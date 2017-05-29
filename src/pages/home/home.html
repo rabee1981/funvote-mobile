@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar color="primary"  style="height: 70px;">
+    <ion-buttons left>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title text-center >
+      Your Charts
+    </ion-title>
+    <ion-buttons right>
+      <ion-item style="background-color: transparent;">
+        <ion-avatar>
+          <img *ngIf="this.afAuth.auth.currentUser?.photoURL!=undefine" src="{{this.afAuth.auth.currentUser?.photoURL}}">
+        </ion-avatar>
+      </ion-item>
+  </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-fab padding bottom="0">
+      <button ion-fab color="danger" (click)="onCreateChart()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+</ion-content>

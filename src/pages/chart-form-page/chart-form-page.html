@@ -1,0 +1,46 @@
+
+<ion-header>
+  <ion-navbar color="primary"  style="height: 70px;">
+    <ion-title text-center >
+      Chart Information
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding class="color-content">
+  <form #f="ngForm" ngSubmit>
+    <ion-list>
+        <ion-label type="text" text-center style="font-size : 20px;">Chart Details</ion-label>
+      <ion-item>
+        <ion-label inline>Title</ion-label>
+        <ion-input type="text" name="title" [(ngModel)]="this.chartDetails.chartTitle" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Type</ion-label>
+          <ion-select  name="type" [(ngModel)]="this.chartDetails.chartType" required>
+            <ion-option value="bar">Bar</ion-option>
+            <ion-option value="pie">Pie</ion-option>
+          </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Options Amount</ion-label>
+          <ion-select  name="optionAmount" (ionChange)="onChange($event)" ngModel required>
+            <ion-option value="2">2</ion-option>
+            <ion-option value="3">3</ion-option>
+            <ion-option value="4">4</ion-option>
+          </ion-select>
+      </ion-item>
+
+      <ion-item *ngFor="let value of valueAxisX; let i = index">
+        <ion-label inline>Option {{numberString[i]}}</ion-label>
+        <ion-input type="text" [name]="value" [(ngModel)]="this.chartDetails.chartLabels[i]" required></ion-input>
+      </ion-item>
+
+</ion-list>
+  </form>
+  <button ion-button (click)="onShow()" [disabled]="!f.valid">Show</button>
+</ion-content>
+

@@ -1,0 +1,23 @@
+<ion-card  >
+        <chart-component [chartDetails]="chartDetails"></chart-component>
+        <ion-row>
+          <ion-col col-4>
+            <button ion-button icon-left clear small (click)="onShare(i)">
+              <ion-icon name="share-alt"></ion-icon>
+              <div>Share</div>
+            </button>
+          </ion-col>
+          <ion-col col-4>
+            <button ion-button icon-left clear small>
+              <ion-icon name="create"></ion-icon>
+              <div>Edite</div>
+            </button>
+          </ion-col>
+          <ion-col col-4>
+            <button ion-button icon-left clear small (click)="onDelete(i)">
+              <ion-icon name="trash"></ion-icon>
+              <div>Delete</div>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
