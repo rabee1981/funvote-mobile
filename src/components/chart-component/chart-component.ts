@@ -1,15 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Color } from "ng2-charts";
 import { ChartDetails } from "../../data/chartDetails";
+import { ChartService } from "../../services/chart.service";
 
 @Component({
   selector: 'chart-component',
   templateUrl: 'chart-component.html'
 })
 export class ChartComponent implements OnInit{
-  @Input() chartDetails: ChartDetails;
+  @Input() chartDetails;
+  @Input() owner;
   chartData:number[]=[];
-  votesCount=0;
+  votesCount;
   isvote=false; 
   public ChartOptions:any = {
     title: {
@@ -43,6 +45,7 @@ export class ChartComponent implements OnInit{
     ];
   public ChartData:number[] = [2,3];
   startFromZero= {};
+  constructor(private chartService : ChartService){};
   ngOnInit(){
     this.ChartOptions.title.text = this.chartDetails.chartTitle;
     if(this.chartDetails.chartType=='bar'){
@@ -53,12 +56,16 @@ export class ChartComponent implements OnInit{
             }
         }]
     }
+  }
+  // votesCount
+  this.votesCount = this.chartDetails.chartData.reduce(
+    (a,b) => {
+      return a+b;
     }
+  )
   }
   public vote(index){
-    this.chartData = this.chartDetails.chartData.slice();
-    this.chartData[index]++
-    this.chartDetails.chartData = this.chartData;
-
+    this.chartDetails.chartData[index]++;
+    this.chartService.voteFor(this.owner,this.chartDetails.$key,this.chartDetails.chartData);
   }
 }

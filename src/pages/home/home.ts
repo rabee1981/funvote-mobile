@@ -13,12 +13,14 @@ import { FirebaseListObservable, AngularFireDatabase } from "angularfire2/databa
 })
 export class HomePage implements OnInit{
   userCharts : FirebaseListObservable<ChartDetails[]>;
+  owner;
   constructor(public navCtrl: NavController, private authService : AuthService ,private afAuth : AngularFireAuth
               ,private chartService : ChartService, private afDatabase: AngularFireDatabase) {
   }
   ngOnInit(){
     this.authService.getUserState().subscribe(
       user => {
+        this.owner = user.uid;
         this.userCharts = this.afDatabase.list(`users/${user.uid}/chartsData`);
       }
     )

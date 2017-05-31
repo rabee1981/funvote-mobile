@@ -14,4 +14,7 @@ export class ChartService {
         chartDetails.chartData = [0,0,0,0];
         return this.afDatabase.list(`users/${this.useruid}/chartsData`).push(chartDetails);
     }
+    voteFor(ownerUid,key,data){
+        this.afDatabase.object(`users/${ownerUid}/chartsData/${key}/chartData`).set(data);
+    }
 }

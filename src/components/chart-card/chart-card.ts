@@ -6,7 +6,8 @@ import { ChartDetails } from "../../data/chartDetails";
   templateUrl: 'chart-card.html'
 })
 export class ChartCard {
-  @Input() chartDetails : ChartDetails;
+  @Input() chartDetails;
+  @Input() owner;
 
   constructor() {}
 
