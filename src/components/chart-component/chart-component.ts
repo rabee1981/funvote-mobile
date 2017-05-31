@@ -65,7 +65,9 @@ export class ChartComponent implements OnInit{
   )
   }
   public vote(index){
-    this.chartDetails.chartData[index]++;
+    this.chartData = this.chartDetails.chartData.slice();
+    this.chartData[index]++;
+    this.chartDetails.chartData = this.chartData;
     this.chartService.voteFor(this.owner,this.chartDetails.$key,this.chartDetails.chartData);
   }
 }
