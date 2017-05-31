@@ -4,7 +4,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 
 @Injectable()
-export class AuthService{
+export class AuthService {
     constructor(private afAuth : AngularFireAuth){}
     login(){
         this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
@@ -21,5 +21,8 @@ export class AuthService{
     }
     logout(){
         this.afAuth.auth.signOut();
+    }
+    getUserState(){
+        return this.afAuth.authState;
     }
 }

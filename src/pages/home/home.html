@@ -19,6 +19,9 @@
 </ion-header>
 
 <ion-content padding>
+  <div *ngFor="let chart of userCharts | async">
+    <chart-card [chartDetails]="chart"></chart-card>
+  </div>
   <ion-fab padding bottom="0">
       <button ion-fab color="danger" (click)="onCreateChart()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>

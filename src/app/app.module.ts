@@ -16,6 +16,7 @@ import { AngularFireAuth } from "angularfire2/auth";
 import { ChartCard } from "../components/chart-card/chart-card";
 import { ChartFormPage } from "../pages/chart-form-page/chart-form-page";
 import { ShowChartPage } from "../pages/show-chart-page/show-chart-page";
+import { ChartService } from "../services/chart.service";
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDuFurr7wtx_FFUbmnOMMcxKSOPwtnXKFg",
@@ -56,6 +57,7 @@ export const firebaseConfig = {
     SplashScreen,
     AuthService,
     AngularFireAuth,
+    ChartService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
