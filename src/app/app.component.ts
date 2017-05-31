@@ -31,6 +31,7 @@ export class MyApp implements OnInit{
         this.rootPage =  this.signinPage;       
         return;
       }
+      this.chartService.useruid = user.uid;
       this.userName = user.displayName.split(' ');
       this.rootPage = this.homePage;      
     });
