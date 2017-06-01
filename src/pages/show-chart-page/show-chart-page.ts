@@ -27,7 +27,7 @@ export class ShowChartPage {
         setTimeout(()=>{
           loading.dismiss();
           this.navCtrl.popToRoot();
-        },2000);
+        },1500);
       }
     )
   }

@@ -17,4 +17,7 @@ export class ChartService {
     voteFor(ownerUid,key,data){
         this.afDatabase.object(`users/${ownerUid}/chartsData/${key}/chartData`).set(data);
     }
+    deleteChart(key){
+        this.afDatabase.object(`users/${this.useruid}/chartsData/${key}`).remove();
+    }
 }
