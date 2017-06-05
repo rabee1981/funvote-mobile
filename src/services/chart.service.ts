@@ -5,6 +5,7 @@ import { ChartDetails } from "../data/chartDetails";
 import { AngularFireDatabase } from "angularfire2/database";
 import { AngularFireAuth } from "angularfire2/auth";
 import { AuthService } from "./auth.service";
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class ChartService {
@@ -12,12 +13,21 @@ export class ChartService {
     constructor(private afDatabase: AngularFireDatabase, private authService: AuthService) { }
     saveChart(chartDetails : ChartDetails){
         chartDetails.chartData = [0,0,0,0];
-        return this.afDatabase.list(`users/${this.useruid}/chartsData`).push(chartDetails);
+        chartDetails.owner = this.useruid;
+        return this.afDatabase.list(`allCharts`).push(chartDetails).then(
+            res => {
+                this.afDatabase.object(`users/${this.useruid}/usersCharts/${res.key}`).set(true);
+            }
+        );
     }
-    voteFor(ownerUid,key,data){
-        this.afDatabase.object(`users/${ownerUid}/chartsData/${key}/chartData`).set(data);
+    voteFor(key,data){
+        this.afDatabase.object(`allCharts/${key}/chartData`).set(data);
     }
     deleteChart(key){
-        this.afDatabase.object(`users/${this.useruid}/chartsData/${key}`).remove();
+        this.afDatabase.object(`allCharts/${key}`).remove().then(
+            res => {
+                this.afDatabase.object(`users/${this.useruid}/usersCharts/${key}`).remove();
+            }
+        )
     }
 }

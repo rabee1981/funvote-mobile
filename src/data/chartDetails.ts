@@ -4,4 +4,5 @@ export class ChartDetails{
     chartData:number[]=[0,0,0,0];
     chartTitle:string;
     chartColor:string[]=[];
+    owner : string;
 }

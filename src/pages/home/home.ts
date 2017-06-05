@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AuthService } from "../../services/auth.service";
 import { AngularFireAuth } from "angularfire2/auth";
@@ -11,19 +11,26 @@ import { FirebaseListObservable, AngularFireDatabase } from "angularfire2/databa
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage implements OnInit{
+export class HomePage implements OnInit,OnDestroy{
   userCharts : FirebaseListObservable<ChartDetails[]>;
-  owner;
+  userStateSubscription;
   constructor(public navCtrl: NavController, private authService : AuthService ,private afAuth : AngularFireAuth
               ,private chartService : ChartService, private afDatabase: AngularFireDatabase) {
   }
   ngOnInit(){
-    this.authService.getUserState().subscribe(
+    this.userStateSubscription = this.authService.getUserState().subscribe(
       user => {
-        this.owner = user.uid;
-        this.userCharts = this.afDatabase.list(`users/${user.uid}/chartsData`);
+        this.userCharts = this.afDatabase.list('allCharts',{
+          query : {
+            orderByChild : 'owner',
+            equalTo : user.uid
+          }    
+        })
       }
     )
+  }
+  ngOnDestroy(){
+    this.userStateSubscription.unsubscribe();
   }
   onCreateChart(){
     this.navCtrl.push(ChartFormPage);

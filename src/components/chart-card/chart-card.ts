@@ -9,6 +9,7 @@ import { ChartService } from "../../services/chart.service";
 export class ChartCard {
   @Input() chartDetails;
   @Input() owner;
+  @Input() justShow = false;
 
   constructor(private chartService : ChartService) {}
   onDelete(){

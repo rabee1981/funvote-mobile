@@ -17,6 +17,7 @@ import { ChartCard } from "../components/chart-card/chart-card";
 import { ChartFormPage } from "../pages/chart-form-page/chart-form-page";
 import { ShowChartPage } from "../pages/show-chart-page/show-chart-page";
 import { ChartService } from "../services/chart.service";
+import { AllChartsPage } from "../pages/all-charts-page/all-charts-page";
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDuFurr7wtx_FFUbmnOMMcxKSOPwtnXKFg",
@@ -35,7 +36,8 @@ export const firebaseConfig = {
     HomePage,
     SigninPage,
     ChartFormPage,
-    ShowChartPage
+    ShowChartPage,
+    AllChartsPage
   ],
   imports: [
     BrowserModule,
@@ -50,7 +52,8 @@ export const firebaseConfig = {
     HomePage,
     SigninPage,
     ChartFormPage,
-    ShowChartPage
+    ShowChartPage,
+    AllChartsPage
   ],
   providers: [
     StatusBar,

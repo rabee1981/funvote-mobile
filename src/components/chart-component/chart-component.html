@@ -4,6 +4,9 @@
             [data]="chartDetails.chartData"
             [labels]="chartDetails.chartLabels"
             [options]="{
+                        animation: {
+                              duration: 500
+                          },
                         title: {
                           text : chartDetails.chartTitle,
                           display: true,

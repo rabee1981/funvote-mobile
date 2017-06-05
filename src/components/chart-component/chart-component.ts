@@ -10,6 +10,7 @@ import { ChartService } from "../../services/chart.service";
 export class ChartComponent implements OnInit{
   @Input() chartDetails;
   @Input() owner;
+  @Input() justShow = false;
   chartData:number[]=[];
   votesCount;
   isvote=false; 
@@ -68,6 +69,8 @@ export class ChartComponent implements OnInit{
     this.chartData = this.chartDetails.chartData.slice();
     this.chartData[index]++;
     this.chartDetails.chartData = this.chartData;
-    this.chartService.voteFor(this.owner,this.chartDetails.$key,this.chartDetails.chartData);
+    if(!this.justShow){
+      this.chartService.voteFor(this.chartDetails.$key,this.chartDetails.chartData);
+    }
   }
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Platform, MenuController } from 'ionic-angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Platform, MenuController, NavController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -8,6 +8,7 @@ import { HomePage } from '../pages/home/home';
 import { SigninPage } from "../pages/signin-page/signin-page";
 import { AuthService } from "../services/auth.service";
 import { ChartService } from "../services/chart.service";
+import { AllChartsPage } from "../pages/all-charts-page/all-charts-page";
 @Component({
   templateUrl: 'app.html'
 })
@@ -15,7 +16,9 @@ export class MyApp implements OnInit{
   homePage =  HomePage;
   rootPage:any = this.homePage;
   signinPage = SigninPage;
+  allChartsPage = AllChartsPage;
   userName = [];
+  @ViewChild('nav') nav : NavController;;
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth : AngularFireAuth
   ,private authService : AuthService, private menuCtrl : MenuController, private chartService : ChartService) {
     platform.ready().then(() => {
@@ -38,6 +41,10 @@ export class MyApp implements OnInit{
   }
   onLogout(){
     this.authService.logout();
+    this.menuCtrl.close();
+  }
+  onLoad(page : any){
+    this.nav.setRoot(page);
     this.menuCtrl.close();
   }
 }
