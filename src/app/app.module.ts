@@ -18,6 +18,7 @@ import { ChartFormPage } from "../pages/chart-form-page/chart-form-page";
 import { ShowChartPage } from "../pages/show-chart-page/show-chart-page";
 import { ChartService } from "../services/chart.service";
 import { AllChartsPage } from "../pages/all-charts-page/all-charts-page";
+import { Facebook } from "@ionic-native/facebook";
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDuFurr7wtx_FFUbmnOMMcxKSOPwtnXKFg",
@@ -61,6 +62,7 @@ export const firebaseConfig = {
     AuthService,
     AngularFireAuth,
     ChartService,
+    Facebook,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -12,6 +12,6 @@ import { AuthService } from "../../services/auth.service";
 export class SigninPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private authService : AuthService) {}
   facebookLogin() {
-    this.authService.login();
+    this.authService.signInWithFacebook();
   }
 }
