@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Color } from "ng2-charts";
 import { ChartDetails } from "../../data/chartDetails";
 import { ChartService } from "../../services/chart.service";
+import { AlertController } from "ionic-angular";
 
 @Component({
   selector: 'chart-component',
@@ -29,24 +30,23 @@ export class ChartComponent implements OnInit{
         }]
     }
   };
-
+  backgroundColor = [
+        '#9b26af',
+        '#68efad',
+        '#3e50b4',
+        '#ff3f80'
+  ]
   public ChartLabels:string[] = ['aa','bb'];
   public ChartType:string = 'bar';
   public ChartLegend:boolean = false;
   public Colors:Array<Color>=[
     {
-      backgroundColor: [
-        '#9b26af',
-        '#68efad',
-        '#3e50b4',
-        '#ff3f80',
-
-  ],
+      backgroundColor : this.backgroundColor
     }
     ];
   public ChartData:number[] = [2,3];
   startFromZero= {};
-  constructor(private chartService : ChartService){};
+  constructor(private chartService : ChartService , private alertCtrl : AlertController){};
   ngOnInit(){
     this.ChartOptions.title.text = this.chartDetails.chartTitle;
     if(this.chartDetails.chartType=='bar'){
@@ -73,4 +73,10 @@ export class ChartComponent implements OnInit{
       this.chartService.voteFor(this.chartDetails.$key,this.chartDetails.chartData);
     }
   }
+  chartClicked(event){
+    //TODO
+   // this.backgroundColor[event.active[0]._index] = "#ff3f80"
+  }
+
+  
 }

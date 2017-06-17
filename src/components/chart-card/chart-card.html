@@ -2,16 +2,13 @@
         <chart-component [chartDetails]="chartDetails" [owner]="owner" [justShow]="justShow"></chart-component>
         <ion-row>
           <ion-col col-4>
-            <button ion-button icon-left clear small (click)="onShare(i)">
+            <button ion-button icon-left clear small (click)="onShare()">
               <ion-icon name="share-alt"></ion-icon>
-              <div>Share</div>
+              <div>Share to Facebook</div>
             </button>
           </ion-col>
           <ion-col col-4>
-            <button ion-button icon-left clear small>
-              <ion-icon name="create"></ion-icon>
-              <div>Edite</div>
-            </button>
+            
           </ion-col>
           <ion-col col-4>
             <button ion-button icon-left clear small (click)="onDelete()">

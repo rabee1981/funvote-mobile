@@ -19,6 +19,10 @@ import { ShowChartPage } from "../pages/show-chart-page/show-chart-page";
 import { ChartService } from "../services/chart.service";
 import { AllChartsPage } from "../pages/all-charts-page/all-charts-page";
 import { Facebook } from "@ionic-native/facebook";
+import { FacebookService } from "../services/facebook.service";
+import { HttpModule } from "@angular/http";
+import { SocialSharing } from '@ionic-native/social-sharing';
+
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDuFurr7wtx_FFUbmnOMMcxKSOPwtnXKFg",
@@ -45,7 +49,8 @@ export const firebaseConfig = {
     ChartsModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    HttpModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -63,6 +68,8 @@ export const firebaseConfig = {
     AngularFireAuth,
     ChartService,
     Facebook,
+    FacebookService,
+    SocialSharing,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

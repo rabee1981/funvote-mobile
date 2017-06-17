@@ -18,8 +18,8 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-      <div *ngFor="let chart of allCharts | async">
+<ion-content class="color-content">
+      <div *ngFor="let chart of allCharts | async" class="margin-card">
     <chart-card [chartDetails]="chart" [owner]="chart.owner"></chart-card>
       </div>
 </ion-content>
