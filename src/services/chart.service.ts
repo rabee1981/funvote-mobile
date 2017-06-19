@@ -30,4 +30,18 @@ export class ChartService {
             }
         )
     }
+    updateFav(key,chartDetails){
+        this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).$ref.transaction(
+            currentValue => {
+                if(currentValue===null){
+                    this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).set(chartDetails);
+                }else{
+                    this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).remove()
+                }
+            }
+        )
+    }
+    isFavor(key){
+        return this.afDatabase.object(`users/${this.useruid}/favorites/${key}`);
+    }
 }

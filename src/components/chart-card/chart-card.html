@@ -4,11 +4,17 @@
           <ion-col col-4>
             <button ion-button icon-left clear small (click)="onShare()">
               <ion-icon name="share-alt"></ion-icon>
-              <div>Share to Facebook</div>
+              <div>Share</div>
             </button>
           </ion-col>
           <ion-col col-4>
-            
+            <button ion-button icon-left clear small (click)="favorities()">
+              <ion-icon *ngIf="(isFav | async)?.$value===null;else other_content" ios="ios-heart-outline" md="md-heart"></ion-icon>
+              <ng-template #other_content>
+                <ion-icon ios="ios-heart" md="md-heart" style="color :#FFD700"></ion-icon>
+                </ng-template>
+              <div>love it</div>
+            </button>
           </ion-col>
           <ion-col col-4>
             <button ion-button icon-left clear small (click)="onDelete()">

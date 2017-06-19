@@ -12,10 +12,17 @@ export class ChartCard {
   @Input() chartDetails;
   @Input() owner;
   @Input() justShow = false;
+  isFav;
 
   constructor(private chartService : ChartService, private fbService : FacebookService) {}
+  ngOnInit(){
+    this.isFav = this.chartService.isFavor(this.chartDetails.$key);
+  }
   onDelete(){
     this.chartService.deleteChart(this.chartDetails.$key);
+  }
+  favorities(){
+      this.chartService.updateFav(this.chartDetails.$key,this.chartDetails);
   }
   onShare(){
     this.chartImage = (document.getElementById(this.chartDetails.$key) as HTMLCanvasElement).toDataURL('image/jpg');

@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-navbar color="primary"  style="height: 70px;">
+    <ion-buttons left>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title text-center >
+      My Favorites
+    </ion-title>
+    <ion-buttons right>
+      <ion-item style="background-color: transparent;">
+        <ion-avatar>
+          <img src="{{this.afAuth.auth.currentUser?.photoURL}}">
+        </ion-avatar>
+      </ion-item>
+  </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <div *ngFor="let chart of favCharts | async"   class="margin-card">
+    <chart-card [chartDetails]="chart" [owner]="chart.owner"></chart-card>
+  </div>
+</ion-content>

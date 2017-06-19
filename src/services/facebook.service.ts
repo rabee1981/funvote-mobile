@@ -67,7 +67,7 @@ export class FacebookService {
       });
     }
     shareImage(url,key){
-      this.socialSharing.shareViaFacebook(null,url,null)
+      this.socialSharing.shareViaFacebook('help me',url,'https://funvaotedata.firebaseapp.com/chart/'+key)
       .then(res => {
         this.loading.dismiss();
       }).catch(

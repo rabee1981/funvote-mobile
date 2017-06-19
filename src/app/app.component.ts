@@ -9,6 +9,7 @@ import { SigninPage } from "../pages/signin-page/signin-page";
 import { AuthService } from "../services/auth.service";
 import { ChartService } from "../services/chart.service";
 import { AllChartsPage } from "../pages/all-charts-page/all-charts-page";
+import { FavPage } from "../pages/fav/fav";
 @Component({
   templateUrl: 'app.html'
 })
@@ -17,6 +18,7 @@ export class MyApp implements OnInit{
   rootPage:any = this.homePage;
   signinPage = SigninPage;
   allChartsPage = AllChartsPage;
+  favPage = FavPage;
   userName = [];
   @ViewChild('nav') nav : NavController;;
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth : AngularFireAuth
