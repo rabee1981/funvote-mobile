@@ -22,11 +22,19 @@ export class ChartService {
     }
     voteFor(key,data){
         this.afDatabase.object(`allCharts/${key}/chartData`).set(data);
+        this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).$ref.transaction(
+            currentValue => {
+                if(currentValue!==null){
+                    this.afDatabase.object(`users/${this.useruid}/favorites/${key}/chartData`).set(data);
+                }
+            }
+        )
     }
     deleteChart(key){
         this.afDatabase.object(`allCharts/${key}`).remove().then(
             res => {
                 this.afDatabase.object(`users/${this.useruid}/usersCharts/${key}`).remove();
+                this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).remove()
             }
         )
     }
