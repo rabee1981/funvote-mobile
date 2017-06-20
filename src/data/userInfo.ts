@@ -1,7 +1,6 @@
 export class UserInfo {
     name : string;
-    id : string;
-    facbookId: string;
+    firebaseUid : string;
+    facebookUid : string;
     pictureUrl : string = null;
-    friends : string[];
 }

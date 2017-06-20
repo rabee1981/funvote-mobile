@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
-import { AngularFireDatabase } from "angularfire2/database";
+import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/database";
 import { AuthService } from "../../services/auth.service";
 
 @Component({
@@ -17,7 +17,7 @@ export class FavPage {
   ngOnInit(){
     this.userStateSubscription = this.authService.getUserState().subscribe(
       user => {
-        this.favCharts = this.afDatabase.list(`users/${user.uid}/favorites`);
+        this.favCharts = this.afDatabase.list(`users/${user.uid}/favorites`).map((array) => array.reverse()) as FirebaseListObservable<any[]>;
       }
     )
   }

@@ -1,26 +1,34 @@
-<ion-card  >
-        <chart-component [chartDetails]="chartDetails" [owner]="owner" [justShow]="justShow"></chart-component>
-        <ion-row>
-          <ion-col col-4>
-            <button ion-button icon-left clear small (click)="onShare()">
-              <ion-icon name="share-alt"></ion-icon>
-              <div>Share</div>
-            </button>
-          </ion-col>
-          <ion-col col-4>
-            <button ion-button icon-left clear small (click)="favorities()">
-              <ion-icon *ngIf="(isFav | async)?.$value===null;else other_content" ios="ios-heart-outline" md="md-heart"></ion-icon>
-              <ng-template #other_content>
-                <ion-icon ios="ios-heart" md="md-heart" style="color :#FFD700"></ion-icon>
-                </ng-template>
-              <div>love it</div>
-            </button>
-          </ion-col>
-          <ion-col col-4>
-            <button ion-button icon-left clear small (click)="onDelete()">
-              <ion-icon name="trash"></ion-icon>
-              <div>Delete</div>
-            </button>
-          </ion-col>
-        </ion-row>
-      </ion-card>
+<ion-card>
+  <ion-buttons right>
+      <ion-item style="background-color: transparent;">
+        <ion-avatar item-start>
+          <img src="{{(ownerInfo | async)?.pictureUrl}}">
+        </ion-avatar>
+        <small>{{(ownerInfo | async)?.name}}</small>
+      </ion-item>
+  </ion-buttons>
+  <chart-component [chartDetails]="chartDetails" [owner]="owner" [justShow]="justShow"></chart-component>
+  <ion-row>
+    <ion-col col-4>
+      <button ion-button icon-left clear small (click)="onShare()">
+        <ion-icon name="share-alt"></ion-icon>
+        <div>Share</div>
+      </button>
+    </ion-col>
+    <ion-col col-4>
+      <button ion-button icon-left clear small (click)="favorities()">
+        <ion-icon *ngIf="(isFav | async)?.$value===null;else other_content" ios="ios-heart-outline" md="md-heart"></ion-icon>
+        <ng-template #other_content>
+          <ion-icon ios="ios-heart" md="md-heart" style="color :#FFD700"></ion-icon>
+          </ng-template>
+        <div>love it</div>
+      </button>
+    </ion-col>
+    <ion-col col-4>
+      <button ion-button icon-left clear small (click)="onDelete()">
+        <ion-icon name="trash"></ion-icon>
+        <div>Delete</div>
+      </button>
+    </ion-col>
+  </ion-row>
+</ion-card>

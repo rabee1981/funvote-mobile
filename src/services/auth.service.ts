@@ -24,6 +24,7 @@ export class AuthService {
   }
     logout(){
         this.afAuth.auth.signOut();
+        this.facebook.logout();
     }
     getUserState(){
         return this.afAuth.authState;

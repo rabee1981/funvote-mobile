@@ -6,7 +6,7 @@
       </button>
     </ion-buttons>
     <ion-title text-center >
-      My Favorites
+      Friends Charts
     </ion-title>
     <ion-buttons right>
       <ion-item style="background-color: transparent;">
@@ -20,7 +20,9 @@
 
 
 <ion-content class="color-content">
-  <div *ngFor="let chart of favCharts | async"   class="margin-card">
-    <chart-card [chartDetails]="chart" [owner]="chart.owner"></chart-card>
-  </div>
+    <div *ngFor="let ops of friendsChartsOps" class="margin-card">
+      <div *ngFor="let chart of ops | async">
+        <chart-card [chartDetails]="chart" [owner]="chart.owner"></chart-card>
+      </div>
+    </div>
 </ion-content>

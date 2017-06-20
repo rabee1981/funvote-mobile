@@ -23,6 +23,7 @@ import { FacebookService } from "../services/facebook.service";
 import { HttpModule } from "@angular/http";
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { FavPage } from "../pages/fav/fav";
+import { FriendsChartsPage } from "../pages/friends-charts/friends-charts";
 
 
 export const firebaseConfig = {
@@ -44,7 +45,8 @@ export const firebaseConfig = {
     ChartFormPage,
     ShowChartPage,
     AllChartsPage,
-    FavPage
+    FavPage,
+    FriendsChartsPage
   ],
   imports: [
     BrowserModule,
@@ -62,7 +64,8 @@ export const firebaseConfig = {
     ChartFormPage,
     ShowChartPage,
     AllChartsPage,
-    FavPage
+    FavPage,
+    FriendsChartsPage
   ],
   providers: [
     StatusBar,
