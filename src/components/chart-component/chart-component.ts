@@ -14,43 +14,14 @@ export class ChartComponent implements OnInit{
   @Input() chartDetails;
   @Input() owner;
   @Input() justShow = false;
+  colors;
   chartData:number[]=[];
   votesCount;
   isvote=false; 
-  public ChartOptions:any = {
-    title: {
-      text : '',
-      display: true,
-      fontSize: 18,
-      fontFamily: "Pacifico"
-    },
-    scales: {
-        yAxes: [{
-            ticks: {
-                beginAtZero: true
-            }
-        }]
-    }
-  };
-  backgroundColor = [
-        '#9b26af',
-        '#68efad',
-        '#3e50b4',
-        '#ff3f80'
-  ]
-  public ChartLabels:string[] = ['aa','bb'];
-  public ChartType:string = 'bar';
   public ChartLegend:boolean = false;
-  public Colors:Array<Color>=[
-    {
-      backgroundColor : this.backgroundColor
-    }
-    ];
-  public ChartData:number[] = [2,3];
   startFromZero= {};
   constructor(private chartService : ChartService , private alertCtrl : AlertController, private modalCtrl : ModalController){};
   ngOnInit(){
-    this.ChartOptions.title.text = this.chartDetails.chartTitle;
     if(this.chartDetails.chartType=='bar'){
       this.startFromZero = {
         yAxes: [{
@@ -66,6 +37,11 @@ export class ChartComponent implements OnInit{
       return a+b;
     }
   )
+  this.colors = [
+                  {
+                    backgroundColor : this.chartDetails.chartColor
+                  }
+                  ]
   }
   public vote(index){
     this.chartData = this.chartDetails.chartData.slice();
@@ -76,9 +52,24 @@ export class ChartComponent implements OnInit{
     }
   }
   chartClicked(event){
-    const colorPicker = this.modalCtrl.create(ColorPickerPage,null,{
-      enableBackdropDismiss : false
-    });
-    colorPicker.present();
+    if(this.justShow){
+      let dataIndex = event.active[0]._index;
+      let chartColor = JSON.parse(JSON.stringify(this.colors));
+      console.log(dataIndex); 
+      const colorPicker = this.modalCtrl.create(ColorPickerPage,{color : this.colors[0].backgroundColor[dataIndex]},{
+        enableBackdropDismiss : false
+      });
+      colorPicker.present();
+      colorPicker.onDidDismiss(
+        color => {
+          if(color){
+            console.log(color)
+            chartColor[0].backgroundColor[dataIndex] = color;
+            this.colors = chartColor;
+            this.chartDetails.chartColor = this.colors[0].backgroundColor;
+          }
+        }
+      )
+    }
   }
 }

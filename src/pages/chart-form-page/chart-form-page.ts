@@ -21,7 +21,7 @@ export class ChartFormPage {
     numberString : string[]=['One','Two','Three','Four'];
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.chartDetails.chartLabels = [];
-    this.chartDetails.chartColor = [ "#e05038", "#334431","#3e50b4","#ff3f80"];
+    this.chartDetails.chartColor = ['#FFEB3C','#FF9900','#F44437','#EA1E63'];
   }
   ionViewDidEnter(){
     this.chartDetails.chartLabels = [];

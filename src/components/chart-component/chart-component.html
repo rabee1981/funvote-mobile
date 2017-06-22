@@ -15,17 +15,17 @@
                         },
                         scales: startFromZero
                       }"
-            [colors]="Colors"
+            [colors]="colors"
             [legend]="ChartLegend"
             [chartType]="chartDetails.chartType"
             (chartClick)="chartClicked($event)"
             ></canvas>
   </div>
   <div id="buttons-center" text-center>
-    <button ion-button *ngIf="chartDetails.chartLabels.length>=1"  [disabled]="isvote" [style.background]="Colors[0].backgroundColor[0]" (click)="vote(0)">{{chartDetails.chartLabels[0]}}</button>
-    <button ion-button *ngIf="chartDetails.chartLabels.length>=2"  [disabled]="isvote" [style.background]="Colors[0].backgroundColor[1]" (click)="vote(1)">{{chartDetails.chartLabels[1]}}</button>
-    <button ion-button *ngIf="chartDetails.chartLabels.length>=3"  [disabled]="isvote" [style.background]="Colors[0].backgroundColor[2]" (click)="vote(2)">{{chartDetails.chartLabels[2]}}</button>
-    <button ion-button *ngIf="chartDetails.chartLabels.length>=4"  [disabled]="isvote" [style.background]="Colors[0].backgroundColor[3]" (click)="vote(3)">{{chartDetails.chartLabels[3]}}</button>
+    <button ion-button *ngIf="chartDetails.chartLabels.length>=1"  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[0]" (click)="vote(0)">{{chartDetails.chartLabels[0]}}</button>
+    <button ion-button *ngIf="chartDetails.chartLabels.length>=2"  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[1]" (click)="vote(1)">{{chartDetails.chartLabels[1]}}</button>
+    <button ion-button *ngIf="chartDetails.chartLabels.length>=3"  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[2]" (click)="vote(2)">{{chartDetails.chartLabels[2]}}</button>
+    <button ion-button *ngIf="chartDetails.chartLabels.length>=4"  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[3]" (click)="vote(3)">{{chartDetails.chartLabels[3]}}</button>
   </div>
   <div padding>
       <ion-chip>

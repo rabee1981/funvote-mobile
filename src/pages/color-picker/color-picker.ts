@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the ColorPickerPage page.
@@ -13,15 +13,37 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'color-picker.html',
 })
 export class ColorPickerPage {
-  vSign : number[]= [0,0,0,0,0,0,0,0,0,0,0,0];
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  colorNumber=-1;
+  choosenColor;
+  colors=['#FFEB3C',
+          '#FF9900',
+          '#F44437',
+          '#EA1E63',
+          '#9C26B0',
+          '#3F51B5',
+          '#2196F3',
+          '#009788',
+          '#4BAF4F',
+          '#534741',
+          '#7E5D4E', 
+          '#9E9E9E',]
+  constructor(private viewCtrl : ViewController,private navParams : NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ColorPickerPage');
+    this.choosenColor = this.navParams.get('color');
   }
   onChooseColor(index){
-    this.vSign = [0,0,0,0,0,0,0,0,0,0,0,0];
-    this.vSign[index] = 1;
+    this.colorNumber = -1;
+    this.colorNumber = index;
+    if(this.colorNumber>=0){
+      this.choosenColor = this.colors[index];
+    }
+  }
+  onCancle(){
+    this.viewCtrl.dismiss();
+  }
+  onOk(){
+    this.viewCtrl.dismiss(this.choosenColor);
   }
 }
