@@ -30,7 +30,7 @@ export class HomePage implements OnInit,OnDestroy{
             orderByChild : 'owner',
             equalTo : user.uid
           }    
-        }).map((array) => array.reverse()) as FirebaseListObservable<any[]>
+        })
       }
     )
   }

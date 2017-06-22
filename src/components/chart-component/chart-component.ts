@@ -2,13 +2,15 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Color } from "ng2-charts";
 import { ChartDetails } from "../../data/chartDetails";
 import { ChartService } from "../../services/chart.service";
-import { AlertController } from "ionic-angular";
+import { AlertController, ModalController } from "ionic-angular";
+import { ColorPickerPage } from "../../pages/color-picker/color-picker";
 
 @Component({
   selector: 'chart-component',
   templateUrl: 'chart-component.html'
 })
 export class ChartComponent implements OnInit{
+  alert;
   @Input() chartDetails;
   @Input() owner;
   @Input() justShow = false;
@@ -46,7 +48,7 @@ export class ChartComponent implements OnInit{
     ];
   public ChartData:number[] = [2,3];
   startFromZero= {};
-  constructor(private chartService : ChartService , private alertCtrl : AlertController){};
+  constructor(private chartService : ChartService , private alertCtrl : AlertController, private modalCtrl : ModalController){};
   ngOnInit(){
     this.ChartOptions.title.text = this.chartDetails.chartTitle;
     if(this.chartDetails.chartType=='bar'){
@@ -74,9 +76,9 @@ export class ChartComponent implements OnInit{
     }
   }
   chartClicked(event){
-    //TODO
-   // this.backgroundColor[event.active[0]._index] = "#ff3f80"
+    const colorPicker = this.modalCtrl.create(ColorPickerPage,null,{
+      enableBackdropDismiss : false
+    });
+    colorPicker.present();
   }
-
-  
 }

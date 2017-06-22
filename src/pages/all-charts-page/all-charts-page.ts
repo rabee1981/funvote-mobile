@@ -24,7 +24,7 @@ export class AllChartsPage implements OnInit{
 
   ngOnInit(){
     this.loading.present();
-    this.allCharts = this.afDatabase.list('allCharts').map((array) => array.reverse()) as FirebaseListObservable<any[]>;
+    this.allCharts = this.afDatabase.list('allCharts');
   }
   ionViewDidEnter(){
     this.loading.dismiss();

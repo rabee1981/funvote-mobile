@@ -13,8 +13,6 @@ $font-path: "../assets/fonts";
 // http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
 
 
-
-
 // Named Color Variables
 // --------------------------------------------------
 // Named colors makes it easy to reuse colors on various components.
@@ -28,7 +26,20 @@ $colors: (
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #222,
+  //color-picker
+  color0 : #FFEB3C,
+  color1 : #FF9900,
+  color2 :#F44437,
+  color3 :#EA1E63,
+  color4 :#9C26B0,
+  color5 :#3F51B5,
+  color6 :#2196F3,
+  color7 :#009788,
+  color8 :#4BAF4F,
+  color9 :#534741,
+  color10 :#7E5D4E, 
+  color11 :#9E9E9E,
 );
 
 // App iOS Variables

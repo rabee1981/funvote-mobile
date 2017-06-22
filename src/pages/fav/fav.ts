@@ -17,7 +17,7 @@ export class FavPage {
   ngOnInit(){
     this.userStateSubscription = this.authService.getUserState().subscribe(
       user => {
-        this.favCharts = this.afDatabase.list(`users/${user.uid}/favorites`).map((array) => array.reverse()) as FirebaseListObservable<any[]>;
+        this.favCharts = this.afDatabase.list(`users/${user.uid}/favorites`);
       }
     )
   }
