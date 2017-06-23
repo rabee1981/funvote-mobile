@@ -23,15 +23,21 @@ export class ChartCard {
     this.ownerInfo = this.afDatabase.object(`users/${this.owner}/userInfo`);
   }
   onDelete(){
-    this.chartService.deleteChart(this.chartDetails.$key);
+    if(!this.justShow){
+      this.chartService.deleteChart(this.chartDetails.$key);
+    }
   }
   favorities(){
+    if(!this.justShow){
       this.chartService.updateFav(this.chartDetails.$key,this.chartDetails);
+    }
   }
   onShare(){
-    this.chartImage = (document.getElementById(this.chartDetails.$key) as HTMLCanvasElement).toDataURL('image/jpg');
-     var blob = this.dataURItoBlob(this.chartImage);
-     this.fbService.saveImage(blob,this.chartDetails.$key);
+    if(!this.justShow){
+      this.chartImage = (document.getElementById(this.chartDetails.$key) as HTMLCanvasElement).toDataURL('image/jpg');
+      var blob = this.dataURItoBlob(this.chartImage);
+      this.fbService.saveImage(blob,this.chartDetails.$key);
+    }
   }
   dataURItoBlob(dataURI) {
     var byteString = atob(dataURI.split(',')[1]);

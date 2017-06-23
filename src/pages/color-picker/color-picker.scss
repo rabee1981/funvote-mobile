@@ -3,6 +3,9 @@ page-color-picker {
     display:none;
     }
     background-color: rgba(0,0,0,0.5);
+    h4 {
+        text-align: center;
+    }
     .guide-modal {
         position: absolute;
         top: 80px;
@@ -12,39 +15,28 @@ page-color-picker {
         height: 372px;
         overflow: hidden;
         }
-    .grid-full{       
-        div {
-            width:250px;
-            padding-left: 5px;
-         ion-row {
-            height: 280px;
+    ion-content {
+        .row-okCancel {
+           ion-col {
+               padding-bottom: 0;
+               padding-left: 0;
+               padding-right: 0;
+               padding-top: 10px;
+                .btn-okCancel {
+                    font-weight: bold;
+                    border: 0.1px groove;
+                    width: 100%;
+                    height: 100%;
+                } 
             }
         }
-    }
-    .cancel-btn {
-    position: absolute;
-    top:85%;
-    left:0px;
-    padding: 0;
-    width: 50%
-  }
-  .ok-btn {
-    position: absolute;
-    top:85%;
-    left:50%;
-    right: 0;
-    margin-right: 0;
-    padding: 0;
-    width: 60%
-  }
-    .button-confirm {
-        border: 0.1px groove;
-        font-weight: bold;
-    }
-    .title-bar {
-        position: absolute;
-        top:-3px;
-        left:35%;
-        font-weight: bold;
+        .row-colors {
+            ion-col {
+                padding-left: 10px;
+            }
+        }
+        ion-row {
+           height : 20%; 
+        }
     }
 }

@@ -1,85 +1,85 @@
 <div class="guide-modal">
 <ion-header>
-
-  <ion-navbar>
-    <h4 class="title-bar">Colors</h4>
+    <ion-navbar>
+    <h4>Colors</h4>
   </ion-navbar>
-
 </ion-header>
-
-<ion-content class="grid-full">
-  <div>
-    <ion-row>
-      <ion-col col-4 col-sm>
-        <ion-fab>
-            <button ion-fab color="color0" (click)="onChooseColor(0)"><ion-icon *ngIf="colorNumber==0"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
-        </ion-fab>
-      </ion-col>
-      <ion-col col-4 col-sm>
-        <ion-fab>
-            <button ion-fab color="color1" (click)="onChooseColor(1)"><ion-icon *ngIf="colorNumber==1"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
-        </ion-fab>
-      </ion-col>
-      <ion-col col-4 col-sm>
-          <ion-fab>
-              <button ion-fab color="color2" (click)="onChooseColor(2)"><ion-icon *ngIf="colorNumber==2"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
-          </ion-fab>
-      </ion-col>
-      <ion-col col-4 col-sm>
-        <ion-fab>
-            <button ion-fab color="color3" (click)="onChooseColor(3)"><ion-icon *ngIf="colorNumber==3" ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
-        </ion-fab>
-      </ion-col>
-      <ion-col col-4 col-sm>
-        <ion-fab>
-            <button ion-fab color="color4" (click)="onChooseColor(4)"><ion-icon *ngIf="colorNumber==4" ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
-        </ion-fab>
-      </ion-col>
-      <ion-col col-4 col-sm>
-          <ion-fab>
-              <button ion-fab color="color5" (click)="onChooseColor(5)"><ion-icon *ngIf="colorNumber==5"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
-          </ion-fab>
-      </ion-col>
-      <ion-col col-4 col-sm>
-        <ion-fab>
-            <button ion-fab color="color6" (click)="onChooseColor(6)"><ion-icon *ngIf="colorNumber==6"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
-        </ion-fab>
-      </ion-col>
-      <ion-col col-4 col-sm>
-        <ion-fab>
-            <button ion-fab color="color7" (click)="onChooseColor(7)"><ion-icon *ngIf="colorNumber==7"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
-        </ion-fab>
-      </ion-col>
-      <ion-col col-4 col-sm>
-          <ion-fab>
-              <button ion-fab color="color8" (click)="onChooseColor(8)"><ion-icon *ngIf="colorNumber==8"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
-          </ion-fab>
-      </ion-col>
-      <ion-col col-4 col-sm>
-        <ion-fab>
-            <button ion-fab color="color9" (click)="onChooseColor(9)"><ion-icon *ngIf="colorNumber==9"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
-        </ion-fab>
-      </ion-col>
-      <ion-col col-4 col-sm>
-        <ion-fab>
-            <button ion-fab color="color10" (click)="onChooseColor(10)"><ion-icon *ngIf="colorNumber==10"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
-        </ion-fab>
-      </ion-col>
-      <ion-col col-4 col-sm>
-          <ion-fab>
-              <button ion-fab color="color11" (click)="onChooseColor(11)"><ion-icon *ngIf="colorNumber==11"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
-          </ion-fab>
-      </ion-col>
+<ion-content>
+    <ion-row class="row-colors">
+        <ion-col col-4>
+            <ion-fab>
+                <button ion-fab color="color0" (click)="onChooseColor(0)"><ion-icon *ngIf="colorNumber==0"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
+            </ion-fab>
+        </ion-col>
+        <ion-col col-4>
+            <ion-fab>
+                <button ion-fab color="color1" (click)="onChooseColor(1)"><ion-icon *ngIf="colorNumber==1"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
+            </ion-fab>
+        </ion-col>
+        <ion-col col-4>
+            <ion-fab>
+                <button ion-fab color="color2" (click)="onChooseColor(2)"><ion-icon *ngIf="colorNumber==2"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
+            </ion-fab>
+        </ion-col>
     </ion-row>
-    
-  </div>
-  <ion-row>
-    <ion-col col-6 col-sm class="cancel-btn">
-    <button ion-button full color="light" class="button-confirm" (click)="onCancle()">Cancle</button>
-    </ion-col>
-    <ion-col col-6 col-sm  class="ok-btn" color="light">
-    <button ion-button full color="light" class="button-confirm" (click)="onOk()">OK</button>
-    </ion-col>
+    <ion-row class="row-colors">
+        <ion-col col-4>
+            <ion-fab>
+                <button ion-fab color="color3" (click)="onChooseColor(3)"><ion-icon *ngIf="colorNumber==3"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
+            </ion-fab>
+        </ion-col>
+        <ion-col col-4>
+            <ion-fab>
+                <button ion-fab color="color4" (click)="onChooseColor(4)"><ion-icon *ngIf="colorNumber==4"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
+            </ion-fab>
+        </ion-col>
+        <ion-col col-4>
+            <ion-fab>
+                <button ion-fab color="color5" (click)="onChooseColor(5)"><ion-icon *ngIf="colorNumber==5"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
+            </ion-fab>
+        </ion-col>
+    </ion-row>
+    <ion-row class="row-colors">
+        <ion-col col-4>
+            <ion-fab>
+                <button ion-fab color="color6" (click)="onChooseColor(6)"><ion-icon *ngIf="colorNumber==6"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
+            </ion-fab>
+        </ion-col>
+        <ion-col col-4>
+            <ion-fab>
+                <button ion-fab color="color7" (click)="onChooseColor(7)"><ion-icon *ngIf="colorNumber==7"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
+            </ion-fab>
+        </ion-col>
+        <ion-col col-4>
+            <ion-fab>
+                <button ion-fab color="color8" (click)="onChooseColor(8)"><ion-icon *ngIf="colorNumber==8"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
+            </ion-fab>
+        </ion-col>
+    </ion-row>
+    <ion-row class="row-colors">
+        <ion-col col-4>
+            <ion-fab>
+                <button ion-fab color="color9" (click)="onChooseColor(9)"><ion-icon *ngIf="colorNumber==9"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
+            </ion-fab>
+        </ion-col>
+        <ion-col col-4>
+            <ion-fab>
+                <button ion-fab color="color10" (click)="onChooseColor(10)"><ion-icon *ngIf="colorNumber==10"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
+            </ion-fab>
+        </ion-col>
+        <ion-col col-4>
+            <ion-fab>
+                <button ion-fab color="color11" (click)="onChooseColor(11)"><ion-icon *ngIf="colorNumber==11"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
+            </ion-fab>
+        </ion-col>
+    </ion-row>
+    <ion-row class="row-okCancel">
+        <ion-col col-6>
+        <button ion-button full color="light" class="btn-okCancel" (click)="onCancle()">Cancel</button>
+        </ion-col>
+        <ion-col col-6>
+        <button ion-button full color="light" class="btn-okCancel" (click)="onOk()">Ok</button>
+        </ion-col>
     </ion-row>
 </ion-content>
 </div>
