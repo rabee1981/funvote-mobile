@@ -1,5 +1,5 @@
 import { Facebook } from "@ionic-native/facebook";
-import { Http , Response} from "@angular/http";
+import { Http } from "@angular/http";
 import { AuthService } from "./auth.service";
 import { LoadingController } from "ionic-angular";
 import 'rxjs/Rx';
@@ -9,7 +9,6 @@ import { Injectable } from "@angular/core";
 import { UserInfo } from "../data/userInfo";
 import { SocialSharing } from "@ionic-native/social-sharing";
 import { AngularFireDatabase } from "angularfire2/database";
-import { Subscription } from "rxjs/Subscription";
 
 @Injectable()
 export class FacebookService {

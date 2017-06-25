@@ -25,6 +25,8 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { FavPage } from "../pages/fav/fav";
 import { FriendsChartsPage } from "../pages/friends-charts/friends-charts";
 import { ColorPickerPage } from "../pages/color-picker/color-picker";
+import { ConnectivityService } from "../services/ConnectivityService";
+import { Network } from "@ionic-native/network";
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDuFurr7wtx_FFUbmnOMMcxKSOPwtnXKFg",
@@ -78,6 +80,8 @@ export const firebaseConfig = {
     Facebook,
     FacebookService,
     SocialSharing,
+    ConnectivityService,
+    Network,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

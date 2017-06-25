@@ -1,9 +1,6 @@
-
-
-import { Injectable, OnInit } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { ChartDetails } from "../data/chartDetails";
 import { AngularFireDatabase } from "angularfire2/database";
-import { AngularFireAuth } from "angularfire2/auth";
 import { AuthService } from "./auth.service";
 import 'rxjs/add/operator/map';
 
@@ -22,6 +19,7 @@ export class ChartService {
     }
     voteFor(key,data){
         this.afDatabase.object(`allCharts/${key}/chartData`).set(data);
+        this.afDatabase.object(`users/${this.useruid}/voted/${key}`).set(true);
         this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).$ref.transaction(
             currentValue => {
                 if(currentValue!==null){
@@ -51,5 +49,8 @@ export class ChartService {
     }
     isFavor(key){
         return this.afDatabase.object(`users/${this.useruid}/favorites/${key}`);
+    }
+    isVote(key){
+        return this.afDatabase.object(`users/${this.useruid}/voted/${key}`);
     }
 }

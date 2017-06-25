@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
 import { FacebookService } from "../../services/facebook.service";
 import { AngularFireDatabase } from "angularfire2/database";
@@ -11,11 +11,16 @@ import { AngularFireDatabase } from "angularfire2/database";
 })
 export class FriendsChartsPage {
   friendsChartsOps=[];
+  loading = this.loadingCtrl.create({
+      content : 'Loading Charts',
+      spinner : 'bubbles',
+    })
   constructor(public navCtrl: NavController, public navParams: NavParams, private afAuth : AngularFireAuth, private fbService : FacebookService,
-  private afDatabase : AngularFireDatabase) {
+  private afDatabase : AngularFireDatabase, private loadingCtrl : LoadingController) {
   }
 
   ngOnInit(){
+    this.loading.present();
     this.friendsChartsOps = [];
     let friendsfireUid : string[] = this.fbService.friendsfireUid.slice();
     for( let f of friendsfireUid){
@@ -24,9 +29,9 @@ export class FriendsChartsPage {
           orderByChild : 'owner',
           equalTo : f
         }
-      }));
+      }))
     }
-
+    this.loading.dismiss();
   }
 
 }

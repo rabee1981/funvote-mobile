@@ -1,15 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { ChartDetails } from "../../data/chartDetails";
 import { ShowChartPage } from "../show-chart-page/show-chart-page";
 
-/**
- * Generated class for the ChartFormPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-@IonicPage()
 @Component({
   selector: 'page-chart-form-page',
   templateUrl: 'chart-form-page.html',
@@ -21,7 +14,7 @@ export class ChartFormPage {
     numberString : string[]=['One','Two','Three','Four'];
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.chartDetails.chartLabels = [];
-    this.chartDetails.chartColor = ['#FFEB3C','#FF9900','#F44437','#EA1E63'];
+    this.chartDetails.chartColor = ['#EA1E63','#3F51B5','#009788','#7E5D4E'];
   }
   ionViewDidEnter(){
     this.chartDetails.chartLabels = [];

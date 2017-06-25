@@ -1,6 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Color } from "ng2-charts";
-import { ChartDetails } from "../../data/chartDetails";
 import { ChartService } from "../../services/chart.service";
 import { AlertController, ModalController } from "ionic-angular";
 import { ColorPickerPage } from "../../pages/color-picker/color-picker";
@@ -17,12 +15,13 @@ export class ChartComponent implements OnInit{
   colors;
   chartData:number[]=[];
   votesCount;
-  isvote=false; 
+  isvote; 
   public ChartLegend:boolean = false;
   startFromZero= {};
   constructor(private chartService : ChartService , private alertCtrl : AlertController, private modalCtrl : ModalController){};
   ngOnInit(){
-    if(this.chartDetails.chartType=='bar'){
+    this.isvote = this.chartService.isVote(this.chartDetails.$key);
+    if(this.chartDetails.chartType=='bar' || this.chartDetails.chartType=='horizontalBar'){
       this.startFromZero = {
         yAxes: [{
             ticks: {
@@ -52,10 +51,10 @@ export class ChartComponent implements OnInit{
     }
   }
   chartClicked(event){
-    if(this.justShow){
+    console.log(event)
+    if(this.justShow && event.active.length>0){
       let dataIndex = event.active[0]._index;
-      let chartColor = JSON.parse(JSON.stringify(this.colors));
-      console.log(dataIndex); 
+      let chartColor = JSON.parse(JSON.stringify(this.colors)); 
       const colorPicker = this.modalCtrl.create(ColorPickerPage,{color : this.colors[0].backgroundColor[dataIndex]},{
         enableBackdropDismiss : false
       });
@@ -63,7 +62,6 @@ export class ChartComponent implements OnInit{
       colorPicker.onDidDismiss(
         color => {
           if(color){
-            console.log(color)
             chartColor[0].backgroundColor[dataIndex] = color;
             this.colors = chartColor;
             this.chartDetails.chartColor = this.colors[0].backgroundColor;

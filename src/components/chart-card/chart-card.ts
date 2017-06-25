@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { ChartDetails } from "../../data/chartDetails";
 import { ChartService } from "../../services/chart.service";
 import { FacebookService } from "../../services/facebook.service";
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
+import { AlertController } from "ionic-angular";
 
 @Component({
   selector: 'chart-card',
@@ -17,15 +17,32 @@ export class ChartCard {
   ownerInfo;
   isFav;
 
-  constructor(private chartService : ChartService, private fbService : FacebookService, private afAuth : AngularFireAuth, private afDatabase : AngularFireDatabase) {}
+  constructor(private chartService : ChartService, private fbService : FacebookService, private afAuth : AngularFireAuth, private afDatabase : AngularFireDatabase,
+              private alertCtrl : AlertController) {}
   ngOnInit(){
     this.isFav = this.chartService.isFavor(this.chartDetails.$key);
     this.ownerInfo = this.afDatabase.object(`users/${this.owner}/userInfo`);
   }
   onDelete(){
-    if(!this.justShow){
-      this.chartService.deleteChart(this.chartDetails.$key);
-    }
+    var alert = this.alertCtrl.create({
+    title: 'Confirm purchase',
+    message: 'Do you want to buy this book?',
+    buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+      },
+      {
+        text: 'Delete',
+        handler: () => {
+          if(!this.justShow){
+            this.chartService.deleteChart(this.chartDetails.$key);
+          }
+        }
+      }
+    ]
+  });
+  alert.present();
   }
   favorities(){
     if(!this.justShow){
