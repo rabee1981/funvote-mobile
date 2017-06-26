@@ -8,6 +8,17 @@ import 'rxjs/add/operator/map';
 export class ChartService {
     useruid;
     constructor(private afDatabase: AngularFireDatabase, private authService: AuthService) { }
+    getUserCharts(){
+        return this.afDatabase.list('allCharts',{
+          query : {
+            orderByChild : 'owner',
+            equalTo : this.useruid
+          }    
+        })
+    }
+    getFavoritesCharts(){
+        return this.afDatabase.list(`users/${this.useruid}/favorites`);
+    }
     saveChart(chartDetails : ChartDetails){
         chartDetails.chartData = [0,0,0,0];
         chartDetails.owner = this.useruid;
@@ -52,5 +63,12 @@ export class ChartService {
     }
     isVote(key){
         return this.afDatabase.object(`users/${this.useruid}/voted/${key}`);
+    }
+    isAllowToCreate(){
+        return this.afDatabase.list(`users/${this.useruid}/usersCharts`).map(
+            userCharts => {
+                return userCharts.length<4; 
+            }
+        )
     }
 }

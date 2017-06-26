@@ -12,7 +12,7 @@ import { ConnectivityService } from "../../services/ConnectivityService";
   templateUrl: 'home.html'
 })
 export class HomePage implements OnInit,OnDestroy{
-  isAllowCreate: boolean;
+  isAllowCreate;
   userCharts = [];
   isAllowCreateSubscription;
   userStateSubscription;
@@ -34,21 +34,17 @@ export class HomePage implements OnInit,OnDestroy{
           this.loading.dismiss();
           return;
         }
-        this.userChartsSubscription = this.afDatabase.list('allCharts',{
-          query : {
-            orderByChild : 'owner',
-            equalTo : user.uid
-          }    
-        }).subscribe(
+        this.userChartsSubscription = this.chartService.getUserCharts().subscribe(
           charts => {
             this.loading.dismiss();
             this.userCharts = charts.slice();
           }
         )
-        this.isAllowCreateSubscription = this.afDatabase.list(`users/${user.uid}/usersCharts`).subscribe(
-          (userCharts : object[]) => {
-              this.isAllowCreate = (userCharts.length<4);
-          })
+        this.isAllowCreateSubscription = this.chartService.isAllowToCreate().subscribe(
+          res => {
+            this.isAllowCreate = res;
+          }
+        )
       }
     )
   }

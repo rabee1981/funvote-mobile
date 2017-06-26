@@ -4,6 +4,7 @@ import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
 import { AuthService } from "../../services/auth.service";
 import { Subscription } from "rxjs/Subscription";
+import { ChartService } from "../../services/chart.service";
 
 @Component({
   selector: 'page-fav',
@@ -18,18 +19,14 @@ export class FavPage implements OnDestroy{
       spinner : 'bubbles',
     })
   constructor(public navCtrl: NavController, public navParams: NavParams, private afAuth : AngularFireAuth, private afDatabase: AngularFireDatabase
-  , private authService : AuthService, private loadingCtrl : LoadingController) {
+  , private authService : AuthService, private loadingCtrl : LoadingController, private chartService : ChartService) {
   }
   ngOnInit(){
     this.loading.present();
-    this.userStateSubscription = this.authService.getUserState().subscribe(
-      user => {
-        this.favChartsSubscribtion = this.afDatabase.list(`users/${user.uid}/favorites`).subscribe(
-          favCharts => {
-            this.loading.dismiss();
-            this.favCharts = favCharts.slice();
-          }
-        )
+    this.favChartsSubscribtion = this.chartService.getFavoritesCharts().subscribe(
+      favCharts => {
+        this.loading.dismiss();
+        this.favCharts = favCharts;
       }
     )
   }
