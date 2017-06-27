@@ -15,8 +15,7 @@ export class ChartComponent implements OnInit{
   colors;
   chartData:number[]=[];
   votesCount;
-  isvote; 
-  public ChartLegend:boolean = false;
+  isvote;
   startFromZero= {};
   constructor(private chartService : ChartService , private alertCtrl : AlertController, private modalCtrl : ModalController){};
   ngOnInit(){
@@ -51,7 +50,6 @@ export class ChartComponent implements OnInit{
     }
   }
   chartClicked(event){
-    console.log(event)
     if(this.justShow && event.active.length>0){
       let dataIndex = event.active[0]._index;
       let chartColor = JSON.parse(JSON.stringify(this.colors)); 

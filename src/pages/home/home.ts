@@ -37,7 +37,7 @@ export class HomePage implements OnInit,OnDestroy{
         this.userChartsSubscription = this.chartService.getUserCharts().subscribe(
           charts => {
             this.loading.dismiss();
-            this.userCharts = charts.slice();
+            this.userCharts = charts;
           }
         )
         this.isAllowCreateSubscription = this.chartService.isAllowToCreate().subscribe(

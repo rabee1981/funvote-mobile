@@ -19,7 +19,7 @@
                         scales: startFromZero
                       }"
             [colors]="colors"
-            [legend]="ChartLegend"
+            [legend]="!(this.chartDetails?.chartType=='bar')"
             [chartType]="chartDetails.chartType"
             (chartClick)="chartClicked($event)"
             ></canvas>

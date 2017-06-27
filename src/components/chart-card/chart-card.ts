@@ -4,6 +4,7 @@ import { FacebookService } from "../../services/facebook.service";
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
 import { AlertController } from "ionic-angular";
+import { AuthService } from "../../services/auth.service";
 
 @Component({
   selector: 'chart-card',
@@ -16,12 +17,14 @@ export class ChartCard {
   @Input() justShow = false;
   ownerInfo;
   isFav;
+  isUserChart;
 
   constructor(private chartService : ChartService, private fbService : FacebookService, private afAuth : AngularFireAuth, private afDatabase : AngularFireDatabase,
-              private alertCtrl : AlertController) {}
+              private alertCtrl : AlertController,private authService : AuthService) {}
   ngOnInit(){
     this.isFav = this.chartService.isFavor(this.chartDetails.$key);
     this.ownerInfo = this.afDatabase.object(`users/${this.owner}/userInfo`);
+    this.isUserChart = (this.owner == this.authService.getCurrentUser().uid)
   }
   onDelete(){
     if(!this.justShow){

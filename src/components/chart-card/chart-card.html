@@ -8,7 +8,7 @@
       </ion-item>
   </ion-buttons>
   <chart-component [chartDetails]="chartDetails" [owner]="owner" [justShow]="justShow"></chart-component>
-  <ion-row>
+  <ion-row *ngIf="isUserChart">
     <ion-col col-4>
       <button ion-button icon-left clear small (click)="onShare()">
         <ion-icon name="share-alt"></ion-icon>
