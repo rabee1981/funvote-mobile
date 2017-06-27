@@ -79,6 +79,7 @@
     </platform>
     <engine name="android" spec="^6.2.3" />
     <engine name="ios" spec="^4.4.0" />
+    <plugin name="com.danielsogl.cordova.clipboard" spec="~1.0.2" />
     <plugin name="com.phonegap.plugins.facebookconnect" spec="file:src/phonegap-facebook-plugin">
         <variable name="APP_ID" value="304302026657534" />
         <variable name="APP_NAME" value="vote4fun" />

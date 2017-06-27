@@ -24,25 +24,25 @@ export class ChartCard {
     this.ownerInfo = this.afDatabase.object(`users/${this.owner}/userInfo`);
   }
   onDelete(){
-    var alert = this.alertCtrl.create({
-    title: 'Confirm purchase',
-    message: 'Do you want to buy this book?',
-    buttons: [
-      {
-        text: 'Cancel',
-        role: 'cancel',
-      },
-      {
-        text: 'Delete',
-        handler: () => {
-          if(!this.justShow){
-            this.chartService.deleteChart(this.chartDetails.$key);
+    if(!this.justShow){
+        var alert = this.alertCtrl.create({
+        title: 'Delete Chart',
+        message: 'Do you want to Delete this chart?',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+          },
+          {
+            text: 'Delete',
+            handler: () => {
+                this.chartService.deleteChart(this.chartDetails.$key);
+            }
           }
-        }
-      }
-    ]
-  });
-  alert.present();
+        ]
+      });
+      alert.present();
+    }
   }
   favorities(){
     if(!this.justShow){
@@ -52,18 +52,7 @@ export class ChartCard {
   onShare(){
     if(!this.justShow){
       this.chartImage = (document.getElementById(this.chartDetails.$key) as HTMLCanvasElement).toDataURL('image/jpg');
-      var blob = this.dataURItoBlob(this.chartImage);
-      this.fbService.saveImage(blob,this.chartDetails.$key);
+      this.fbService.shareImage(this.chartDetails.$key,this.chartImage);
     }
   }
-  dataURItoBlob(dataURI) {
-    var byteString = atob(dataURI.split(',')[1]);
-    var ab = new ArrayBuffer(byteString.length);
-    var ia = new Uint8Array(ab);
-    for (var i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-    }
-    return new Blob([ab], { type: 'image/jpg' });
-}
-
 }

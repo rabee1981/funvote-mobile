@@ -3,12 +3,14 @@ import { Http } from "@angular/http";
 import { AuthService } from "./auth.service";
 import { LoadingController } from "ionic-angular";
 import 'rxjs/Rx';
-import 'rxjs/add/operator/take'
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/map';
 import firebase from 'firebase';
 import { Injectable } from "@angular/core";
 import { UserInfo } from "../data/userInfo";
 import { SocialSharing } from "@ionic-native/social-sharing";
 import { AngularFireDatabase } from "angularfire2/database";
+import { Platform, AlertController } from 'ionic-angular';
 
 @Injectable()
 export class FacebookService {
@@ -23,7 +25,8 @@ export class FacebookService {
       content: '<p>Shared Successfully</p>'
     });
     constructor(private http : Http, private authService : AuthService, private loadingCtrl: LoadingController,
-     private facebook: Facebook, private socialSharing: SocialSharing, private afDatabase: AngularFireDatabase){}
+     private facebook: Facebook, private socialSharing: SocialSharing, private afDatabase: AngularFireDatabase, private platform : Platform
+     ,private alertCtrl : AlertController){}
     saveFriendsInfo(){
       this.facebook.api('me/friends/?fields=name,id,picture',[])
       .then(
@@ -60,25 +63,28 @@ export class FacebookService {
         }
       )
     }
-    saveImage(image,key){
-    this.loading.present();
-      var storageRef = firebase.storage().ref();
-      storageRef.child('chartsImages/'+key).put(image).then((snapshot) => {
-        var url = snapshot.downloadURL;
-        this.shareImage(url,key);
-      }).catch((error) => {
-        console.error('Upload failed:', error);
-      });
-    }
-    shareImage(url,key){
-      this.socialSharing.shareViaFacebook('help me',url,'https://funvaotedata.firebaseapp.com/chart/'+key)
-      .then(res => {
-        this.loading.dismiss();
-      }).catch(
-        err => {
+    shareImage(key,base64){
+      this.loading.present();
+      if(this.platform.is('android')){
+        var message = 'help me https://funvaotedata.firebaseapp.com/chart/'+key;
+        this.socialSharing.shareViaFacebookWithPasteMessageHint(message,base64,'https://funvaotedata.firebaseapp.com/chart/'+key,'please click paste')
+        .then(res => {
           this.loading.dismiss();
-        }
-      )
+        }).catch(
+          err => {
+            this.loading.dismiss();
+          }
+        )
+      }else {
+          this.socialSharing.shareViaFacebook('help me',base64,'https://funvaotedata.firebaseapp.com/chart/'+key)
+        .then(res => {
+          this.loading.dismiss();
+        }).catch(
+          err => {
+            this.loading.dismiss();
+          }
+        )
+      }
     }
     friendsFirebaseUid(userUid){
       this.friendsfireUid =[];
