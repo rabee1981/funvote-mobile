@@ -36,23 +36,35 @@ export class MyApp implements OnInit, OnDestroy{
   ,private authService : AuthService, private menuCtrl : MenuController, private chartService : ChartService, private fbService : FacebookService
   ,private alertCtrl : AlertController,private conService : ConnectivityService, private network : Network, private adMob : AdMob) {
     platform.ready().then(() => {
-      let adMobId = 'ca-app-pub-9268480526904407/2463538177';
+      let bannerId;
+      let interstitialId;
       if(platform.is('android')){
-        adMobId = 'ca-app-pub-9268480526904407/8370470970';
+        bannerId = 'ca-app-pub-9268480526904407/8370470970'
+        interstitialId = 'ca-app-pub-9268480526904407/7796891371';
       }else if(platform.is('ios')){
-        adMobId = 'ca-app-pub-9268480526904407/2463538177';
+        bannerId = 'ca-app-pub-9268480526904407/2463538177';
+        interstitialId = 'ca-app-pub-9268480526904407/4843424975';
       }
-      let adMobOptions : AdMobOptions = {
-        adId : adMobId,
+      let adMobBannerOptions : AdMobOptions = {
+        adId : bannerId,
         position : 8,
-        autoShow: true,
-        isTesting:true
+        autoShow: true, 
+        isTesting:true  // TODO: remove this line when release
       }
-      adMob.createBanner(adMobOptions)
+      let adMobInterstitialOptions : AdMobOptions = {
+        adId : interstitialId,
+        autoShow: true, 
+        isTesting:true  // TODO: remove this line when release
+      }
+      adMob.prepareInterstitial(adMobInterstitialOptions)
+      .catch(err=>{console.log(err)})
+      adMob.createBanner(adMobBannerOptions)
       .catch(err=>console.log(err))
+      
       statusBar.styleDefault();
       splashScreen.hide();
-    });
+      });
+
   }
   ngOnInit(){
     this.disconnectSubscription = this.network.onDisconnect().subscribe(() => {
