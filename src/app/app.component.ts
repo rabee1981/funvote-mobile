@@ -14,6 +14,7 @@ import { FacebookService } from "../services/facebook.service";
 import { FriendsChartsPage } from "../pages/friends-charts/friends-charts";
 import { ConnectivityService } from "../services/ConnectivityService";
 import { Network } from "@ionic-native/network";
+import { AdMob, AdMobOptions } from '@ionic-native/admob';
 
 @Component({
   templateUrl: 'app.html'
@@ -33,10 +34,22 @@ export class MyApp implements OnInit, OnDestroy{
   @ViewChild('nav') nav : NavController;
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth : AngularFireAuth
   ,private authService : AuthService, private menuCtrl : MenuController, private chartService : ChartService, private fbService : FacebookService
-  ,private alertCtrl : AlertController,private conService : ConnectivityService, private network : Network) {
+  ,private alertCtrl : AlertController,private conService : ConnectivityService, private network : Network, private adMob : AdMob) {
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
+      let adMobId = 'ca-app-pub-9268480526904407/2463538177';
+      if(platform.is('android')){
+        adMobId = 'ca-app-pub-9268480526904407/8370470970';
+      }else if(platform.is('ios')){
+        adMobId = 'ca-app-pub-9268480526904407/2463538177';
+      }
+      let adMobOptions : AdMobOptions = {
+        adId : adMobId,
+        position : 8,
+        autoShow: true,
+        isTesting:true
+      }
+      adMob.createBanner(adMobOptions)
+      .catch(err=>console.log(err))
       statusBar.styleDefault();
       splashScreen.hide();
     });
