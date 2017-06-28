@@ -17,6 +17,8 @@ export class FacebookService {
     friendsList : UserInfo[]=[];
     userInfo : UserInfo = new UserInfo();
     friendsfireUid : string[]=[];
+    googleShortenerKey = "AIzaSyBZNC-GL8dUvcXoUxTA1XZa6l8rRhbVOQU";
+    googleShortenerUrl = "https://www.googleapis.com/urlshortener/v1/url"
     loading = this.loadingCtrl.create({
       content: 'Please Wait...'
     });
@@ -65,9 +67,14 @@ export class FacebookService {
     }
     shareImage(key,base64){
       this.loading.present();
-      if(this.platform.is('android')){
-        var message = 'help me https://funvaotedata.firebaseapp.com/chart/'+key;
-        this.socialSharing.shareViaFacebookWithPasteMessageHint(message,base64,'https://funvaotedata.firebaseapp.com/chart/'+key,'please click paste')
+      var getReq : string = this.googleShortenerUrl+"?key="+this.googleShortenerKey;
+      this.http.post(getReq,{"longUrl" : "https://funvaotedata.firebaseapp.com/chart/"+key})
+      .subscribe(
+        (res : any)=>{
+       var shortUrl = JSON.parse(res._body).id;
+        if(this.platform.is('android')){
+        var message = 'please vote here '+shortUrl;
+        this.socialSharing.shareViaFacebookWithPasteMessageHint(message,base64,shortUrl,'please click paste')
         .then(res => {
           this.loading.dismiss();
         }).catch(
@@ -76,7 +83,7 @@ export class FacebookService {
           }
         )
       }else {
-          this.socialSharing.shareViaFacebook('help me',base64,'https://funvaotedata.firebaseapp.com/chart/'+key)
+          this.socialSharing.shareViaFacebook('please vote here',base64,shortUrl)
         .then(res => {
           this.loading.dismiss();
         }).catch(
@@ -85,6 +92,7 @@ export class FacebookService {
           }
         )
       }
+      })
     }
     friendsFirebaseUid(userUid){
       this.friendsfireUid =[];
