@@ -36,8 +36,8 @@ export class MyApp implements OnInit, OnDestroy{
   ,private authService : AuthService, private menuCtrl : MenuController, private chartService : ChartService, private fbService : FacebookService
   ,private alertCtrl : AlertController,private conService : ConnectivityService, private network : Network, private adMob : AdMob) {
     platform.ready().then(() => {
-      let bannerId;
-      let interstitialId;
+      let bannerId
+      let interstitialId
       if(platform.is('android')){
         bannerId = 'ca-app-pub-9268480526904407/8370470970'
         interstitialId = 'ca-app-pub-9268480526904407/7796891371';
