@@ -8,14 +8,15 @@
       </ion-item>
   </ion-buttons>
   <chart-component [chartDetails]="chartDetails" [owner]="owner" [justShow]="justShow"></chart-component>
-  <ion-row *ngIf="isUserChart">
-    <ion-col col-4>
+  <ion-row>
+    <!-- your charts page -->
+    <ion-col col-4 *ngIf="isUserChart">
       <button ion-button icon-left clear small (click)="onShare()">
         <ion-icon name="share-alt"></ion-icon>
         <div>Share</div>
       </button>
     </ion-col>
-    <ion-col col-4>
+    <ion-col col-4 *ngIf="isUserChart">
       <button ion-button icon-left clear small (click)="favorities()">
         <ion-icon *ngIf="(isFav | async)?.$value===null;else other_content" ios="ios-heart-outline" md="md-heart-outline"></ion-icon>
         <ng-template #other_content>
@@ -24,7 +25,23 @@
         <div>love it</div>
       </button>
     </ion-col>
-    <ion-col col-4>
+    <!-- other pages -->
+    <ion-col col-6 offset-1 *ngIf="!isUserChart">
+      <button ion-button icon-left clear small (click)="onShare()">
+        <ion-icon name="share-alt"></ion-icon>
+        <div>Share</div>
+      </button>
+    </ion-col>
+    <ion-col col-4 *ngIf="!isUserChart">
+      <button ion-button icon-left clear small (click)="favorities()">
+        <ion-icon *ngIf="(isFav | async)?.$value===null;else other_content" ios="ios-heart-outline" md="md-heart-outline"></ion-icon>
+        <ng-template #other_content>
+          <ion-icon ios="ios-heart" md="md-heart" style="color :#FFD700"></ion-icon>
+          </ng-template>
+        <div>love it</div>
+      </button>
+    </ion-col>
+    <ion-col col-4 *ngIf="isUserChart">
       <button ion-button icon-left clear small (click)="onDelete()">
         <ion-icon name="trash"></ion-icon>
         <div>Delete</div>

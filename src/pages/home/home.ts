@@ -13,7 +13,7 @@ import { ConnectivityService } from "../../services/ConnectivityService";
 })
 export class HomePage implements OnInit,OnDestroy{
   isAllowCreate;
-  userCharts = [];
+  userCharts : any[] = [];
   isAllowCreateSubscription;
   userStateSubscription;
   userChartsSubscription;

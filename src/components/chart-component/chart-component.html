@@ -4,6 +4,9 @@
             [data]="chartDetails.chartData"
             [labels]="chartDetails.chartLabels"
             [options]="{
+                        legend : {
+                          labels:{boxWidth:10}
+                        },
                         tooltips: {
                           enabled : false
                         },
@@ -32,7 +35,7 @@
   </div>
   <div padding>
       <ion-chip>
-          <ion-icon name="contacts"></ion-icon>
+          <ion-icon name="contacts" style="margin : 0;"></ion-icon>
           <ion-label>{{votesCount}} voters</ion-label>
       </ion-chip>
   </div>
