@@ -1,13 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ChartService } from "../../services/chart.service";
 import { AlertController, ModalController } from "ionic-angular";
 import { ColorPickerPage } from "../../pages/color-picker/color-picker";
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
   selector: 'chart-component',
   templateUrl: 'chart-component.html'
 })
-export class ChartComponent implements OnInit{
+export class ChartComponent implements OnInit, OnDestroy{
+  isvoteSubscribtion: Subscription;
   alert;
   @Input() chartDetails;
   @Input() owner;
@@ -15,11 +17,14 @@ export class ChartComponent implements OnInit{
   colors;
   chartData:number[]=[];
   votesCount;
-  isvote;
+  isvote=true;
   startFromZero= {};
   constructor(private chartService : ChartService , private alertCtrl : AlertController, private modalCtrl : ModalController){};
   ngOnInit(){
-    this.isvote = this.chartService.isVote(this.chartDetails.$key);
+    this.isvoteSubscribtion = this.chartService.isVote(this.chartDetails.$key)
+    .subscribe(res => {
+      this.isvote = res.$value
+    })
     if(this.chartDetails.chartType=='bar' || this.chartDetails.chartType=='horizontalBar'){
       this.startFromZero = {
         yAxes: [{
@@ -42,11 +47,13 @@ export class ChartComponent implements OnInit{
                   ]
   }
   public vote(index){
-    this.chartData = this.chartDetails.chartData.slice();
-    this.chartData[index]++;
-    this.chartDetails.chartData = this.chartData;
-    if(!this.justShow){
-      this.chartService.voteFor(this.chartDetails.$key,this.chartDetails.chartData);
+    if(!this.isvote){
+      this.chartData = this.chartDetails.chartData.slice();
+      this.chartData[index]++;
+      this.chartDetails.chartData = this.chartData;
+      if(!this.justShow){
+        this.chartService.voteFor(this.chartDetails.$key,this.chartDetails.chartData);
+      }
     }
   }
   chartClicked(event){
@@ -67,5 +74,8 @@ export class ChartComponent implements OnInit{
         }
       )
     }
+  }
+  ngOnDestroy(){
+    this.isvoteSubscribtion.unsubscribe()
   }
 }
