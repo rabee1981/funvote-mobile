@@ -1,17 +1,19 @@
+import { LoadingController } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthService } from "../../services/auth.service";
 
-
-
-@IonicPage()
 @Component({
   selector: 'page-signin-page',
   templateUrl: 'signin-page.html',
 })
 export class SigninPage {
-  constructor(public navCtrl: NavController, public navParams: NavParams, private authService : AuthService) {}
+  constructor(private authService : AuthService, private loadingCtrl : LoadingController) {}
   facebookLogin() {
-    this.authService.signInWithFacebook();
+    var loading = this.loadingCtrl.create({
+      content : 'Logging in...',
+      spinner : 'bubbles',
+    });
+    loading.present();
+    this.authService.signInWithFacebook().then(res => loading.dismiss())
   }
 }

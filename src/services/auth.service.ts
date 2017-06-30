@@ -1,3 +1,4 @@
+import { AngularFireDatabase } from 'angularfire2/database';
 
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -8,12 +9,12 @@ import * as firebase from 'firebase/app';
 @Injectable()
 export class AuthService {
     
-    constructor(private afAuth : AngularFireAuth, private facebook : Facebook, private platform : Platform){}
+    constructor(private afAuth : AngularFireAuth, private facebook : Facebook, private platform : Platform, private afDatabase : AngularFireDatabase){}
 
     signInWithFacebook(): firebase.Promise<any> {
       let permissions = ['email','user_friends','public_profile'];
     if (this.platform.is('cordova')) {
-      return this.facebook.login(permissions).then(res => {
+      return this.facebook.login(permissions).then((res : any) => {
         const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
         return this.afAuth.auth.signInWithCredential(facebookCredential);
       });

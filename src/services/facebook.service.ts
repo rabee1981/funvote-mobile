@@ -29,25 +29,27 @@ export class FacebookService {
     constructor(private http : Http, private authService : AuthService, private loadingCtrl: LoadingController,
      private facebook: Facebook, private socialSharing: SocialSharing, private afDatabase: AngularFireDatabase, private platform : Platform
      ,private alertCtrl : AlertController){}
-    saveFriendsInfo(){
-      this.facebook.api('me/friends/?fields=name,id,picture',[])
-      .then(
-        res => {
-          this.friendsList=[];
-          for(let key in res.data){
-            let friend = new UserInfo();
-            friend.name = res.data[key].name;
-            friend.facebookUid = res.data[key].id;
-            friend.pictureUrl = res.data[key].picture.data.url;
-            this.friendsList.push(friend);
-          }
-          firebase.database().ref('users/'+this.authService.getCurrentUser().uid+'/friendsList').set(this.friendsList);
-        }
-      ).catch(
-        err => {
-          console.log(err);
-        }
-      );
+
+    saveFriendsInfo(user){
+      this.facebook.getAccessToken().then(accessToken =>{
+        this.http.get(`https://graph.facebook.com/v2.9/${user.providerData[0].uid}/friends?fields=name,id,picture&access_token=${accessToken}`)
+        .take(1).subscribe(
+            (res : any) => {
+                console.log(JSON.parse(res._body).data)
+                let freidsArray = JSON.parse(res._body).data;
+                let userFriendsList : UserInfo[]=[];
+                for(let key in freidsArray){
+                var userInfo : UserInfo = new UserInfo();
+                    userInfo.name = freidsArray[key].name,
+                    userInfo.pictureUrl = freidsArray[key].picture.data.url,
+                    userInfo.facebookUid = freidsArray[key].id,
+                userFriendsList.push(userInfo)
+            }
+            console.log(userFriendsList)
+                this.afDatabase.object(`users/${user.uid}/friendsList`).set(userFriendsList);
+            }
+        )
+      })
     }
     saveUserInfo(firebaseUid){
       this.facebook.api('me/?fields=name,id,picture',[])
@@ -57,7 +59,7 @@ export class FacebookService {
           this.userInfo.facebookUid = res.id;
           this.userInfo.name = res.name;
           this.userInfo.pictureUrl =res.picture.data.url;
-          firebase.database().ref('users/'+this.authService.getCurrentUser().uid+'/userInfo').set(this.userInfo);
+          firebase.database().ref('users/'+firebaseUid+'/userInfo').set(this.userInfo);
         }
       ).catch(
         err => {
