@@ -52,13 +52,14 @@ export class FacebookService {
       })
     }
     saveUserInfo(firebaseUid){
-      this.facebook.api('me/?fields=name,id,picture',[])
+      this.facebook.api('me/?fields=name,id,picture,email',[])
       .then(
         (res) => {
           this.userInfo.firebaseUid = firebaseUid;
           this.userInfo.facebookUid = res.id;
           this.userInfo.name = res.name;
           this.userInfo.pictureUrl =res.picture.data.url;
+          this.userInfo.email = res.email;
           firebase.database().ref('users/'+firebaseUid+'/userInfo').set(this.userInfo);
         }
       ).catch(
