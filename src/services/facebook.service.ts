@@ -60,7 +60,7 @@ export class FacebookService {
           this.userInfo.name = res.name;
           this.userInfo.pictureUrl =res.picture.data.url;
           this.userInfo.email = res.email;
-          firebase.database().ref('users/'+firebaseUid+'/userInfo').set(this.userInfo);
+          firebase.database().ref('users/'+firebaseUid+'/userInfo').update(this.userInfo);
         }
       ).catch(
         err => {
