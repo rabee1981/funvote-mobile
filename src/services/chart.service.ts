@@ -1,3 +1,4 @@
+import { AlertController } from 'ionic-angular';
 import { FacebookService } from './facebook.service';
 import { Injectable } from "@angular/core";
 import { ChartDetails } from "../data/chartDetails";
@@ -12,7 +13,14 @@ import { Observable } from "rxjs/Rx";
 @Injectable()
 export class ChartService {
     useruid;
-    constructor(private afDatabase: AngularFireDatabase, private authService: AuthService, private fbService : FacebookService) { }
+    alert = this.alertCtrl.create({
+        title : 'chart not exist',
+        message : 'this chart no longer exist...',
+        buttons : ['Ok']
+        
+    })
+    constructor(private afDatabase: AngularFireDatabase, private authService: AuthService, private fbService : FacebookService,
+                private alertCtrl : AlertController) { }
     getUserCharts(){
         return this.afDatabase.list(`users/${this.useruid}/userCharts/`,{
           query : {
@@ -42,27 +50,29 @@ export class ChartService {
         );
     }
     voteFor(key,data,owner){
-        console.log(this.afDatabase.list(`allCharts/${key}`))
-        if(!this.afDatabase.list(`allCharts/${key}`)){ //TODO add alertCtrl to check if chart exist before voting
-            alert('this chart no longer exist..')
-            return
-        }  
-        this.afDatabase.object(`allCharts/${key}/chartData`).set(data);
-        this.afDatabase.object(`users/${this.useruid}/voted/${key}`).set(true);
-        this.afDatabase.object(`users/${owner}/userCharts/${key}/chartData`).set(data);
-        this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).$ref.transaction(
-            currentValue => {
-                if(currentValue!==null){
-                    this.afDatabase.object(`users/${this.useruid}/favorites/${key}/chartData`).set(data);
-                }
+        //TODO add alertCtrl to check if chart exist before voting
+        this.afDatabase.object(`allCharts/${key}`).take(1).subscribe(res => {
+            if(!res.$value){
+                this.alert.present()
+            }else{
+                this.afDatabase.object(`allCharts/${key}/chartData`).set(data);
+                this.afDatabase.object(`users/${this.useruid}/voted/${key}`).set(true);
+                this.afDatabase.object(`users/${owner}/userCharts/${key}/chartData`).set(data);
+                this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).$ref.transaction(
+                    currentValue => {
+                        if(currentValue!==null){
+                            this.afDatabase.object(`users/${this.useruid}/favorites/${key}/chartData`).set(data);
+                        }
+                    }
+                )
             }
-        )
+        })
     }
     deleteChart(key){
         this.afDatabase.object(`allCharts/${key}`).remove().then(
             res => {
                 this.afDatabase.object(`users/${this.useruid}/userCharts/${key}`).remove();
-                this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).remove()
+                this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).remove();
             }
         )
     }
