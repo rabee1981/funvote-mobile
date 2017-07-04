@@ -89,8 +89,7 @@ export class MyApp implements OnInit, OnDestroy{
           this.userName = user.displayName.split(' ');
           this.rootPage = this.homePage;
           this.fbService.saveFriendsInfo(user); 
-          this.fbService.saveUserInfo(user.uid);
-          this.fbService.friendsFirebaseUid(user.uid);      
+          this.fbService.saveUserInfo(user.uid);      
         }else{
         this.rootPage =  this.signinPage; 
         }  

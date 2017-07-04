@@ -31,11 +31,13 @@ export class FacebookService {
      ,private alertCtrl : AlertController){}
 
     saveFriendsInfo(user){
+      if(!this.platform.is('cordova')){
+        return;
+      }
       this.facebook.getAccessToken().then(accessToken =>{
         this.http.get(`https://graph.facebook.com/v2.9/${user.providerData[0].uid}/friends?fields=name,id,picture&access_token=${accessToken}`)
         .take(1).subscribe(
             (res : any) => {
-                console.log(JSON.parse(res._body).data)
                 let freidsArray = JSON.parse(res._body).data;
                 let userFriendsList : UserInfo[]=[];
                 for(let key in freidsArray){
@@ -45,13 +47,17 @@ export class FacebookService {
                     userInfo.facebookUid = freidsArray[key].id,
                 userFriendsList.push(userInfo)
             }
-            console.log(userFriendsList)
-                this.afDatabase.object(`users/${user.uid}/friendsList`).set(userFriendsList);
+                for(let k in userFriendsList){
+                  this.afDatabase.object(`users/${user.uid}/friendsList/${k}`).update(userFriendsList[k])
+                }
             }
         )
       })
     }
     saveUserInfo(firebaseUid){
+      if(!this.platform.is('cordova')){
+        return;
+      }
       this.facebook.api('me/?fields=name,id,picture,email',[])
       .then(
         (res) => {
@@ -61,6 +67,7 @@ export class FacebookService {
           this.userInfo.pictureUrl =res.picture.data.url;
           this.userInfo.email = res.email;
           firebase.database().ref('users/'+firebaseUid+'/userInfo').update(this.userInfo);
+          firebase.database().ref(`facebookUidVsFirebaseUid/${res.id}`).set(firebaseUid);
         }
       ).catch(
         err => {
@@ -97,25 +104,25 @@ export class FacebookService {
       }
       })
     }
-    friendsFirebaseUid(userUid){
-      this.friendsfireUid =[];
-      this.afDatabase.list(`users/${userUid}/friendsList`).take(1).subscribe(
-        friendsList => {
-          friendsList.forEach(
-            friend => {
-              this.afDatabase.list(`users`,{
-              query : {
-                orderByChild : 'userInfo/facebookUid',
-                equalTo : friend.facebookUid
-              }    
-            }).take(1).subscribe((res : any)=>{
-              this.friendsfireUid.push(res[0].$key);
-              this.afDatabase.object(`users/${userUid}/friendsList/${friend.$key}`).update({firebaseUid : res[0].$key})
-            })
-            }
-          )
-        }
-      )
-    }
+    // friendsFirebaseUid(userUid){
+    //   this.friendsfireUid =[];
+    //   this.afDatabase.list(`users/${userUid}/friendsList`).take(1).subscribe(
+    //     friendsList => {
+    //       friendsList.forEach(
+    //         friend => {
+    //           this.afDatabase.list(`users`,{
+    //           query : {
+    //             orderByChild : 'userInfo/facebookUid',
+    //             equalTo : friend.facebookUid
+    //           }    
+    //         }).take(1).subscribe((res : any)=>{
+    //           this.friendsfireUid.push(res[0].$key);
+    //           this.afDatabase.object(`users/${userUid}/friendsList/${friend.$key}`).update({firebaseUid : res[0].$key})
+    //         })
+    //         }
+    //       )
+    //     }
+    //   )
+    // }
 
 }

@@ -1,3 +1,4 @@
+import * as firebase from 'firebase/app';
 export class ChartDetails{
     chartLabels:string[]=[];
     chartType:string;
@@ -5,4 +6,5 @@ export class ChartDetails{
     chartTitle:string;
     chartColor:string[]=[];
     owner : string;
+    createdAt = 0-Date.now();
 }

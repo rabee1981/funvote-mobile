@@ -52,7 +52,7 @@ export class ChartComponent implements OnInit, OnDestroy{
       this.chartData[index]++;
       this.chartDetails.chartData = this.chartData;
       if(!this.justShow){
-        this.chartService.voteFor(this.chartDetails.$key,this.chartDetails.chartData);
+        this.chartService.voteFor(this.chartDetails.$key,this.chartDetails.chartData,this.chartDetails.owner);
       }
     }
   }

@@ -20,9 +20,7 @@
 
 
 <ion-content class="color-content">
-    <div *ngFor="let ops of friendsChartsOps" class="margin-card">
-      <div *ngFor="let chart of ops | async">
+    <div *ngFor="let chart of friendsCharts" class="margin-card">
         <chart-card [chartDetails]="chart" [owner]="chart.owner"></chart-card>
-      </div>
     </div>
 </ion-content>
