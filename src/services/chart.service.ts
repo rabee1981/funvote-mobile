@@ -5,10 +5,7 @@ import { ChartDetails } from "../data/chartDetails";
 import { AngularFireDatabase } from "angularfire2/database";
 import { AuthService } from "./auth.service";
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/switchMap';
 import 'rxjs/Rx';
-import * as firebase from 'firebase/app';
-import { Observable } from "rxjs/Rx";
 
 @Injectable()
 export class ChartService {
@@ -51,8 +48,8 @@ export class ChartService {
     }
     voteFor(key,data,owner){
         //TODO add alertCtrl to check if chart exist before voting
-        this.afDatabase.object(`allCharts/${key}`).take(1).subscribe(res => {
-            if(!res.$value){
+        this.afDatabase.list(`allCharts/${key}`).take(1).subscribe(res => {
+            if(res.length<=0){
                 this.alert.present()
             }else{
                 this.afDatabase.object(`allCharts/${key}/chartData`).set(data);
