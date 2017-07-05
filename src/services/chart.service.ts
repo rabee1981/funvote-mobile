@@ -35,10 +35,22 @@ export class ChartService {
                             let index = favCharts.findIndex(chart => {
                                 return chart.$key == res.$key
                             })
-                            if(index<0){
-                                favCharts.push(res)
-                            }else{
-                                favCharts[index] = res;
+                                                                console.log(index)
+                            //favorite chart was removed
+                            if(res.$value===null){
+                                this.afDatabase.object(`users/${this.useruid}/favorites/${res.$key}`).remove()
+                                .then(response => {
+                                    if(index>=0){
+                                        favCharts.splice(index,1)
+                                    }
+                                })
+                            }
+                            else{
+                                if(index<0){
+                                    favCharts.push(res)
+                                }else{
+                                    favCharts[index] = res;
+                                }
                             }
                         })
                     }

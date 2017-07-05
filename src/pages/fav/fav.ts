@@ -25,10 +25,10 @@ export class FavPage implements OnDestroy{
     this.loading.present();
     this.favChartsSubscribtion = this.chartService.getFavoritesCharts().subscribe(
       favCharts => {
-        this.loading.dismiss();
         this.favCharts = favCharts;
       }
     )
+    this.loading.dismiss();
   }
   ngOnDestroy(): void {
     this.favChartsSubscribtion.unsubscribe();
