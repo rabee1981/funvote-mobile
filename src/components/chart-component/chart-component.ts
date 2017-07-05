@@ -51,7 +51,7 @@ export class ChartComponent implements OnInit, OnDestroy{
       this.chartData = this.chartDetails.chartData.slice();
       this.chartData[index]++;
       if(!this.justShow){
-        this.chartService.voteFor(this.chartDetails.$key,this.chartData,this.chartDetails.owner);
+        this.chartService.voteFor(this.chartDetails.$key,this.chartData,this.chartDetails.owner,this.votesCount);
       }else{
         this.chartDetails.chartData = this.chartData;
       }

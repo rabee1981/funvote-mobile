@@ -7,4 +7,5 @@ export class ChartDetails{
     chartColor:string[]=[];
     owner : string;
     createdAt = 0-Date.now();
+    voteCount = 0;
 }

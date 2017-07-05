@@ -73,14 +73,16 @@ export class ChartService {
             }
         );
     }
-    voteFor(key,data,owner){
+    voteFor(key,data,owner,voteCount){
         this.afDatabase.list(`allCharts/${key}`).take(1).subscribe(res => {
             if(res.length<=0){
                 this.alert.present()
             }else{
                 this.afDatabase.object(`allCharts/${key}/chartData`).set(data);
+                this.afDatabase.object(`allCharts/${key}/voteCount`).set(-1*(voteCount+1));
                 this.afDatabase.object(`users/${this.useruid}/voted/${key}`).set(true);
                 this.afDatabase.object(`users/${owner}/userCharts/${key}/chartData`).set(data);
+                this.afDatabase.object(`users/${owner}/userCharts/${key}/voteCount`).set(-1*(voteCount+1))
             }
         })
     }
