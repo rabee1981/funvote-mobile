@@ -49,7 +49,7 @@ export class ChartCard {
   }
   favorities(){
     if(!this.justShow){
-      this.chartService.updateFav(this.chartDetails.$key,this.chartDetails);
+      this.chartService.updateFav(this.chartDetails.$key);
     }
   }
   onShare(){

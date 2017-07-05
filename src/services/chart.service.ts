@@ -26,8 +26,24 @@ export class ChartService {
           }    
         })
     }
-    getFavoritesCharts(){ //TODO chart not updated if any user vote, except the current user
-        return this.afDatabase.list(`users/${this.useruid}/favorites`);
+    getFavoritesCharts(){ 
+        return this.afDatabase.list(`users/${this.useruid}/favorites`)
+                .map(favKeyArray => {
+                    let favCharts = []
+                    for(let f of favKeyArray){
+                        this.afDatabase.object(`allCharts/${f.$key}`).subscribe(res => {
+                            let index = favCharts.findIndex(chart => {
+                                return chart.$key == res.$key
+                            })
+                            if(index<0){
+                                favCharts.push(res)
+                            }else{
+                                favCharts[index] = res;
+                            }
+                        })
+                    }
+                  return favCharts
+                })
     }
 
     getFriendsCharts(){
@@ -47,7 +63,6 @@ export class ChartService {
         );
     }
     voteFor(key,data,owner){
-        //TODO add alertCtrl to check if chart exist before voting
         this.afDatabase.list(`allCharts/${key}`).take(1).subscribe(res => {
             if(res.length<=0){
                 this.alert.present()
@@ -55,13 +70,6 @@ export class ChartService {
                 this.afDatabase.object(`allCharts/${key}/chartData`).set(data);
                 this.afDatabase.object(`users/${this.useruid}/voted/${key}`).set(true);
                 this.afDatabase.object(`users/${owner}/userCharts/${key}/chartData`).set(data);
-                this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).$ref.transaction(
-                    currentValue => {
-                        if(currentValue!==null){
-                            this.afDatabase.object(`users/${this.useruid}/favorites/${key}/chartData`).set(data);
-                        }
-                    }
-                )
             }
         })
     }
@@ -73,11 +81,11 @@ export class ChartService {
             }
         )
     }
-    updateFav(key,chartDetails){
+    updateFav(key){
         this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).$ref.transaction(
             currentValue => {
                 if(currentValue===null){
-                    this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).set(chartDetails);
+                    this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).set(true);
                 }else{
                     this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).remove()
                 }
