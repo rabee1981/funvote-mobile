@@ -19,7 +19,7 @@
   <ion-list style="margin : 0">
     <ion-item>
       <ion-label style="font-weight : bold;">Sort By :</ion-label>
-      <ion-select [(ngModel)]="sortBy" placeholder="Newest">
+      <ion-select [(ngModel)]="sortBy" placeholder="Newest" (ionChange)="onChange($event)">
       <ion-option value="createdAt">Newest</ion-option>
       <ion-option value="voteCount">Most Voted</ion-option>
       </ion-select>
@@ -29,12 +29,12 @@
 
 <ion-content class="color-content">
   <div *ngIf="sortBy === 'createdAt'">
-    <div *ngFor="let chart of allChartsByNewest | async" class="margin-card">
+    <div *ngFor="let chart of allChartsByNewest" class="margin-card">
     <chart-card [chartDetails]="chart" [owner]="chart.owner"></chart-card>
       </div>
   </div>
   <div *ngIf="sortBy === 'voteCount'">
-    <div *ngFor="let chart of allChartsByMostVoted | async" class="margin-card">
+    <div *ngFor="let chart of allChartsByMostVoted" class="margin-card">
     <chart-card [chartDetails]="chart" [owner]="chart.owner"></chart-card>
       </div>
   </div>
