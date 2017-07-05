@@ -35,7 +35,6 @@ export class ChartService {
                             let index = favCharts.findIndex(chart => {
                                 return chart.$key == res.$key
                             })
-                                                                console.log(index)
                             //favorite chart was removed
                             if(res.$value===null){
                                 this.afDatabase.object(`users/${this.useruid}/favorites/${res.$key}`).remove()

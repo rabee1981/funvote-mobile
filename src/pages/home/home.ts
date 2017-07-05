@@ -63,10 +63,10 @@ export class HomePage implements OnInit,OnDestroy{
   }
   ngOnDestroy(){
     if (this.userStateSubscription)
-    this.userStateSubscription.unsubscribe();
+      this.userStateSubscription.unsubscribe();
     if(this.userChartsSubscription)
-    this.userChartsSubscription.unsubscribe();
+      this.userChartsSubscription.unsubscribe();
     if(this.isAllowCreateSubscription)
-    this.isAllowCreateSubscription.unsubscribe();
+      this.isAllowCreateSubscription.unsubscribe();
     }
 }

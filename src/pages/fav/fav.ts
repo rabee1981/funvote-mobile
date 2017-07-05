@@ -28,6 +28,8 @@ export class FavPage implements OnDestroy{
         this.favCharts = favCharts;
       }
     )
+  }
+  ionViewDidEnter(){
     this.loading.dismiss();
   }
   ngOnDestroy(): void {
