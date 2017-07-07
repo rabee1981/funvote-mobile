@@ -8,4 +8,5 @@ export class ChartDetails{
     owner : string;
     createdAt = 0-Date.now();
     voteCount = 0;
+    titleColor = '#000000';
 }

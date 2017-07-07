@@ -8,7 +8,7 @@ import { NavParams, ViewController } from 'ionic-angular';
 export class ColorPickerPage {
   colorNumber=-1;
   choosenColor;
-  colors=['#FFEB3C',
+  colors=['#000000',
           '#FF9900',
           '#F44437',
           '#EA1E63',

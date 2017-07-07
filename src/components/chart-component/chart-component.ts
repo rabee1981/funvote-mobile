@@ -21,6 +21,7 @@ export class ChartComponent implements OnInit, OnDestroy{
   startFromZero= {};
   constructor(private chartService : ChartService , private alertCtrl : AlertController, private modalCtrl : ModalController){};
   ngOnInit(){
+    this.chartDetails.TitleColor = '#000000'
     this.isvoteSubscribtion = this.chartService.isVote(this.chartDetails.$key)
     .subscribe(res => {
       this.isvote = res.$value
