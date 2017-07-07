@@ -1,8 +1,10 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { ChartService } from "../../services/chart.service";
 import { AlertController, ModalController } from "ionic-angular";
 import { ColorPickerPage } from "../../pages/color-picker/color-picker";
 import { Subscription } from "rxjs/Subscription";
+
+declare var Chart: any;
 
 @Component({
   selector: 'chart-component',
@@ -20,7 +22,24 @@ export class ChartComponent implements OnInit, OnDestroy{
   isvote=true;
   startFromZero= {};
   constructor(private chartService : ChartService , private alertCtrl : AlertController, private modalCtrl : ModalController){};
+  chartPlugins(){
+    Chart.pluginService.register({
+    beforeDraw: (chart, easing) => {
+        if (chart.config.options.chartArea && chart.config.options.chartArea.backgroundColor) {
+            var helpers = Chart.helpers;
+            var ctx = chart.chart.ctx;
+            var chartArea = chart.chartArea;
+
+            ctx.save();
+            ctx.fillStyle = chart.config.options.chartArea.backgroundColor;
+            ctx.fillRect(0,0,600,315);
+            ctx.restore();
+        }
+      }
+    });
+  }
   ngOnInit(){
+    this.chartPlugins()
     this.chartDetails.TitleColor = '#000000'
     this.isvoteSubscribtion = this.chartService.isVote(this.chartDetails.$key)
     .subscribe(res => {

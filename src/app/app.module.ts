@@ -1,3 +1,4 @@
+import { SharingService } from './../services/sharing.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -84,6 +85,7 @@ export const firebaseConfig = {
     ConnectivityService,
     Network,
     AdMob,
+    SharingService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

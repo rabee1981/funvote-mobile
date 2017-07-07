@@ -1,3 +1,4 @@
+import { SharingService } from './../../services/sharing.service';
 import { Component, Input } from '@angular/core';
 import { ChartService } from "../../services/chart.service";
 import { FacebookService } from "../../services/facebook.service";
@@ -5,6 +6,7 @@ import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
 import { AlertController } from "ionic-angular";
 import { AuthService } from "../../services/auth.service";
+import { ShareVia } from "../../data/shareVia.enum";
 
 @Component({
   selector: 'chart-card',
@@ -20,7 +22,7 @@ export class ChartCard {
   isUserChart;
 
   constructor(private chartService : ChartService, private fbService : FacebookService, private afAuth : AngularFireAuth, private afDatabase : AngularFireDatabase,
-              private alertCtrl : AlertController,private authService : AuthService) {}
+              private alertCtrl : AlertController,private authService : AuthService, private sharingService : SharingService) {}
   ngOnInit(){
     this.isFav = this.chartService.isFavor(this.chartDetails.$key);
     this.ownerInfo = this.afDatabase.object(`users/${this.owner}/userInfo`);
@@ -54,8 +56,10 @@ export class ChartCard {
   }
   onShare(){
     if(!this.justShow){
-      this.chartImage = (document.getElementById(this.chartDetails.$key) as HTMLCanvasElement).toDataURL('image/jpg');
-      this.fbService.shareImage(this.chartDetails.$key,this.chartImage);
+      this.chartImage = (document.getElementById(this.chartDetails.$key) as HTMLCanvasElement).toDataURL('image/png');
+      //this.fbService.shareImage(this.chartDetails.$key,this.chartImage);
+      this.sharingService.share(ShareVia.WHATSAPP,this.chartDetails.$key,this.chartImage)
+
     }
   }
 }
