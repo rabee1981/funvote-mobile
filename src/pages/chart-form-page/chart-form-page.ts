@@ -19,19 +19,19 @@ export class ChartFormPage {
     this.chartDetails.chartLabels = [];
     this.chartDetails.chartColor = ['#EA1E63','#3F51B5','#009788','#7E5D4E'];
   }
-  ionViewDidEnter(){
-    this.chartDetails.chartLabels = [];
-  }
   onChange(valueString) {
+      console.log(this.chartDetails.chartLabels)
       let value = valueString;
       let values:number[]=[];
       for(let i=1;i<=value;i++){
             values[i-1]=i;
       }
-      this.valueAxisX=values.slice();
+      this.valueAxisX=values;
       
   }
   onShow(){
+    this.chartDetails.chartLabels.splice(this.valueAxisX.length);
+    console.log(this.chartDetails.chartLabels)
     this.navCtrl.push(ShowChartPage,this.chartDetails);
   }
   changeLabelColor(index){

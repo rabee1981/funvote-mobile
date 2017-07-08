@@ -18,7 +18,8 @@ export class ChartComponent implements OnInit, OnDestroy{
   chartData:number[]=[];
   votesCount;
   isvote=true;
-  startFromZero= {};
+  titlePadding = 2;
+  startFromZero= {xAxes:[],yAxes:[]};
   constructor(private chartService : ChartService , private alertCtrl : AlertController, private modalCtrl : ModalController){};
 
   ngOnInit(){
@@ -28,7 +29,9 @@ export class ChartComponent implements OnInit, OnDestroy{
       this.isvote = res.$value
     })
     if(this.chartDetails.chartType=='bar'){
+      this.titlePadding = 10
       this.startFromZero = {
+        xAxes:[],
         yAxes: [{
             ticks: {
                 beginAtZero: true

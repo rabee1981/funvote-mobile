@@ -3,8 +3,16 @@
             [data]="chartDetails.chartData"
             [labels]="chartDetails.chartLabels"
             [options]="{
+                        layout : {
+                          padding : {
+                              left: 10,
+                              right: 5,
+                              top: 0,
+                              bottom: 0
+                          }
+                        },
                         legend : {
-                          labels:{boxWidth:10}
+                          labels:{padding:5,boxWidth:10}
                         },
                         tooltips: {
                           enabled : false
@@ -17,6 +25,7 @@
                           display: true,
                           fontSize: 18,
                           fontFamily: 'Pacifico',
+                          padding : this.titlePadding,
                           fontColor : this.chartDetails?.titleColor
                         },
                         scales: startFromZero,
@@ -30,7 +39,7 @@
             (chartClick)="chartClicked($event)"
             ></canvas>
   </div>
-  <div id="buttons-center" text-center>
+  <div text-center>
     <button ion-button *ngIf="chartDetails.chartLabels.length>=1"  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[0]" (click)="vote(0)">{{chartDetails.chartLabels[0]}}</button>
     <button ion-button *ngIf="chartDetails.chartLabels.length>=2"  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[1]" (click)="vote(1)">{{chartDetails.chartLabels[1]}}</button>
     <button ion-button *ngIf="chartDetails.chartLabels.length>=3"  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[2]" (click)="vote(2)">{{chartDetails.chartLabels[2]}}</button>
