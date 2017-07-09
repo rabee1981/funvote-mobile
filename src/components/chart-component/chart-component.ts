@@ -20,6 +20,7 @@ export class ChartComponent implements OnInit, OnDestroy{
   isvote=true;
   titlePadding = 2;
   startFromZero= {xAxes:[],yAxes:[]};
+  options={}
   constructor(private chartService : ChartService , private alertCtrl : AlertController, private modalCtrl : ModalController){};
 
   ngOnInit(){
@@ -38,6 +39,38 @@ export class ChartComponent implements OnInit, OnDestroy{
             }
         }]
     }
+    //options
+    this.options = {
+                        layout : {
+                          padding : {
+                              left: 10,
+                              right: 5,
+                              top: 0,
+                              bottom: 0
+                          }
+                        },
+                        legend : {
+                          labels:{padding:5,boxWidth:10}
+                        },
+                        tooltips: {
+                          enabled : false
+                        },
+                        animation: {
+                              duration: 200
+                          },
+                        title: {
+                          text : this.chartDetails.chartTitle,
+                          display: true,
+                          fontSize: 18,
+                          fontFamily: 'Pacifico',
+                          padding : this.titlePadding,
+                          fontColor : this.chartDetails.titleColor
+                        },
+                        scales: this.startFromZero,
+                        chartArea: {
+                            backgroundColor: '#ffffff'
+                        }
+                      }
   }
   // votesCount
   this.votesCount = this.chartDetails.chartData.reduce(
@@ -60,25 +93,6 @@ export class ChartComponent implements OnInit, OnDestroy{
       }else{
         this.chartDetails.chartData = this.chartData;
       }
-    }
-  }
-  chartClicked(event){
-    if(this.justShow && event.active.length>0){
-      let dataIndex = event.active[0]._index;
-      let chartColor = JSON.parse(JSON.stringify(this.colors)); 
-      const colorPicker = this.modalCtrl.create(ColorPickerPage,{color : this.colors[0].backgroundColor[dataIndex]},{
-        enableBackdropDismiss : false
-      });
-      colorPicker.present();
-      colorPicker.onDidDismiss(
-        color => {
-          if(color){
-            chartColor[0].backgroundColor[dataIndex] = color;
-            this.colors = chartColor;
-            this.chartDetails.chartColor = this.colors[0].backgroundColor;
-          }
-        }
-      )
     }
   }
   ngOnDestroy(){
