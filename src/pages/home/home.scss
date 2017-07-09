@@ -12,4 +12,19 @@ page-home {
         font-size: 130%;
         font-style: italic;
     }
+    .color-content {
+        padding-left : 0px!important;
+        .input-wrapper{
+            ion-label {
+                margin : 0px!important;
+            }
+        }
+        .item-inner {
+        padding-right: 0px!important;
+        }
+           
+    }
+    .list {
+        margin-bottom : 15px!important;
+    }
 }

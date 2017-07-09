@@ -98,7 +98,6 @@ export class ChartService {
                 if(currentValue===null){
                     this.afDatabase.object(`users/${owner}/userCharts/${key}/loveCount`).$ref.transaction(
                         count => {
-                            console.log(count);
                             count--;
                             return count;
                         }
@@ -108,7 +107,6 @@ export class ChartService {
                     this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).remove()
                     this.afDatabase.object(`users/${owner}/userCharts/${key}/loveCount`).$ref.transaction(
                         count => {
-                            console.log(count);
                             count++;
                             return count;
                         }

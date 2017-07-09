@@ -41,26 +41,26 @@ export class HomePage implements OnInit,OnDestroy{
             this.userCharts = charts;
           }
         )
-        this.isAllowCreateSubscription = this.chartService.isAllowToCreate().subscribe(
-          res => {
-            this.isAllowCreate = res;
-          }
-        )
       }
     )
   }
   }
   onCreateChart(){
-    if(this.isAllowCreate){
-      this.navCtrl.push(ChartFormPage);
-    }else{
-      var alert = this.alertCtrl.create({
-      title: 'Charts Limit',
-      subTitle: 'you reached the maximum amount of charts, please delete some charts to be able to add a new chart',
-      buttons: ['I will do']
-  });
-  alert.present();
-    }
+    this.isAllowCreateSubscription = this.chartService.isAllowToCreate().take(1).subscribe(
+      res => {
+        this.isAllowCreate = res;
+        if(this.isAllowCreate){
+           this.navCtrl.push(ChartFormPage);
+        }else{
+          var alert = this.alertCtrl.create({
+          title: 'Charts Limit',
+          subTitle: 'you reached the maximum amount of charts, please delete some charts to be able to add a new chart',
+          buttons: ['I will do']
+      });
+      alert.present();
+        }
+      }
+    )
   }
   ngOnDestroy(){
     if (this.userStateSubscription)
