@@ -51,7 +51,7 @@ export class ChartCard {
   }
   favorities(){
     if(!this.justShow){
-      this.chartService.updateFav(this.chartDetails.$key);
+      this.chartService.updateFav(this.chartDetails.$key,this.chartDetails.owner);
     }
   }
   onShare(){

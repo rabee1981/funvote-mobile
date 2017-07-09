@@ -67,19 +67,13 @@ export class ChartService {
     saveChart(chartDetails : ChartDetails){
         chartDetails.chartData = [0,0,0,0];
         chartDetails.owner = this.useruid;
-        return this.afDatabase.list(`allCharts`).push(chartDetails).then(
-            res => {
-                this.afDatabase.object(`users/${this.useruid}/userCharts/${res.key}`).set(chartDetails);
-            }
-        );
+        return this.afDatabase.list(`users/${this.useruid}/userCharts`).push(chartDetails);
     }
     voteFor(key,data,owner,voteCount){
         this.afDatabase.list(`allCharts/${key}`).take(1).subscribe(res => {
             if(res.length<=0){
                 this.alert.present()
             }else{
-                this.afDatabase.object(`allCharts/${key}/chartData`).set(data);
-                this.afDatabase.object(`allCharts/${key}/voteCount`).set(-1*(voteCount+1));
                 this.afDatabase.object(`users/${this.useruid}/voted/${key}`).set(true);
                 this.afDatabase.object(`users/${owner}/userCharts/${key}/chartData`).set(data);
                 this.afDatabase.object(`users/${owner}/userCharts/${key}/voteCount`).set(-1*(voteCount+1))
@@ -87,20 +81,30 @@ export class ChartService {
         })
     }
     deleteChart(key){
-        this.afDatabase.object(`allCharts/${key}`).remove().then(
-            res => {
-                this.afDatabase.object(`users/${this.useruid}/userCharts/${key}`).remove();
-                this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).remove();
-            }
-        )
+        this.afDatabase.object(`users/${this.useruid}/userCharts/${key}`).remove();
+        this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).remove();
     }
-    updateFav(key){
+    updateFav(key,owner){
         this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).$ref.transaction(
             currentValue => {
                 if(currentValue===null){
+                    this.afDatabase.object(`users/${owner}/userCharts/${key}/loveCount`).$ref.transaction(
+                        count => {
+                            console.log(count);
+                            count--;
+                            return count;
+                        }
+                    )
                     this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).set(true);
                 }else{
                     this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).remove()
+                    this.afDatabase.object(`users/${owner}/userCharts/${key}/loveCount`).$ref.transaction(
+                        count => {
+                            console.log(count);
+                            count++;
+                            return count;
+                        }
+                    )
                 }
             }
         )

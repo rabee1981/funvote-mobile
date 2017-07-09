@@ -1,4 +1,4 @@
-import * as firebase from 'firebase/app';
+
 export class ChartDetails{
     chartLabels:string[]=[];
     chartType:string;
@@ -9,4 +9,5 @@ export class ChartDetails{
     createdAt = 0-Date.now();
     voteCount = 0;
     titleColor = '#000000';
+    loveCount = 0;
 }

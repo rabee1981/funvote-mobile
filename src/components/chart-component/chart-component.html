@@ -9,14 +9,20 @@
             ></canvas>
   </div>
   <div text-center>
-    <button ion-button *ngIf="chartDetails.chartLabels.length>=1"  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[0]" (click)="vote(0)">{{chartDetails.chartLabels[0]}}</button>
-    <button ion-button *ngIf="chartDetails.chartLabels.length>=2"  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[1]" (click)="vote(1)">{{chartDetails.chartLabels[1]}}</button>
+    <button ion-button  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[0]" (click)="vote(0)">{{chartDetails.chartLabels[0]}}</button>
+    <button ion-button  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[1]" (click)="vote(1)">{{chartDetails.chartLabels[1]}}</button>
     <button ion-button *ngIf="chartDetails.chartLabels.length>=3"  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[2]" (click)="vote(2)">{{chartDetails.chartLabels[2]}}</button>
     <button ion-button *ngIf="chartDetails.chartLabels.length>=4"  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[3]" (click)="vote(3)">{{chartDetails.chartLabels[3]}}</button>
   </div>
-  <div style="padding: 5px 0 3px 15px">
-      <ion-chip>
+  <div style="padding: 5px 0 3px 5px;">
+    <ion-item>
+      <ion-chip item-start>
           <ion-icon name="contacts" style="margin : 0;"></ion-icon>
           <ion-label>{{votesCount}} voters</ion-label>
       </ion-chip>
+      <ion-badge item-end *ngIf="this.chartDetails.loveCount<0">
+        <label for="icon" style="font-size : 14px">{{-1*this.chartDetails.loveCount}}</label>
+        <ion-icon name="icon" ios="ios-heart" md="md-heart" style="color :#FFD700;"></ion-icon>
+        </ion-badge>
+    </ion-item> 
   </div>
