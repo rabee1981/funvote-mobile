@@ -1,3 +1,4 @@
+import { ChartDetails } from './../../data/chartDetails';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ChartService } from "../../services/chart.service";
 import { AlertController, ModalController } from "ionic-angular";
@@ -86,15 +87,19 @@ export class ChartComponent implements OnInit, OnDestroy{
   this.votesCount = this.chartService.getVoteCount(this.chartDetails.$key,this.chartDetails.owner);
   }
   public vote(index){
-    if(!this.isvote){
-      this.chartData = this.chartDetails.chartData.slice();
-      this.chartData[index]++;
+    this.chartService.isVote(this.chartDetails.$key)
+    .take(1).subscribe(res => {
+      if(!res.$value){
       if(!this.justShow){
-        this.chartService.voteFor(this.chartDetails.$key,this.chartData,this.chartDetails.owner);
+        this.chartDetails.chartData[index]++;
+        this.chartService.voteFor(this.chartDetails.$key,this.chartDetails.chartData,this.chartDetails.owner);
       }else{
+        this.chartData = this.chartDetails.chartData.slice();
+        this.chartData[index]++;
         this.chartDetails.chartData = this.chartData;
       }
     }
+    })
   }
   ngOnDestroy(){
     this.isvoteSubscribtion.unsubscribe()

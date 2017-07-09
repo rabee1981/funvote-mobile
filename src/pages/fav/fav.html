@@ -20,7 +20,9 @@
 
 
 <ion-content class="color-content">
-  <div *ngFor="let chart of favCharts; trackBy:trackByCreatedAt">
-    <chart-card [chartDetails]="chart" [owner]="chart.owner"></chart-card>
-  </div>
+  <ion-list>
+    <ion-item class="color-content item-chart" no-lines *ngFor="let chart of favCharts; trackBy:trackByCreatedAt">
+      <chart-card [chartDetails]="chart" [owner]="chart.owner"></chart-card>
+    </ion-item>
+  </ion-list>
 </ion-content>

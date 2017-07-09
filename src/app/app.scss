@@ -6,6 +6,21 @@
 ion-icon {
     margin-top: 2px
 }
+.item-chart {
+        padding-left : 0px!important;
+        .input-wrapper{
+            ion-label {
+                margin : 0px!important;
+            }
+        }
+        .item-inner {
+        padding-right: 0px!important;
+        }
+           
+    }
+    .list {
+        margin-bottom : 15px!important;
+    }
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These

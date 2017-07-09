@@ -21,10 +21,8 @@
 <ion-content class="color-content">
   <div *ngIf="this.userCharts.length==0" class="center-page">Create Your Chart To See It Here...</div>
   <ion-list>
-    <ion-item class="color-content" no-lines *ngFor="let chart of userCharts; trackBy:trackByCreatedAt">
-      <div class="item-div">
+    <ion-item class="color-content item-chart" no-lines *ngFor="let chart of userCharts; trackBy:trackByCreatedAt">
         <chart-card [chartDetails]="chart" [owner]="chart.owner"></chart-card>
-      </div>
     </ion-item>
   </ion-list>
   <ion-fab padding bottom="0">
