@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { AuthService } from "../../services/auth.service";
@@ -14,9 +15,9 @@ import { ConnectivityService } from "../../services/ConnectivityService";
 export class HomePage implements OnInit,OnDestroy{
   isAllowCreate;
   userCharts : any[] = [];
-  isAllowCreateSubscription;
-  userStateSubscription;
-  userChartsSubscription;
+  isAllowCreateSubscription : Subscription;
+  userStateSubscription : Subscription;
+  userChartsSubscription : Subscription;
   loading = this.loadingCtrl.create({
       content : 'Loading Charts',
       spinner : 'bubbles',
@@ -68,5 +69,8 @@ export class HomePage implements OnInit,OnDestroy{
       this.userChartsSubscription.unsubscribe();
     if(this.isAllowCreateSubscription)
       this.isAllowCreateSubscription.unsubscribe();
+    }
+    trackByCreatedAt(index,chart){
+      return chart ? chart.createdAt : undefined;
     }
 }

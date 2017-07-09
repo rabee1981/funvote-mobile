@@ -20,7 +20,6 @@ export class ChartFormPage {
     this.chartDetails.chartColor = ['#EA1E63','#3F51B5','#009788','#7E5D4E'];
   }
   onChange(valueString) {
-      console.log(this.chartDetails.chartLabels)
       let value = valueString;
       let values:number[]=[];
       for(let i=1;i<=value;i++){
@@ -31,7 +30,6 @@ export class ChartFormPage {
   }
   onShow(){
     this.chartDetails.chartLabels.splice(this.valueAxisX.length);
-    console.log(this.chartDetails.chartLabels)
     this.navCtrl.push(ShowChartPage,this.chartDetails);
   }
   changeLabelColor(index){

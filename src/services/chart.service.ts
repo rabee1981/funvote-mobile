@@ -69,16 +69,24 @@ export class ChartService {
         chartDetails.owner = this.useruid;
         return this.afDatabase.list(`users/${this.useruid}/userCharts`).push(chartDetails);
     }
-    voteFor(key,data,owner,voteCount){
+    voteFor(key,data,owner){
         this.afDatabase.list(`allCharts/${key}`).take(1).subscribe(res => {
             if(res.length<=0){
                 this.alert.present()
             }else{
                 this.afDatabase.object(`users/${this.useruid}/voted/${key}`).set(true);
                 this.afDatabase.object(`users/${owner}/userCharts/${key}/chartData`).set(data);
-                this.afDatabase.object(`users/${owner}/userCharts/${key}/voteCount`).set(-1*(voteCount+1))
+                this.afDatabase.object(`users/${owner}/userCharts/${key}/voteCount`).$ref.transaction(
+                    voteCount => {
+                        voteCount--;
+                        return voteCount;
+                    }
+                )
             }
         })
+    }
+    getVoteCount(key,owner){
+        return this.afDatabase.object(`users/${owner}/userCharts/${key}/voteCount`)
     }
     deleteChart(key){
         this.afDatabase.object(`users/${this.useruid}/userCharts/${key}`).remove();

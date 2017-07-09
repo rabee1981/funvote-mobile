@@ -20,7 +20,7 @@
 
 
 <ion-content class="color-content">
-  <div *ngFor="let chart of favCharts">
+  <div *ngFor="let chart of favCharts; trackBy:trackByCreatedAt">
     <chart-card [chartDetails]="chart" [owner]="chart.owner"></chart-card>
   </div>
 </ion-content>

@@ -71,4 +71,7 @@ export class AllChartsPage implements OnInit, OnDestroy{
     if(this.allChartsByNewestSub)
         this.allChartsByNewestSub.unsubscribe()
   }
+  trackByCreatedAt(index,chart){
+    return chart ? chart.createdAt : undefined;
+  }
 }

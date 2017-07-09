@@ -35,4 +35,7 @@ export class FavPage implements OnDestroy{
   ngOnDestroy(): void {
     this.favChartsSubscribtion.unsubscribe();
   }
+  trackByCreatedAt(index,chart){
+      return chart ? chart.createdAt : undefined;
+    }
 }

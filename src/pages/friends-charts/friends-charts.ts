@@ -27,5 +27,8 @@ export class FriendsChartsPage implements OnInit{
       this.loading.dismiss()
     })
   }
+  trackByCreatedAt(index,chart){
+    return chart ? chart.createdAt : undefined;
+    }
 
 }

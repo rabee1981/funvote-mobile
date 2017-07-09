@@ -29,12 +29,12 @@
 
 <ion-content class="color-content">
   <div *ngIf="sortBy === 'createdAt'">
-    <div *ngFor="let chart of allChartsByNewest">
+    <div *ngFor="let chart of allChartsByNewest; trackBy : trackByCreatedAt;">
     <chart-card [chartDetails]="chart" [owner]="chart.owner"></chart-card>
       </div>
   </div>
   <div *ngIf="sortBy === 'voteCount'">
-    <div *ngFor="let chart of allChartsByMostVoted">
+    <div *ngFor="let chart of allChartsByMostVoted; trackBy : trackByCreatedAt;">
     <chart-card [chartDetails]="chart" [owner]="chart.owner"></chart-card>
       </div>
   </div>

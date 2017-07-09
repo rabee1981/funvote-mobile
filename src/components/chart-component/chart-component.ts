@@ -83,13 +83,14 @@ export class ChartComponent implements OnInit, OnDestroy{
                     backgroundColor : this.chartDetails.chartColor
                   }
                   ]
+  this.votesCount = this.chartService.getVoteCount(this.chartDetails.$key,this.chartDetails.owner);
   }
   public vote(index){
     if(!this.isvote){
       this.chartData = this.chartDetails.chartData.slice();
       this.chartData[index]++;
       if(!this.justShow){
-        this.chartService.voteFor(this.chartDetails.$key,this.chartData,this.chartDetails.owner,this.votesCount);
+        this.chartService.voteFor(this.chartDetails.$key,this.chartData,this.chartDetails.owner);
       }else{
         this.chartDetails.chartData = this.chartData;
       }
