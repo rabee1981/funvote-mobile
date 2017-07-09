@@ -1,28 +1,34 @@
-<div style="display: block;">
+<ion-card-content style="padding: 0px!important;">
     <canvas [id]="chartDetails.$key" baseChart width="600" height="315"
+            [legend]="!(this.chartDetails?.chartType==='bar')"
+            [options]="options"
+            [chartType]="chartDetails.chartType"
             [data]="chartDetails.chartData"
             [labels]="chartDetails.chartLabels"
-            [options]="options"
             [colors]="colors"
-            [legend]="!(this.chartDetails?.chartType=='bar')"
-            [chartType]="chartDetails.chartType"
             ></canvas>
-  </div>
-  <div text-center>
+  </ion-card-content>
+  <ion-card-content *ngIf="(this.chartDetails?.chartType==='bar')" style="text-align: center;">
     <button ion-button  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[0]" (click)="vote(0)">{{chartDetails.chartLabels[0]}}</button>
     <button ion-button  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[1]" (click)="vote(1)">{{chartDetails.chartLabels[1]}}</button>
     <button ion-button *ngIf="chartDetails.chartLabels.length>=3"  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[2]" (click)="vote(2)">{{chartDetails.chartLabels[2]}}</button>
     <button ion-button *ngIf="chartDetails.chartLabels.length>=4"  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[3]" (click)="vote(3)">{{chartDetails.chartLabels[3]}}</button>
-  </div>
-  <div style="padding: 5px 0 3px 5px;">
-    <ion-item>
-      <ion-chip item-start>
-          <ion-icon name="contacts" style="margin : 0;"></ion-icon>
-          <ion-label class="label-voters">{{-1*(votesCount | async)?.$value}} voters</ion-label>
-      </ion-chip>
-      <ion-badge item-end *ngIf="this.chartDetails.loveCount<0">
-        {{-1*this.chartDetails.loveCount}}
-        <ion-icon name="icon" ios="ios-heart" md="md-heart" style="color :#FFD700;font-size : 0.9em!important;"></ion-icon>
-        </ion-badge>
-    </ion-item> 
-  </div>
+  </ion-card-content>
+    <ion-card-content *ngIf="!(this.chartDetails?.chartType==='bar')" style="text-align: center;">
+    <button ion-button *ngIf="chartDetails.chartLabels.length>=4"  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[3]" (click)="vote(3)">{{chartDetails.chartLabels[3]}}</button>
+    <button ion-button *ngIf="chartDetails.chartLabels.length>=3"  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[2]" (click)="vote(2)">{{chartDetails.chartLabels[2]}}</button>
+    <button ion-button  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[1]" (click)="vote(1)">{{chartDetails.chartLabels[1]}}</button>
+    <button ion-button  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[0]" (click)="vote(0)">{{chartDetails.chartLabels[0]}}</button>
+  </ion-card-content>
+  <ion-card-content style="padding: 0px!important;">
+  <ion-item>
+    <ion-chip item-start>
+        <ion-icon name="contacts" style="margin : 0;"></ion-icon>
+        <ion-label class="label-voters">{{-1*(votesCount | async)?.$value}} voters</ion-label>
+    </ion-chip>
+    <ion-badge item-end *ngIf="this.chartDetails.loveCount<0">
+      {{-1*this.chartDetails.loveCount}}
+      <ion-icon name="icon" ios="ios-heart" md="md-heart" style="color :#FFD700;font-size : 0.9em!important;"></ion-icon>
+      </ion-badge>
+  </ion-item>
+  </ion-card-content>

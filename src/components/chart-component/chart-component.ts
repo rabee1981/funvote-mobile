@@ -40,8 +40,13 @@ export class ChartComponent implements OnInit, OnDestroy{
             }
         }]
     }
+  }
     //options
     this.options = {
+                        legend : {
+                          reverse: true,
+                          labels:{padding:5,boxWidth:20}
+                        },
                         layout : {
                           padding : {
                               left: 10,
@@ -50,15 +55,11 @@ export class ChartComponent implements OnInit, OnDestroy{
                               bottom: 0
                           }
                         },
-                        legend : {
-                          labels:{padding:5,boxWidth:10}
-                        },
+                        animateRotate: false,
                         tooltips: {
                           enabled : false
                         },
-                        animation: {
-                              duration: 200
-                          },
+                        animation: false,
                         title: {
                           text : this.chartDetails.chartTitle,
                           display: true,
@@ -72,7 +73,6 @@ export class ChartComponent implements OnInit, OnDestroy{
                             backgroundColor: '#ffffff'
                         }
                       }
-  }
   // votesCount
   this.votesCount = this.chartDetails.chartData.reduce(
     (a,b) => {
@@ -91,15 +91,15 @@ export class ChartComponent implements OnInit, OnDestroy{
     .take(1).subscribe(res => {
       if(!res.$value){
       if(!this.justShow){
-        this.chartDetails.chartData[index]++;
-        this.chartService.voteFor(this.chartDetails.$key,this.chartDetails.chartData,this.chartDetails.owner);
+        this.isvote = true;
+        this.chartService.voteFor(this.chartDetails.$key,index,this.chartDetails.owner);
       }else{
         this.chartData = this.chartDetails.chartData.slice();
         this.chartData[index]++;
         this.chartDetails.chartData = this.chartData;
       }
     }
-    })
+  })
   }
   ngOnDestroy(){
     this.isvoteSubscribtion.unsubscribe()

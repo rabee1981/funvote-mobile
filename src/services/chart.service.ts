@@ -69,13 +69,18 @@ export class ChartService {
         chartDetails.owner = this.useruid;
         return this.afDatabase.list(`users/${this.useruid}/userCharts`).push(chartDetails);
     }
-    voteFor(key,data,owner){
+    voteFor(key,index,owner){
         this.afDatabase.list(`allCharts/${key}`).take(1).subscribe(res => {
             if(res.length<=0){
                 this.alert.present()
             }else{
                 this.afDatabase.object(`users/${this.useruid}/voted/${key}`).set(true);
-                this.afDatabase.object(`users/${owner}/userCharts/${key}/chartData`).set(data);
+                this.afDatabase.object(`users/${owner}/userCharts/${key}/chartData/${index}`).$ref.transaction(
+                    value => {
+                        value++;
+                        return value;
+                    }
+                )
                 this.afDatabase.object(`users/${owner}/userCharts/${key}/voteCount`).$ref.transaction(
                     voteCount => {
                         voteCount--;
