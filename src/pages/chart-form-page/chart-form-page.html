@@ -14,7 +14,7 @@
         <ion-label type="text" text-center style="font-size : 20px;">Chart Details</ion-label>
       <ion-item>
         <ion-label inline>Title :</ion-label>
-        <ion-input type="text" name="title" [(ngModel)]="this.chartDetails.chartTitle" required placeholder="What is your favorite phone?"></ion-input>
+        <ion-input type="text" name="title" [ngStyle]="{'color' : titleColor}" [(ngModel)]="this.chartDetails.chartTitle" required placeholder="What is your favorite phone?"></ion-input>
         <button ion-button item-end 
                 [ngStyle]="{'background-color' : this.chartDetails.titleColor}" 
                 style="font-size : 18px;"

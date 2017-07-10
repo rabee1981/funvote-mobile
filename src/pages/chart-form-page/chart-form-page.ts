@@ -10,7 +10,7 @@ import { ShowChartPage } from "../show-chart-page/show-chart-page";
   templateUrl: 'chart-form-page.html',
 })
 export class ChartFormPage {
-
+  titleColor="#000000"
   valueAxisX: number[] = [];
     chartDetails : ChartDetails = new ChartDetails();
     numberString : string[]=['1','2','3','4'];
@@ -48,6 +48,7 @@ export class ChartFormPage {
       colorPicker.onDidDismiss(
         color => {
           if(color){
+            this.titleColor = color;
             this.chartDetails.titleColor = color;
           }
         })
