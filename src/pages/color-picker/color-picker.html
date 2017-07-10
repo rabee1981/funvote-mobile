@@ -1,13 +1,13 @@
-<div class="guide-modal">
+<ion-card-content class="guide-modal">
 <ion-header>
-    <ion-navbar color="primary"  style="height: 50px;">
+    <ion-navbar color="primary">
     <ion-title text-center >
       Colors
     </ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content>
-    <ion-row class="row-colors">
+    <ion-row class="colors-row">
         <ion-col col-4>
             <ion-fab>
                 <button ion-fab color="color0" (click)="onChooseColor(0)"><ion-icon *ngIf="colorNumber==0"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
@@ -24,7 +24,7 @@
             </ion-fab>
         </ion-col>
     </ion-row>
-    <ion-row class="row-colors">
+    <ion-row class="colors-row">
         <ion-col col-4>
             <ion-fab>
                 <button ion-fab color="color3" (click)="onChooseColor(3)"><ion-icon *ngIf="colorNumber==3"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
@@ -41,7 +41,7 @@
             </ion-fab>
         </ion-col>
     </ion-row>
-    <ion-row class="row-colors">
+    <ion-row class="colors-row">
         <ion-col col-4>
             <ion-fab>
                 <button ion-fab color="color6" (click)="onChooseColor(6)"><ion-icon *ngIf="colorNumber==6"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
@@ -58,7 +58,7 @@
             </ion-fab>
         </ion-col>
     </ion-row>
-    <ion-row class="row-colors">
+    <ion-row class="colors-row">
         <ion-col col-4>
             <ion-fab>
                 <button ion-fab color="color9" (click)="onChooseColor(9)"><ion-icon *ngIf="colorNumber==9"  ios="ios-checkmark" md="md-checkmark" style="font-size: 50px;"></ion-icon></button>
@@ -75,13 +75,15 @@
             </ion-fab>
         </ion-col>
     </ion-row>
-    <ion-row class="row-okCancel">
+    <ion-footer>
+    <ion-row class="button-row">
         <ion-col col-6>
-        <button ion-button full color="light" class="btn-okCancel" (click)="onCancle()">Cancel</button>
+            <button ion-button full color="light" (click)="onCancle()">Cancel</button>
         </ion-col>
         <ion-col col-6>
-        <button ion-button full color="light" class="btn-okCancel" (click)="onOk()">Ok</button>
+            <button ion-button full color="light" (click)="onOk()">Ok</button>
         </ion-col>
     </ion-row>
+    </ion-footer>
 </ion-content>
-</div>
+</ion-card-content>

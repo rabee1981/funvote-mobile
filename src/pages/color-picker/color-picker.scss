@@ -3,41 +3,37 @@ page-color-picker {
     display:none;
     }
     background-color: rgba(0,0,0,0.5);
-    h4 {
-        text-align: center;
-    }
-    .guide-modal {
-        border-radius : 5%;
-        position: absolute;
-        top: 20%;
-        left: 18%;
-        display: block;
-        width: 65%;
-        height: 60%;
-        overflow: hidden;
-        }
-    ion-content {
-        .row-okCancel {
-           ion-col {
-               padding-bottom: 0;
-               padding-left: 0;
-               padding-right: 0;
-               padding-top: 0%;
-                .btn-okCancel {
-                    font-weight: bold;
-                    border: 0.1px groove;
-                    width: 100%;
-                    height: 100%;
-                } 
+    ion-card-content {
+            padding: 0px !important;
+            height: 60% !important;
+            position: absolute;
+            top: 20%;
+            left: 18%;
+            display: block;
+            width: 65%;
+            height: 60%;
+            overflow: hidden;
+            ion-content {
+                height: 100%;
+                width: 100%;
+                .colors-row {
+                    height: 21%;
+                    ion-col{
+                        ion-fab{
+                            left : 15%;
+                            top: 15%;
+                        }
+                    }
+                }
             }
         }
-        .row-colors {
-            ion-col {
-                padding-left: 5%;
+        .button-row {
+            ion-col{
+                padding: 0!important;
+                button{
+                    border:0.1rem gray solid;
+                    margin : 0px!important;
+                }
             }
         }
-        ion-row {
-           height : 20%; 
-        }
-    }
 }

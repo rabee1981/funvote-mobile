@@ -5,9 +5,10 @@ import { Pipe, PipeTransform } from '@angular/core'
 
 export class ThousandPipe implements PipeTransform{
     transform(value : number) : string{
-        if(value>=1000)
+        if(value<1000)
+            return value.toString()
+        if(value>=1000 && value<1000000)
             return Math.floor(value/1000).toString().concat('k')
-        else
-        return value.toString()
+        return Math.floor(value/1000000).toString().concat('M')
     }
 }
