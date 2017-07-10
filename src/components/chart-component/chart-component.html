@@ -20,15 +20,4 @@
     <button ion-button  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[1]" (click)="vote(1)">{{chartDetails.chartLabels[1]}}</button>
     <button ion-button  [disabled]="isvote" [style.background]="this.chartDetails.chartColor[0]" (click)="vote(0)">{{chartDetails.chartLabels[0]}}</button>
   </ion-card-content>
-  <ion-card-content style="padding: 0px!important;">
-  <ion-item>
-    <ion-chip item-start>
-        <ion-icon name="contacts" style="margin : 0;"></ion-icon>
-        <ion-label class="label-voters">{{-1*(votesCount | async)?.$value}} voters</ion-label>
-    </ion-chip>
-    <ion-badge item-end *ngIf="this.chartDetails.loveCount<0">
-      {{-1*this.chartDetails.loveCount}}
-      <ion-icon name="icon" ios="ios-heart" md="md-heart" style="color :#FFD700;font-size : 0.9em!important;"></ion-icon>
-      </ion-badge>
-  </ion-item>
-  </ion-card-content>
+

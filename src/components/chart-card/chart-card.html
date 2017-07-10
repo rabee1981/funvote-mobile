@@ -8,6 +8,18 @@
       </ion-item>
   </ion-buttons>
   <chart-component [chartDetails]="chartDetails" [owner]="owner" [justShow]="justShow"></chart-component>
+  <ion-card-content style="padding: 0px!important;">
+  <ion-item>
+    <ion-chip item-start>
+        <ion-icon name="contacts" style="margin : 0;"></ion-icon>
+        <ion-label class="label-voters">{{-1*(votesCount | async)?.$value | thousand}} voters</ion-label>
+    </ion-chip>
+    <ion-badge item-end *ngIf="this.chartDetails.loveCount<0">
+      {{-1*this.chartDetails.loveCount | thousand}}
+      <ion-icon name="icon" ios="ios-heart" md="md-heart" style="color :#FFD700;font-size : 0.9em!important;"></ion-icon>
+      </ion-badge>
+  </ion-item>
+  </ion-card-content>
   <ion-row>
     <!-- your charts page -->
     <ion-col col-4 *ngIf="isUserChart" text-center>
@@ -18,7 +30,7 @@
     </ion-col>
     <ion-col col-4 *ngIf="isUserChart" text-center>
       <button ion-button icon-left clear small (click)="favorities()">
-        <ion-icon *ngIf="(isFav | async)?.$value===null;else other_content" ios="ios-heart-outline" md="md-heart-outline"></ion-icon>
+        <ion-icon *ngIf="!isFav;else other_content" ios="ios-heart-outline" md="md-heart-outline"></ion-icon>
         <ng-template #other_content>
           <ion-icon ios="ios-heart" md="md-heart" style="color :#FFD700"></ion-icon>
           </ng-template>
@@ -34,7 +46,7 @@
     </ion-col>
     <ion-col col-4 *ngIf="!isUserChart">
       <button ion-button icon-left clear small (click)="favorities()">
-        <ion-icon *ngIf="(isFav | async)?.$value===null;else other_content" ios="ios-heart-outline" md="md-heart-outline"></ion-icon>
+        <ion-icon *ngIf="!isFav;else other_content" ios="ios-heart-outline" md="md-heart-outline"></ion-icon>
         <ng-template #other_content>
           <ion-icon ios="ios-heart" md="md-heart" style="color :#FFD700"></ion-icon>
           </ng-template>

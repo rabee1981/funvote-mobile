@@ -17,11 +17,11 @@ export class ChartComponent implements OnInit, OnDestroy{
   @Input() justShow = false;
   colors;
   chartData:number[]=[];
-  votesCount;
   isvote=true;
   titlePadding = 2;
   startFromZero= {xAxes:[],yAxes:[]};
   options={}
+  currentData=[];
   constructor(private chartService : ChartService , private alertCtrl : AlertController, private modalCtrl : ModalController){};
 
   ngOnInit(){
@@ -73,34 +73,39 @@ export class ChartComponent implements OnInit, OnDestroy{
                             backgroundColor: '#ffffff'
                         }
                       }
-  // votesCount
-  this.votesCount = this.chartDetails.chartData.reduce(
-    (a,b) => {
-      return a+b;
-    }
-  )
   this.colors = [
                   {
                     backgroundColor : this.chartDetails.chartColor
                   }
                   ]
-  this.votesCount = this.chartService.getVoteCount(this.chartDetails.$key,this.chartDetails.owner);
   }
   public vote(index){
     this.chartService.isVote(this.chartDetails.$key)
     .take(1).subscribe(res => {
-      if(!res.$value){
+     if(!res.$value){
       if(!this.justShow){
         this.isvote = true;
+        this.currentData = this.chartDetails.chartData.slice();
+        this.currentData[index]++;
+        this.chartDetails.chartData = this.currentData;
         this.chartService.voteFor(this.chartDetails.$key,index,this.chartDetails.owner);
       }else{
         this.chartData = this.chartDetails.chartData.slice();
         this.chartData[index]++;
         this.chartDetails.chartData = this.chartData;
       }
-    }
-  })
+   }
+ })
   }
+  arraysAreIdentical(arr1, arr2){
+    if (arr1.length !== arr2.length) return false;
+    for (var i = 0, len = arr1.length; i < len; i++){
+        if (arr1[i] !== arr2[i]){
+            return false;
+        }
+    }
+    return true; 
+}
   ngOnDestroy(){
     this.isvoteSubscribtion.unsubscribe()
   }

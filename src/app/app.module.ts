@@ -29,6 +29,7 @@ import { ColorPickerPage } from "../pages/color-picker/color-picker";
 import { ConnectivityService } from "../services/ConnectivityService";
 import { Network } from "@ionic-native/network";
 import { AdMob } from '@ionic-native/admob';
+import { ThousandPipe } from "../pipes/thousand.pipe"
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDuFurr7wtx_FFUbmnOMMcxKSOPwtnXKFg",
@@ -51,7 +52,8 @@ export const firebaseConfig = {
     AllChartsPage,
     FavPage,
     FriendsChartsPage,
-    ColorPickerPage
+    ColorPickerPage,
+    ThousandPipe
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
+import { Subscription } from 'rxjs/Subscription';
 import { SharingService } from './../../services/sharing.service';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { ChartService } from "../../services/chart.service";
 import { FacebookService } from "../../services/facebook.service";
 import { AngularFireAuth } from "angularfire2/auth";
@@ -12,11 +13,14 @@ import { ShareVia } from "../../data/shareVia.enum";
   selector: 'chart-card',
   templateUrl: 'chart-card.html'
 })
-export class ChartCard {
+export class ChartCard implements OnDestroy {
+  isFavSub: Subscription;
+  currentLoveCount: any;
   chartImage: any;
   @Input() chartDetails;
   @Input() owner;
   @Input() justShow = false;
+  votesCount;
   ownerInfo;
   isFav;
   isUserChart;
@@ -24,9 +28,20 @@ export class ChartCard {
   constructor(private chartService : ChartService, private fbService : FacebookService, private afAuth : AngularFireAuth, private afDatabase : AngularFireDatabase,
               private alertCtrl : AlertController,private authService : AuthService, private sharingService : SharingService) {}
   ngOnInit(){
-    this.isFav = this.chartService.isFavor(this.chartDetails.$key);
+    this.isFavSub = this.chartService.isFavor(this.chartDetails.$key).subscribe(
+      res => {
+        this.isFav = res.$value ? true : false;
+      }
+    );
     this.ownerInfo = this.afDatabase.object(`users/${this.owner}/userInfo`);
     this.isUserChart = (this.owner == this.authService.getCurrentUser().uid)
+      // votesCount
+  this.votesCount = this.chartDetails.chartData.reduce(
+    (a,b) => {
+      return a+b;
+    }
+  )
+  this.votesCount = this.chartService.getVoteCount(this.chartDetails.$key,this.chartDetails.owner);
   }
   onDelete(){
     if(!this.justShow){
@@ -51,15 +66,23 @@ export class ChartCard {
   }
   favorities(){
     if(!this.justShow){
+      if(this.isFav){
+        this.chartDetails.loveCount++;
+      }else{
+        this.chartDetails.loveCount--;
+      }
       this.chartService.updateFav(this.chartDetails.$key,this.chartDetails.owner);
+      this.currentLoveCount = this.chartDetails.loveCount;
     }
   }
   onShare(){
     if(!this.justShow){
       this.chartImage = (document.getElementById(this.chartDetails.$key) as HTMLCanvasElement).toDataURL('image/png');
-      //this.fbService.shareImage(this.chartDetails.$key,this.chartImage);
       this.sharingService.share(ShareVia.WHATSAPP,this.chartDetails.$key,this.chartImage)
 
     }
+  }
+    ngOnDestroy(): void {
+     this.isFavSub.unsubscribe();
   }
 }
