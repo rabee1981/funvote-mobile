@@ -36,7 +36,9 @@ export class ShowChartPage {
       spinner : 'hide',
       content : 'saved successfully'
     })
-    this.chartService.saveChart(this.chartDetails)
+    let image = this.chartDetails.backgroundImage;
+    this.chartDetails.backgroundImage = null;
+    this.chartService.saveChart(this.chartDetails,image)
     .then(
       res => {
         loading.present();

@@ -1,11 +1,12 @@
+import { ChartDetails } from './../data/chartDetails';
 import { AlertController } from 'ionic-angular';
 import { FacebookService } from './facebook.service';
 import { Injectable } from "@angular/core";
-import { ChartDetails } from "../data/chartDetails";
 import { AngularFireDatabase } from "angularfire2/database";
 import { AuthService } from "./auth.service";
 import 'rxjs/add/operator/map';
 import 'rxjs/Rx';
+import * as firebase from 'firebase';
 
 @Injectable()
 export class ChartService {
@@ -64,10 +65,16 @@ export class ChartService {
            }
        })
     }
-    saveChart(chartDetails : ChartDetails){
+    saveChart(chartDetails : ChartDetails,image){
         chartDetails.chartData = [0,0,0,0];
         chartDetails.owner = this.useruid;
-        return this.afDatabase.list(`users/${this.useruid}/userCharts`).push(chartDetails);
+        return this.afDatabase.list(`users/${this.useruid}/userCharts`).push(chartDetails).then(
+            res => {
+                if(image){
+                    this.saveImage(image,res.key);
+                }
+            }
+        );
     }
     voteFor(key,index,owner){
         this.afDatabase.list(`allCharts/${key}`).take(1).subscribe(res => {
@@ -132,5 +139,11 @@ export class ChartService {
                 return userCharts.length<4; 
             }
         )
+    }
+    saveImage(base64,key){
+        firebase.storage().ref().child(`users/${this.useruid}/${key}`).putString(base64,'data_url')
+        .then(res => {
+            this.afDatabase.object(`users/${this.useruid}/userCharts/${key}/backgroundImage`).set(res.downloadURL)
+        })
     }
 }

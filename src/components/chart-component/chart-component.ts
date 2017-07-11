@@ -27,8 +27,9 @@ export class ChartComponent implements OnInit, OnDestroy{
   constructor(private chartService : ChartService , private alertCtrl : AlertController, private modalCtrl : ModalController){};
 
   ngOnInit(){
-    // this.chartImagBackgroundPlugin()  
-    if(!this.chartDetails.backgroundImage){
+    // this.chartImagBackgroundPlugin()
+    console.log(this.chartDetails.backgroundImage);  
+    if(this.chartDetails.backgroundImage==null){
         this.backgroundColor = '#ffff00';
     }
     this.chartDetails.TitleColor = '#000000'
