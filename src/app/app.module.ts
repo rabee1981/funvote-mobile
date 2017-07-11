@@ -29,7 +29,8 @@ import { ColorPickerPage } from "../pages/color-picker/color-picker";
 import { ConnectivityService } from "../services/ConnectivityService";
 import { Network } from "@ionic-native/network";
 import { AdMob } from '@ionic-native/admob';
-import { ThousandPipe } from "../pipes/thousand.pipe"
+import { ThousandPipe } from "../pipes/thousand.pipe";
+import {Camera} from '@ionic-native/camera';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDuFurr7wtx_FFUbmnOMMcxKSOPwtnXKFg",
@@ -88,6 +89,7 @@ export const firebaseConfig = {
     Network,
     AdMob,
     SharingService,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -69,7 +69,7 @@ export class MyApp implements OnInit, OnDestroy{
 
   }
   ngOnInit(){
-    this.chartPlugins()
+    this.chartColorBackgroundPlugins();
     this.disconnectSubscription = this.network.onDisconnect().subscribe(() => {
       this.connectionAlert = this.alertCtrl.create({
     title: 'Connection error',
@@ -99,6 +99,21 @@ export class MyApp implements OnInit, OnDestroy{
     });
     }
   }
+  chartColorBackgroundPlugins(){
+    Chart.pluginService.register({
+    beforeDraw: (chart, easing) => {
+        if (chart.config.options.chartArea && chart.config.options.chartArea.backgroundColor) {
+            var helpers = Chart.helpers;
+            var ctx = chart.chart.ctx;
+            var chartArea = chart.chartArea;
+            ctx.save();
+            ctx.fillStyle = chart.config.options.chartArea.backgroundColor;
+            ctx.fillRect(0, 0, 600, 315);
+            ctx.restore();
+        }
+      }
+    });
+  }
   onLogout(){
     this.authService.logout();
     this.menuCtrl.close();
@@ -106,22 +121,6 @@ export class MyApp implements OnInit, OnDestroy{
   onLoad(page : any){
     this.nav.setRoot(page);
     this.menuCtrl.close();
-  }
-  chartPlugins(){
-    Chart.pluginService.register({
-    beforeDraw: (chart, easing) => {
-        if (chart.config.options.chartArea && chart.config.options.chartArea.backgroundColor) {
-            var helpers = Chart.helpers;
-            var ctx = chart.chart.ctx;
-            var chartArea = chart.chartArea;
-
-            ctx.save();
-            ctx.fillStyle = chart.config.options.chartArea.backgroundColor;
-            ctx.fillRect(0,0,600,315);
-            ctx.restore();
-        }
-      }
-    });
   }
   ngOnDestroy(): void {
     this.disconnectSubscription.unsubscribe();

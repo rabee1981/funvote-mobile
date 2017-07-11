@@ -2,8 +2,9 @@ import { ChartDetails } from './../../data/chartDetails';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ChartService } from "../../services/chart.service";
 import { AlertController, ModalController } from "ionic-angular";
-import { ColorPickerPage } from "../../pages/color-picker/color-picker";
 import { Subscription } from "rxjs/Subscription";
+
+ declare var Chart:any;
 
 @Component({
   selector: 'chart-component',
@@ -22,9 +23,14 @@ export class ChartComponent implements OnInit, OnDestroy{
   startFromZero= {xAxes:[],yAxes:[]};
   options={}
   currentData=[];
+  backgroundColor;
   constructor(private chartService : ChartService , private alertCtrl : AlertController, private modalCtrl : ModalController){};
 
   ngOnInit(){
+    // this.chartImagBackgroundPlugin()  
+    if(!this.chartDetails.backgroundImage){
+        this.backgroundColor = '#ffff00';
+    }
     this.chartDetails.TitleColor = '#000000'
     this.isvoteSubscribtion = this.chartService.isVote(this.chartDetails.$key)
     .subscribe(res => {
@@ -33,10 +39,17 @@ export class ChartComponent implements OnInit, OnDestroy{
     if(this.chartDetails.chartType=='bar'){
       this.titlePadding = 10
       this.startFromZero = {
-        xAxes:[],
+        xAxes:[{
+            ticks: {
+                fontStyle : 'bold',
+                fontColor: "#000000",
+            }
+        }],
         yAxes: [{
             ticks: {
-                beginAtZero: true
+                beginAtZero: true,
+                fontStyle : 'bold',
+                fontColor: "#000000",
             }
         }]
     }
@@ -70,7 +83,8 @@ export class ChartComponent implements OnInit, OnDestroy{
                         },
                         scales: this.startFromZero,
                         chartArea: {
-                            backgroundColor: '#ffffff'
+                            backgroundColor: this.backgroundColor,
+                            backgroundImage : this.chartDetails.backgroundImage
                         }
                       }
   this.colors = [
@@ -105,7 +119,32 @@ export class ChartComponent implements OnInit, OnDestroy{
         }
     }
     return true; 
-}
+  }
+  // chartImagBackgroundPlugin(){             
+  //     Chart.plugins.register({
+  //     beforeDraw: (chart, easing) => {
+  //       if (chart.config.options.chartArea && chart.config.options.chartArea.backgroundImage) {
+  //           var helpers = Chart.helpers;
+  //           var ctx = chart.chart.ctx;
+  //           var chartArea = chart.chartArea;
+  //           ctx.save();
+  //           ctx.fillStyle = chart.config.options.chartArea.backgroundImage;
+  //           if(this.chartDetails.backgroundImage){
+  //             var image = new Image();
+  //             image.onload = () => {
+  //               ctx.save();
+  //               ctx.globalAlpha = 0.2
+  //               ctx.drawImage(image, chartArea.left, chartArea.top, chartArea.right - chartArea.left, chartArea.bottom - chartArea.top);
+  //               ctx.globalCompositeOperation='source-over';
+  //               ctx.restore()
+  //             }              
+  //             image.src = this.chartDetails.backgroundImage;
+  //           }
+  //           ctx.restore();
+  //       }
+  //      }
+  //   });
+  // }
   ngOnDestroy(){
     this.isvoteSubscribtion.unsubscribe()
   }

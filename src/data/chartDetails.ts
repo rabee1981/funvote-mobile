@@ -10,4 +10,5 @@ export class ChartDetails{
     voteCount = 0;
     titleColor = '#000000';
     loveCount = 0;
+    backgroundImage=null;
 }

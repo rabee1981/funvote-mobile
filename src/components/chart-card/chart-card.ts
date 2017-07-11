@@ -8,6 +8,7 @@ import { AngularFireDatabase } from "angularfire2/database";
 import { AlertController } from "ionic-angular";
 import { AuthService } from "../../services/auth.service";
 import { ShareVia } from "../../data/shareVia.enum";
+import * as html2canvas from "html2canvas"
 
 @Component({
   selector: 'chart-card',
@@ -77,10 +78,20 @@ export class ChartCard implements OnDestroy {
   }
   onShare(){
     if(!this.justShow){
-      this.chartImage = (document.getElementById(this.chartDetails.$key) as HTMLCanvasElement).toDataURL('image/png');
-      this.sharingService.share(ShareVia.WHATSAPP,this.chartDetails.$key,this.chartImage)
-
+    //  this.chartImage = (document.getElementById(this.chartDetails.$key) as HTMLCanvasElement).toDataURL('image/jpg');
+      html2canvas(document.getElementById(this.chartDetails.$key)).then(
+        res => {
+          this.chartImage = res.toDataURL('image/png')
+          this.sharingService.share(ShareVia.FACEBOOK,this.chartDetails.$key,this.chartImage)
+        }
+      )
+    //  this.fbService.shareImage(this.chartDetails.$key,this.chartImage);
     }
+    // if(!this.justShow){
+    //   this.chartImage = (document.getElementById(this.chartDetails.$key) as HTMLCanvasElement).toDataURL('image/png');
+    //   this.sharingService.share(ShareVia.WHATSAPP,this.chartDetails.$key,this.chartImage)
+
+    // }
   }
     ngOnDestroy(): void {
      this.isFavSub.unsubscribe();

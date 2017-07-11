@@ -51,5 +51,7 @@
 </ion-list>
   </form>
   <button ion-button (click)="onShow()" [disabled]="!f.valid">Show</button>
+  <button ion-button (click)="loadImage()">Load Image</button>
+  <img *ngIf="this.chartDetails.backgroundImage"[src]="this.chartDetails.backgroundImage">
 </ion-content>
 

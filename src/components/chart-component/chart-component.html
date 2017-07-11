@@ -1,5 +1,6 @@
 <ion-card-content style="padding: 0px!important;">
     <canvas [id]="chartDetails.$key" baseChart width="600" height="315"
+            [ngStyle]="{'background-image': 'url(' + this.chartDetails?.backgroundImage + ')','background-repeat' : 'no-repeat','background-size' : 'cover'}"
             [legend]="!(this.chartDetails?.chartType==='bar')"
             [options]="options"
             [chartType]="chartDetails.chartType"
