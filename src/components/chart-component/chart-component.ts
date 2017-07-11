@@ -4,13 +4,12 @@ import { ChartService } from "../../services/chart.service";
 import { AlertController, ModalController } from "ionic-angular";
 import { Subscription } from "rxjs/Subscription";
 
- declare var Chart:any;
-
 @Component({
   selector: 'chart-component',
   templateUrl: 'chart-component.html'
 })
 export class ChartComponent implements OnInit, OnDestroy{
+  imageSub: Subscription;
   isvoteSubscribtion: Subscription;
   alert;
   @Input() chartDetails;
@@ -23,15 +22,28 @@ export class ChartComponent implements OnInit, OnDestroy{
   startFromZero= {xAxes:[],yAxes:[]};
   options={}
   currentData=[];
-  backgroundColor;
+  backgroundImage;
   constructor(private chartService : ChartService , private alertCtrl : AlertController, private modalCtrl : ModalController){};
 
-  ngOnInit(){
-    // this.chartImagBackgroundPlugin()
-    console.log(this.chartDetails.backgroundImage);  
-    if(this.chartDetails.backgroundImage==null){
-        this.backgroundColor = '#ffff00';
+  ngOnInit(){  
+    if(!this.justShow){
+      this.imageSub = this.chartService.getImageUrl(this.chartDetails.owner,this.chartDetails.$key).subscribe(
+      res => {
+        if(res.$value){
+          this.convertToDataURLviaCanvas(res.$value, "image/jpeg")
+              .then( base64Img => {
+                this.backgroundImage = base64Img
+              })
+              // this.backgroundImage = res.$value;
+        }else{
+              this.backgroundImage = "data:image/gif;base64,R0lGODlhWAJRAYAAAP///wAAACH5BAEAAAAALAAAAABYAlEBAAL/hI+py+0Po5y02ouz3rz7D4biSJbmiabqyrbuC8fyTNf2jef6zvf+DwwKh8Si8YhMKpfMpvMJjUqn1Kr1is1qt9yu9wsOi8fksvmMTqvX7Lb7DY/L5/S6/Y7P6/f8vv8PGCg4SFhoeIiYqLjI2Oj4CBkpOUlZaXmJmam5ydnp+QkaKjpKWmp6ipqqusra6voKGys7S1tre4ubq7vL2+v7CxwsPExcbHyMnKy8zNzs/AwdLT1NXW19jZ2tvc3d7f0NHi4+Tl5ufo6err7O3u7+Dh8vP09fb3+Pn6+/z9/v/w8woMCBBAsaPIgwocKFDBs6fAgxosSJFCtavIgxo8aN/xw7evwIMqTIkSRLmjyJMqXKlSxbunwJM6bMmTRr2ryJM6fOnTx7+vwJNKjQoUSLGj2KNKnSpUybOn0KNarUqVSrWr2KNavWrVy7ev0KNqzYsWTLmj2LNq3atWzbun0LN67cuXTr2r2LN6/evXz7+v0LOLDgwYQLGz6MOLHixYwbO34MObLkyZQrW76MObPmzZw7e/4MOrTo0aRLmz6NOrXq1axbu34NO7bs2bRr276NO7fu3bx7+/4NPLjw4cSLGz+OPLny5cybO38OPbr06dSrW7+OPbv27dy7e/8OPrz48eTLmz+PPr369ezbu38PP778+fTr27+PP7/+/fz7+6T/D2CAAg5IYIEGHohgggouyGCDDj4IYYQSTkhhhRZeiGGGGm7IYYcefghiiCKOSGKJJp6IYooqrshiiy6+CGOMMs5IY4023ohjjjruyGOPPv4IZJBCDklkkUYeiWSSSi7JZJNOPglllFJOSWWVVl6JZZZabslll15+CWaYYo5JZplmnolmmmquyWabbr4JZ5xyzklnnXbeiWeeeu7JZ59+/ilRAQA7";
+        }
+      }
+    )
+    }else{
+      this.backgroundImage = this.chartDetails.backgroundImage;
     }
+    
     this.chartDetails.TitleColor = '#000000'
     this.isvoteSubscribtion = this.chartService.isVote(this.chartDetails.$key)
     .subscribe(res => {
@@ -83,10 +95,6 @@ export class ChartComponent implements OnInit, OnDestroy{
                           fontColor : this.chartDetails.titleColor
                         },
                         scales: this.startFromZero,
-                        chartArea: {
-                            backgroundColor: this.backgroundColor,
-                            backgroundImage : this.chartDetails.backgroundImage
-                        }
                       }
   this.colors = [
                   {
@@ -121,32 +129,27 @@ export class ChartComponent implements OnInit, OnDestroy{
     }
     return true; 
   }
-  // chartImagBackgroundPlugin(){             
-  //     Chart.plugins.register({
-  //     beforeDraw: (chart, easing) => {
-  //       if (chart.config.options.chartArea && chart.config.options.chartArea.backgroundImage) {
-  //           var helpers = Chart.helpers;
-  //           var ctx = chart.chart.ctx;
-  //           var chartArea = chart.chartArea;
-  //           ctx.save();
-  //           ctx.fillStyle = chart.config.options.chartArea.backgroundImage;
-  //           if(this.chartDetails.backgroundImage){
-  //             var image = new Image();
-  //             image.onload = () => {
-  //               ctx.save();
-  //               ctx.globalAlpha = 0.2
-  //               ctx.drawImage(image, chartArea.left, chartArea.top, chartArea.right - chartArea.left, chartArea.bottom - chartArea.top);
-  //               ctx.globalCompositeOperation='source-over';
-  //               ctx.restore()
-  //             }              
-  //             image.src = this.chartDetails.backgroundImage;
-  //           }
-  //           ctx.restore();
-  //       }
-  //      }
-  //   });
-  // }
+  convertToDataURLviaCanvas(url, outputFormat){
+	return new Promise( (resolve, reject) => {
+		let img = new Image();
+		img.crossOrigin = 'Anonymous';
+		img.onload = function(){
+			let canvas = <HTMLCanvasElement> document.createElement('CANVAS'),
+			ctx = canvas.getContext('2d'),
+			dataURL;
+			canvas.height = 315;
+			canvas.width = 315;
+			ctx.drawImage(img, 0, 0);
+			dataURL = canvas.toDataURL(outputFormat);
+			//callback(dataURL);
+			canvas = null;
+			resolve(dataURL); 
+		};
+		img.src = url;
+	});
+}
   ngOnDestroy(){
     this.isvoteSubscribtion.unsubscribe()
+    this.imageSub.unsubscribe()
   }
 }

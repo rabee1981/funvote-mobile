@@ -71,6 +71,6 @@ export class HomePage implements OnInit,OnDestroy{
       this.isAllowCreateSubscription.unsubscribe();
     }
     trackByCreatedAt(index,chart){
-      return chart ? chart.createdAt : undefined;
+      return chart ? chart.backgroundImage : undefined;
     }
 }

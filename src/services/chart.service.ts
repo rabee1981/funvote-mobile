@@ -146,4 +146,7 @@ export class ChartService {
             this.afDatabase.object(`users/${this.useruid}/userCharts/${key}/backgroundImage`).set(res.downloadURL)
         })
     }
+    getImageUrl(owner,key){
+        return this.afDatabase.object(`users/${owner}/userCharts/${key}/backgroundImage`);
+    }
 }
