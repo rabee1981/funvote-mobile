@@ -1,3 +1,4 @@
+import { ImageProccessService } from './../services/imageProccess.service';
 import { SharingService } from './../services/sharing.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -90,6 +91,7 @@ export const firebaseConfig = {
     AdMob,
     SharingService,
     Camera,
+    ImageProccessService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

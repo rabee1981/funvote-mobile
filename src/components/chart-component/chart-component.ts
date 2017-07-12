@@ -1,3 +1,4 @@
+import { ImageProccessService } from './../../services/imageProccess.service';
 import { ChartDetails } from './../../data/chartDetails';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ChartService } from "../../services/chart.service";
@@ -23,7 +24,8 @@ export class ChartComponent implements OnInit, OnDestroy{
   options={}
   currentData=[];
   backgroundImage;
-  constructor(private chartService : ChartService , private alertCtrl : AlertController, private modalCtrl : ModalController){};
+  constructor(private chartService : ChartService , private alertCtrl : AlertController, private modalCtrl : ModalController
+              ,private imgService : ImageProccessService){};
 
   ngOnInit(){  
     if(!this.justShow){
@@ -34,7 +36,7 @@ export class ChartComponent implements OnInit, OnDestroy{
       this.imageSub = this.chartService.getImageUrl(this.chartDetails.owner,this.chartDetails.$key).subscribe(
       res => {
         if(res.$value){
-          this.convertToDataURLviaCanvas(res.$value, "image/jpeg")
+          this.imgService.convertToDataURLviaCanvas(res.$value, "image/jpeg")
               .then( base64Img => {
                 this.backgroundImage = base64Img
               })
@@ -130,28 +132,6 @@ export class ChartComponent implements OnInit, OnDestroy{
     }
     return true; 
   }
-  convertToDataURLviaCanvas(url, outputFormat){
-	return new Promise( (resolve, reject) => {
-		let img = new Image();
-		img.crossOrigin = 'Anonymous';
-		img.onload = () => {
-			let canvas = <HTMLCanvasElement> document.createElement('CANVAS'),
-			ctx = canvas.getContext('2d'),
-			dataURL;
-			canvas.height = 315;
-      canvas.width = 315;
-      ctx.globalAlpha = 0.5;
-      ctx.rect(0, 0, 315, 315);
-      ctx.fillStyle = "white";
-      ctx.fill()
-      ctx.drawImage(img,0, 0);
-			dataURL = canvas.toDataURL(outputFormat);
-			canvas = null;
-			resolve(dataURL); 
-		};
-		img.src = url;
-	});
-}
   ngOnDestroy(){
     if(!this.justShow){
         this.isvoteSubscribtion.unsubscribe()

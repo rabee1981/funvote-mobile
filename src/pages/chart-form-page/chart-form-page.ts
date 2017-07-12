@@ -1,3 +1,4 @@
+import { ImageProccessService } from './../../services/imageProccess.service';
 import { ColorPickerPage } from './../color-picker/color-picker';
 import { ModalController } from 'ionic-angular';
 import { Component } from '@angular/core';
@@ -25,7 +26,8 @@ export class ChartFormPage {
     chartDetails : ChartDetails = new ChartDetails();
     numberString : string[]=['1','2','3','4'];
     labelPlaceHolder = ['iPhone','HTC','Galaxy','OnePlus']
-  constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl : ModalController, private camera : Camera) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl : ModalController, private camera : Camera
+              ,private imgService : ImageProccessService) {
     this.chartDetails.chartLabels = [];
     this.chartDetails.chartColor = ['#EA1E63','#3F51B5','#009788','#7E5D4E'];
   }
@@ -66,7 +68,11 @@ export class ChartFormPage {
   loadImage(){
     this.camera.getPicture(this.options)
       .then(img => {
-        this.chartDetails.backgroundImage = 'data:image/jpeg;base64,'+img
+        let base64 = 'data:image/jpeg;base64,'+img
+        this.imgService.convertToDataURLviaCanvas(base64, "image/jpeg")
+              .then( base64WithOpacity => {
+                this.chartDetails.backgroundImage = base64WithOpacity
+              })
       })
   }
   
