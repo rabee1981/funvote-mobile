@@ -27,6 +27,10 @@ export class ChartComponent implements OnInit, OnDestroy{
 
   ngOnInit(){  
     if(!this.justShow){
+      this.isvoteSubscribtion = this.chartService.isVote(this.chartDetails.$key)
+      .subscribe(res => {
+        this.isvote = res.$value
+      })
       this.imageSub = this.chartService.getImageUrl(this.chartDetails.owner,this.chartDetails.$key).subscribe(
       res => {
         if(res.$value){
@@ -42,13 +46,10 @@ export class ChartComponent implements OnInit, OnDestroy{
     )
     }else{
       this.backgroundImage = this.chartDetails.backgroundImage;
+      this.isvote = false;
     }
     
     this.chartDetails.TitleColor = '#000000'
-    this.isvoteSubscribtion = this.chartService.isVote(this.chartDetails.$key)
-    .subscribe(res => {
-      this.isvote = res.$value
-    })
     if(this.chartDetails.chartType=='bar'){
       this.titlePadding = 10
       this.startFromZero = {
@@ -133,15 +134,18 @@ export class ChartComponent implements OnInit, OnDestroy{
 	return new Promise( (resolve, reject) => {
 		let img = new Image();
 		img.crossOrigin = 'Anonymous';
-		img.onload = function(){
+		img.onload = () => {
 			let canvas = <HTMLCanvasElement> document.createElement('CANVAS'),
 			ctx = canvas.getContext('2d'),
 			dataURL;
 			canvas.height = 315;
-			canvas.width = 315;
-			ctx.drawImage(img, 0, 0);
+      canvas.width = 315;
+      ctx.globalAlpha = 0.5;
+      ctx.rect(0, 0, 315, 315);
+      ctx.fillStyle = "white";
+      ctx.fill()
+      ctx.drawImage(img,0, 0);
 			dataURL = canvas.toDataURL(outputFormat);
-			//callback(dataURL);
 			canvas = null;
 			resolve(dataURL); 
 		};
@@ -149,7 +153,9 @@ export class ChartComponent implements OnInit, OnDestroy{
 	});
 }
   ngOnDestroy(){
-    this.isvoteSubscribtion.unsubscribe()
-    this.imageSub.unsubscribe()
+    if(!this.justShow){
+        this.isvoteSubscribtion.unsubscribe()
+        this.imageSub.unsubscribe()
+    }
   }
 }

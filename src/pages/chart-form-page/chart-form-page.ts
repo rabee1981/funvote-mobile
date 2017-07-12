@@ -12,7 +12,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 })
 export class ChartFormPage {
   options: CameraOptions = {
-      quality: 50,
+      quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
       mediaType: this.camera.MediaType.PICTURE,

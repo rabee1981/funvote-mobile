@@ -68,13 +68,7 @@ export class ChartService {
     saveChart(chartDetails : ChartDetails,image){
         chartDetails.chartData = [0,0,0,0];
         chartDetails.owner = this.useruid;
-        return this.afDatabase.list(`users/${this.useruid}/userCharts`).push(chartDetails).then(
-            res => {
-                if(image){
-                    this.saveImage(image,res.key);
-                }
-            }
-        );
+        return this.afDatabase.list(`users/${this.useruid}/userCharts`).push(chartDetails)
     }
     voteFor(key,index,owner){
         this.afDatabase.list(`allCharts/${key}`).take(1).subscribe(res => {
@@ -141,12 +135,12 @@ export class ChartService {
         )
     }
     saveImage(base64,key){
-        firebase.storage().ref().child(`users/${this.useruid}/${key}`).putString(base64,'data_url')
-        .then(res => {
-            this.afDatabase.object(`users/${this.useruid}/userCharts/${key}/backgroundImage`).set(res.downloadURL)
-        })
+        return firebase.storage().ref().child(`users/${this.useruid}/${key}`).putString(base64,'data_url')
     }
     getImageUrl(owner,key){
         return this.afDatabase.object(`users/${owner}/userCharts/${key}/backgroundImage`);
+    }
+    saveImageURLToDatabase(key,url){
+        return this.afDatabase.object(`users/${this.useruid}/userCharts/${key}/backgroundImage`).set(url)                        
     }
 }

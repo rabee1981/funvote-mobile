@@ -1,3 +1,4 @@
+import { HomePage } from './../home/home';
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ChartDetails } from "../../data/chartDetails";
@@ -10,7 +11,6 @@ import { AuthService } from "../../services/auth.service";
 })
 export class ShowChartPage {
   chartDetails : ChartDetails;
-  owner=this.authService.getCurrentUser().uid;
   constructor(public navCtrl: NavController, public navParams: NavParams, private chartService : ChartService,
               private loadingCtrl: LoadingController, private authService : AuthService) {
   }
@@ -33,20 +33,30 @@ export class ShowChartPage {
     }
   onSave(){
     let loading = this.loadingCtrl.create({
-      spinner : 'hide',
-      content : 'saved successfully'
+      spinner : 'bubbles',
+      content : 'saving your chart'
     })
+    loading.present();
     let image = this.chartDetails.backgroundImage;
     this.chartDetails.backgroundImage = null;
-    this.chartService.saveChart(this.chartDetails,image)
-    .then(
-      res => {
-        loading.present();
-        setTimeout(()=>{
-          loading.dismiss();
-          this.navCtrl.popToRoot();
-        },1500);
-      }
-    )
+    //save chart
+    this.chartService.saveChart(this.chartDetails,image).then(
+            chart => {
+                if(image){
+                  //save image to storage
+                    this.chartService.saveImage(image,chart.key)
+                    .then(imageRef => {
+                        // save imageurl to database
+                        this.chartService.saveImageURLToDatabase(chart.key,imageRef.downloadURL)
+                        .then(
+                          res => {
+                            loading.dismiss()
+                            this.navCtrl.popToRoot()
+                          }
+                        )
+                    })
+                }
+            }
+        );
   }
 }
