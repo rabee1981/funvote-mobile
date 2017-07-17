@@ -27,7 +27,6 @@
             <ion-option value="bar">Bar</ion-option>
             <ion-option value="pie">Pie</ion-option>
             <ion-option value="doughnut">Doughnut</ion-option>
-            <ion-option value="horizontalBar">Horizontal Bar</ion-option>
           </ion-select>
       </ion-item>
 
@@ -48,11 +47,14 @@
                 style="font-size : 18px;"
                 (click)="changeLabelColor(i)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
       </ion-item>
-
+      <ion-item>
+        Background Image : (optional)
+        <button *ngIf="!this.chartDetails.backgroundImage" ion-button outline item-end color="secondary" (click)="loadImage()">add</button>
+        <button *ngIf="this.chartDetails.backgroundImage" ion-button outline item-end color="danger" (click)="removeImage()">remove</button>
+      </ion-item>
 </ion-list>
   </form>
   <button ion-button (click)="onShow()" [disabled]="!f.valid">Show</button>
-  <button ion-button (click)="loadImage()">Load Image</button>
   <img *ngIf="this.chartDetails.backgroundImage"[src]="this.chartDetails.backgroundImage">
 </ion-content>
 

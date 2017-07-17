@@ -65,7 +65,7 @@ export class ChartService {
            }
        })
     }
-    saveChart(chartDetails : ChartDetails,image){
+    saveChart(chartDetails : ChartDetails){
         chartDetails.chartData = [0,0,0,0];
         chartDetails.owner = this.useruid;
         return this.afDatabase.list(`users/${this.useruid}/userCharts`).push(chartDetails)

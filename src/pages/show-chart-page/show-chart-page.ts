@@ -40,7 +40,7 @@ export class ShowChartPage {
     let image = this.chartDetails.backgroundImage;
     this.chartDetails.backgroundImage = null;
     //save chart
-    this.chartService.saveChart(this.chartDetails,image).then(
+    this.chartService.saveChart(this.chartDetails).then(
             chart => {
                 if(image){
                   //save image to storage
@@ -55,6 +55,9 @@ export class ShowChartPage {
                           }
                         )
                     })
+                }else{
+                      loading.dismiss()
+                      this.navCtrl.popToRoot()
                 }
             }
         );

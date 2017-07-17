@@ -4,6 +4,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ChartService } from "../../services/chart.service";
 import { AlertController, ModalController } from "ionic-angular";
 import { Subscription } from "rxjs/Subscription";
+import { Color } from "ng2-charts";
 
 @Component({
   selector: 'chart-component',
@@ -16,7 +17,7 @@ export class ChartComponent implements OnInit, OnDestroy{
   @Input() chartDetails;
   @Input() owner;
   @Input() justShow = false;
-  colors;
+  colors : Color[];
   chartData:number[]=[];
   isvote=true;
   titlePadding = 2;
@@ -27,7 +28,7 @@ export class ChartComponent implements OnInit, OnDestroy{
   constructor(private chartService : ChartService , private alertCtrl : AlertController, private modalCtrl : ModalController
               ,private imgService : ImageProccessService){};
 
-  ngOnInit(){  
+  ngOnInit(){
     if(!this.justShow){
       this.isvoteSubscribtion = this.chartService.isVote(this.chartDetails.$key)
       .subscribe(res => {
@@ -52,7 +53,7 @@ export class ChartComponent implements OnInit, OnDestroy{
     }
     
     this.chartDetails.TitleColor = '#000000'
-    if(this.chartDetails.chartType==='bar' || this.chartDetails.chartType==='horizontalBar'){
+    if(this.chartDetails.chartType==='bar'){
       this.titlePadding = 10
       this.startFromZero = {
         xAxes:[{
@@ -74,7 +75,12 @@ export class ChartComponent implements OnInit, OnDestroy{
     this.options = {
                         legend : {
                           reverse: true,
-                          labels:{padding:5,boxWidth:20}
+                          labels:{
+                            padding:5,
+                            boxWidth:20,
+                            fontStyle : 'bold',
+                            fontColor: "#000000"
+                          }
                         },
                         layout : {
                           padding : {
@@ -99,9 +105,10 @@ export class ChartComponent implements OnInit, OnDestroy{
                         },
                         scales: this.startFromZero,
                       }
-  this.colors = [
+  this.colors= [
                   {
-                    backgroundColor : this.chartDetails.chartColor
+                    backgroundColor : this.chartDetails.chartColor,
+                    borderWidth : 0.5
                   }
                   ]
   }
@@ -132,6 +139,14 @@ export class ChartComponent implements OnInit, OnDestroy{
     }
     return true; 
   }
+  // getColorsWithOpacity(colors : string[],opacity : string){
+  //   var colorsWithOpacity : string[]=[];
+  //   for(var color of colors){
+  //     var index = color.indexOf(')');
+  //     colorsWithOpacity.push(color.substring(0,index-3)+`,${opacity})`)
+  //   }
+  //   return colorsWithOpacity;
+  // }
   ngOnDestroy(){
     if(!this.justShow){
         this.isvoteSubscribtion.unsubscribe()
