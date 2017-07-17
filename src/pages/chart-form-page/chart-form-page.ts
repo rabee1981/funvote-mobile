@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { ImageProccessService } from './../../services/imageProccess.service';
 import { ColorPickerPage } from './../color-picker/color-picker';
 import { ModalController } from 'ionic-angular';
@@ -27,7 +28,7 @@ export class ChartFormPage {
     numberString : string[]=['1','2','3','4'];
     labelPlaceHolder = ['iPhone','HTC','Galaxy','OnePlus']
   constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl : ModalController, private camera : Camera
-              ,private imgService : ImageProccessService) {
+              ,private imgService : ImageProccessService, private authService : AuthService) {
     this.chartDetails.chartLabels = [];
     this.chartDetails.chartColor = ['#EA1E63','#3F51B5','#009788','#7E5D4E'];
   }
@@ -41,6 +42,7 @@ export class ChartFormPage {
       
   }
   onShow(){
+    this.chartDetails.owner = this.authService.getCurrentUser().uid;
     this.chartDetails.chartLabels.splice(this.valueAxisX.length);
     this.navCtrl.push(ShowChartPage,this.chartDetails);
   }

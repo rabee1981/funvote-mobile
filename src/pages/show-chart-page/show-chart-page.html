@@ -1,18 +1,16 @@
 
 <ion-header>
 
-  <ion-navbar color="primary"  style="height: 70px;">
+  <ion-navbar color="primary">
     <ion-title>showChartPage</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding class="color-content">
-  <h5 style="color : red">This is an example how your chart will looks like</h5>
-  <chart-card [chartDetails]="chartDetails" [justShow]="true" [owner]="owner"></chart-card>
-  <p>* click at the color chart to change the color</p>
+<ion-content class="color-content">
+  <chart-card [chartDetails]="chartDetails" [justShow]="true" [owner]="chartDetails.owner"></chart-card>
   <p>
-  <button ion-button (click)="onSave()">Save Chart</button>
+  <button ion-button (click)="onSave()">Create</button>
   </p>
 </ion-content>

@@ -11,10 +11,10 @@ export class ImageProccessService {
             dataURL;
             canvas.height = 315;
             canvas.width = 315;
-            ctx.globalAlpha = 0.5;
             ctx.rect(0, 0, 315, 315);
-            ctx.fillStyle = "white";
+            ctx.fillStyle = "#ffffff";
             ctx.fill()
+            ctx.globalAlpha = 0.5;
             ctx.drawImage(img,0, 0);
 			dataURL = canvas.toDataURL(outputFormat);
 			canvas = null;
