@@ -23,6 +23,7 @@ export class ChartFormPage {
       targetWidth: 315
     }
   titleColor="#000000"
+  selectedValue = '2';
   valueAxisX: number[] = [1,2];
     chartDetails : ChartDetails = new ChartDetails();
     numberString : string[]=['1','2','3','4'];

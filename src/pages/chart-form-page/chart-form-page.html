@@ -32,7 +32,7 @@
 
       <ion-item>
         <ion-label>Options Amount :</ion-label>
-          <ion-select  name="optionAmount" (ionChange)="onChange($event)" ngModel required>
+          <ion-select  name="optionAmount" (ionChange)="onChange($event)" [(ngModel)]="selectedValue" required>
             <ion-option value="2">2</ion-option>
             <ion-option value="3">3</ion-option>
             <ion-option value="4">4</ion-option>
