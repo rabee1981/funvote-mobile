@@ -17,7 +17,7 @@ export class AuthService {
       return this.facebook.login(permissions).then((res : any) => {
         const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
         return this.afAuth.auth.signInWithCredential(facebookCredential);
-      });
+      }).catch()
     } else {
       return this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
     }

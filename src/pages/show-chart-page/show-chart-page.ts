@@ -53,13 +53,13 @@ export class ShowChartPage {
                             loading.dismiss()
                             this.navCtrl.popToRoot()
                           }
-                        )
-                    })
+                        ).catch()
+                    }).catch()
                 }else{
                       loading.dismiss()
                       this.navCtrl.popToRoot()
                 }
             }
-        );
+        ).catch()
   }
 }

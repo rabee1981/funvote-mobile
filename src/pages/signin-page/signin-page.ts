@@ -14,6 +14,6 @@ export class SigninPage {
       spinner : 'bubbles',
     });
     loading.present();
-    this.authService.signInWithFacebook().then(res => loading.dismiss())
+    this.authService.signInWithFacebook().then(res => loading.dismiss()).catch()
   }
 }

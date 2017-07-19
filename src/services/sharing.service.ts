@@ -75,6 +75,6 @@ export class SharingService {
       this.socialSharing.shareViaWhatsApp(message,base64)
       .then(res => {
         this.loading.dismiss()
-      })
+      }).catch()
     }
 }

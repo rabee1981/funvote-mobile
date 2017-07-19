@@ -48,7 +48,7 @@ export class FacebookService {
                 }
             }
         )
-      })
+      }).catch()
     }
     saveUserInfo(firebaseUid){
       if(!this.platform.is('cordova')){

@@ -1,3 +1,4 @@
+import { AngularFireAuth } from 'angularfire2/auth';
 import { ChartDetails } from './../data/chartDetails';
 import { AlertController } from 'ionic-angular';
 import { FacebookService } from './facebook.service';
@@ -18,7 +19,7 @@ export class ChartService {
         
     })
     constructor(private afDatabase: AngularFireDatabase, private authService: AuthService, private fbService : FacebookService,
-                private alertCtrl : AlertController) { }
+                private alertCtrl : AlertController, private afAuth : AngularFireAuth) { }
     getUserCharts(){
         return this.afDatabase.list(`users/${this.useruid}/userCharts/`,{
           query : {
@@ -43,7 +44,7 @@ export class ChartService {
                                     if(index>=0){
                                         favCharts.splice(index,1)
                                     }
-                                })
+                                }).catch()
                             }
                             else{
                                 if(index<0){
@@ -155,6 +156,11 @@ export class ChartService {
                 )
             })
             return votersInfo;
+        })
+    }
+    storeDeviceToken(token){
+        this.afAuth.authState.subscribe(user => {
+            this.afDatabase.object(`users/${user.uid}/userInfo/deviceToken`).set(token)
         })
     }
 }

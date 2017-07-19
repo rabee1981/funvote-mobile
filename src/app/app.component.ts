@@ -63,7 +63,7 @@ export class MyApp implements OnInit, OnDestroy{
       
       statusBar.styleDefault();
       splashScreen.hide();
-      });
+      }).catch();
 
   }
   ngOnInit(){

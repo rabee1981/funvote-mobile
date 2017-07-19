@@ -33,6 +33,7 @@ import { Network } from "@ionic-native/network";
 import { AdMob } from '@ionic-native/admob';
 import { ThousandPipe } from "../pipes/thousand.pipe";
 import {Camera} from '@ionic-native/camera';
+import { Firebase } from '@ionic-native/firebase';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDuFurr7wtx_FFUbmnOMMcxKSOPwtnXKFg",
@@ -95,6 +96,7 @@ export const firebaseConfig = {
     SharingService,
     Camera,
     ImageProccessService,
+    Firebase,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

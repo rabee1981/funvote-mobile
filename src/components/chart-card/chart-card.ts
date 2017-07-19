@@ -84,7 +84,7 @@ export class ChartCard implements OnDestroy {
           this.chartImage = res.toDataURL('image/png')
           this.sharingService.share(ShareVia.FACEBOOK,this.chartDetails.$key,this.chartImage)
         }
-      )
+      ).catch()
     }
   }
   listVoters(event){

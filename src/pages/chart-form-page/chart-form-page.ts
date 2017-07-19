@@ -75,8 +75,8 @@ export class ChartFormPage {
         this.imgService.convertToDataURLviaCanvas(base64, "image/jpeg")
               .then( base64WithOpacity => {
                 this.chartDetails.backgroundImage = base64WithOpacity
-              })
-      })
+              }).catch()
+      }).catch()
   }
   removeImage(){
       this.chartDetails.backgroundImage = null;

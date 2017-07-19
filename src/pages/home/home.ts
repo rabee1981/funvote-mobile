@@ -1,12 +1,13 @@
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, LoadingController, AlertController, Platform } from 'ionic-angular';
 import { AuthService } from "../../services/auth.service";
 import { AngularFireAuth } from "angularfire2/auth";
 import { ChartFormPage } from "../chart-form-page/chart-form-page";
 import { ChartService } from "../../services/chart.service";
 import { AngularFireDatabase } from "angularfire2/database";
 import { ConnectivityService } from "../../services/ConnectivityService";
+import { Firebase } from '@ionic-native/firebase';
 
 @Component({
   selector: 'page-home',
@@ -24,7 +25,8 @@ export class HomePage implements OnInit,OnDestroy{
     });
   constructor(public navCtrl: NavController, private authService : AuthService ,private afAuth : AngularFireAuth
               ,private chartService : ChartService, private afDatabase: AngularFireDatabase, private loadingCtrl : LoadingController
-              ,private conService : ConnectivityService, private alertCtrl : AlertController) {
+              ,private conService : ConnectivityService, private alertCtrl : AlertController, private fbase : Firebase,
+              private platform : Platform) {
   }
   ngOnInit(){
     if(this.conService.isOnline()){
@@ -44,6 +46,33 @@ export class HomePage implements OnInit,OnDestroy{
       }
     )
   }
+  }
+  ionViewDidLoad(){
+    if(this.platform.is('ios')){
+      this.fbase.grantPermission().then(()=>{
+      this.fcmInit()
+    });
+    }else{
+      this.fcmInit()
+    }
+    
+    }
+  fcmInit(){
+    this.fbase.getToken().then(token=>{
+          this.chartService.storeDeviceToken(token);
+        })
+
+      this.fbase.onNotificationOpen().subscribe(data=>{
+        if(data.wasTapped){
+          console.log("Received in background");
+        } else {
+          console.log("Received in foreground");
+        };
+      })
+
+      this.fbase.onTokenRefresh().subscribe(token=>{
+        this.chartService.storeDeviceToken(token);
+      })
   }
   onCreateChart(){
     this.isAllowCreateSubscription = this.chartService.isAllowToCreate().take(1).subscribe(
