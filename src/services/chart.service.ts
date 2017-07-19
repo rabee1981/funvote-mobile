@@ -70,12 +70,12 @@ export class ChartService {
         chartDetails.owner = this.useruid;
         return this.afDatabase.list(`users/${this.useruid}/userCharts`).push(chartDetails)
     }
-    voteFor(key,index,owner){
+    voteFor(key,index,owner){ // voters is updated just in the user charts its not updates in the allCharts and friends charts
         this.afDatabase.list(`allCharts/${key}`).take(1).subscribe(res => {
             if(res.length<=0){
                 this.alert.present()
             }else{
-                this.afDatabase.object(`users/${this.useruid}/voted/${key}`).set(true);
+                this.afDatabase.object(`users/${owner}/userCharts/${key}/voters/${this.useruid}`).set(true);
                 this.afDatabase.object(`users/${owner}/userCharts/${key}/chartData/${index}`).$ref.transaction(
                     value => {
                         value++;
@@ -124,8 +124,8 @@ export class ChartService {
     isFavor(key){
         return this.afDatabase.object(`users/${this.useruid}/favorites/${key}`);
     }
-    isVote(key){
-        return this.afDatabase.object(`users/${this.useruid}/voted/${key}`);
+    isVote(key,owner){ // voters is updated just in the user charts its not updates in the allCharts and friends charts
+        return this.afDatabase.object(`users/${owner}/userCharts/${key}/voters/${this.useruid}`);
     }
     isAllowToCreate(){
         return this.afDatabase.list(`users/${this.useruid}/userCharts`).map(
@@ -142,5 +142,19 @@ export class ChartService {
     }
     saveImageURLToDatabase(key,url){
         return this.afDatabase.object(`users/${this.useruid}/userCharts/${key}/backgroundImage`).set(url)                        
+    }
+    getListOfVoters(key,owner){
+        return this.afDatabase.list(`users/${owner}/userCharts/${key}/voters`)
+        .map(uidList => {
+            let votersInfo=[];
+            uidList.forEach(useruid => {
+                this.afDatabase.object(`users/${useruid.$key}/userInfo`).take(1).subscribe(
+                    userInfo => {
+                        votersInfo.push({name :userInfo.name, photo : userInfo.pictureUrl});
+                    }
+                )
+            })
+            return votersInfo;
+        })
     }
 }

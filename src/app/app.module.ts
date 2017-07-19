@@ -1,3 +1,4 @@
+import { PopoverVotersListPage } from './../pages/popover-voters-list/popover-voters-list';
 import { ImageProccessService } from './../services/imageProccess.service';
 import { SharingService } from './../services/sharing.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -55,7 +56,8 @@ export const firebaseConfig = {
     FavPage,
     FriendsChartsPage,
     ColorPickerPage,
-    ThousandPipe
+    ThousandPipe,
+    PopoverVotersListPage
   ],
   imports: [
     BrowserModule,
@@ -75,7 +77,8 @@ export const firebaseConfig = {
     AllChartsPage,
     FavPage,
     FriendsChartsPage,
-    ColorPickerPage
+    ColorPickerPage,
+    PopoverVotersListPage
   ],
   providers: [
     StatusBar,

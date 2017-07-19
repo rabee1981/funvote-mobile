@@ -30,7 +30,7 @@ export class ChartComponent implements OnInit, OnDestroy{
 
   ngOnInit(){
     if(!this.justShow){
-      this.isvoteSubscribtion = this.chartService.isVote(this.chartDetails.$key)
+      this.isvoteSubscribtion = this.chartService.isVote(this.chartDetails.$key,this.chartDetails.owner)
       .subscribe(res => {
         this.isvote = res.$value
       })
@@ -113,7 +113,7 @@ export class ChartComponent implements OnInit, OnDestroy{
                   ]
   }
   public vote(index){
-    this.chartService.isVote(this.chartDetails.$key)
+    this.chartService.isVote(this.chartDetails.$key,this.chartDetails.owner)
     .take(1).subscribe(res => {
      if(!res.$value){
       if(!this.justShow){

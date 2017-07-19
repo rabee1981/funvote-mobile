@@ -12,7 +12,7 @@
   <ion-item>
     <ion-chip item-start>
         <ion-icon name="contacts" style="margin : 0;"></ion-icon>
-        <ion-label class="label-voters">{{-1*(votesCount | async)?.$value | thousand}} voters</ion-label>
+        <ion-label class="label-voters"><a (click)="listVoters($event)">{{-1*(votesCount | async)?.$value | thousand}} voters</a></ion-label>
     </ion-chip>
     <ion-badge item-end *ngIf="this.chartDetails.loveCount<0">
       {{-1*this.chartDetails.loveCount | thousand}}
