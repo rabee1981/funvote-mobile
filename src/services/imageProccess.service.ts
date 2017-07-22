@@ -9,13 +9,13 @@ export class ImageProccessService {
             let canvas = <HTMLCanvasElement> document.createElement('CANVAS'),
             ctx = canvas.getContext('2d'),
             dataURL;
-            canvas.height = 315;
+            canvas.height = 166;
             canvas.width = 315;
-            ctx.rect(0, 0, 315, 315);
+            ctx.rect(0, 0, 315, 166);
             ctx.fillStyle = "#E9EBEE";
             ctx.fill()
             ctx.globalAlpha = 0.5;
-            ctx.drawImage(img,0, 0);
+            ctx.drawImage(img,0, 0, img.width, img.height, 0, 0, 315, 166);
 			dataURL = canvas.toDataURL(outputFormat);
 			canvas = null;
 			resolve(dataURL); 

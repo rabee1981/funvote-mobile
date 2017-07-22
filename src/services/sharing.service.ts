@@ -45,7 +45,6 @@ export class SharingService {
       })
     }
     facebookSharing(base64,shortUrl,message){
-      if(this.platform.is('android')){
         this.socialSharing.shareViaFacebookWithPasteMessageHint(message,base64,shortUrl,'please click paste')
         .then(res => {
           this.loading.dismiss();
@@ -54,16 +53,6 @@ export class SharingService {
             this.loading.dismiss();
           }
         )
-      }else {
-          this.socialSharing.shareViaFacebook('please vote here',base64,shortUrl)
-        .then(res => {
-          this.loading.dismiss();
-        }).catch(
-          err => {
-            this.loading.dismiss();
-          }
-        )
-      }
     }
     instagramSharing(base64,shortUrl,message){
       //TODO
@@ -75,6 +64,9 @@ export class SharingService {
       this.socialSharing.shareViaWhatsApp(message,base64)
       .then(res => {
         this.loading.dismiss()
-      }).catch()
+      }).catch(
+        err => {
+          this.loading.dismiss()
+        })
     }
 }

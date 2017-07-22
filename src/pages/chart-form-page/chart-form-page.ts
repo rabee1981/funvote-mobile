@@ -14,13 +14,14 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 })
 export class ChartFormPage {
   options: CameraOptions = {
-      quality: 100,
+      quality: 75,
       destinationType: this.camera.DestinationType.DATA_URL,
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
       mediaType: this.camera.MediaType.PICTURE,
       encodingType: this.camera.EncodingType.JPEG,
-      targetHeight: 315,
-      targetWidth: 315
+      targetWidth: 315,
+      correctOrientation: true,
+
     }
   titleColor="#000000"
   selectedValue = '2';

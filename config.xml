@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.funvote516366" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>vote4fun</name>
-    <description>An awesome Ionic/Cordova app.</description>
+<widget id="com.mr.votefun" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Vote Fun</name>
+    <description>Vote Fun</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
     <content src="index.html" />
     <access origin="*" />
@@ -83,22 +83,22 @@
     </platform>
     <engine name="android" spec="^6.2.3" />
     <engine name="ios" spec="^4.4.0" />
-    <plugin name="com.phonegap.plugins.facebookconnect" spec="file:src/Facebook">
+    <plugin name="com.phonegap.plugins.facebookconnect" spec="/Users/mohamadrabee/Desktop/Facebook">
         <variable name="APP_ID" value="304302026657534" />
-        <variable name="APP_NAME" value="vote4fun" />
+        <variable name="APP_NAME" value="Vote Fun" />
     </plugin>
     <plugin name="cordova-plugin-admobpro" spec="^2.29.21" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1">
         <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value=" " />
     </plugin>
-    <plugin name="cordova-plugin-console" spec="^1.0.5" />
-    <plugin name="cordova-plugin-device" spec="^1.1.4" />
+    <plugin name="cordova-plugin-console" spec="^1.0.7" />
+    <plugin name="cordova-plugin-device" spec="^1.1.6" />
     <plugin name="cordova-plugin-firebase" spec="^0.1.22" />
     <plugin name="cordova-plugin-network-information" spec="^1.3.3" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
-    <plugin name="cordova-plugin-statusbar" spec="^2.2.2" />
-    <plugin name="cordova-plugin-whitelist" spec="^1.3.1" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.2.3" />
+    <plugin name="cordova-plugin-whitelist" spec="^1.3.2" />
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.1.8" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
 </widget>

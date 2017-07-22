@@ -83,8 +83,8 @@ export class HomePage implements OnInit,OnDestroy{
         }else{
           var alert = this.alertCtrl.create({
           title: 'Charts Limit',
-          subTitle: 'you reached the maximum amount of charts, please delete some charts to be able to add a new chart',
-          buttons: ['I will do']
+          subTitle: 'you reached the maximum amount of charts, please delete some charts to be able to add a new one',
+          buttons: ['GOT IT']
       });
       alert.present();
         }
