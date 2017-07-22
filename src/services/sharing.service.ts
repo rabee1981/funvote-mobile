@@ -61,12 +61,6 @@ export class SharingService {
       //TODO
     }
     whatsappSharing(base64,shortUrl,message){
-      this.socialSharing.shareViaWhatsApp(message,base64)
-      .then(res => {
-        this.loading.dismiss()
-      }).catch(
-        err => {
-          this.loading.dismiss()
-        })
+     //TODO
     }
 }

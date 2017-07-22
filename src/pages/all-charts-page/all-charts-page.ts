@@ -28,7 +28,8 @@ export class AllChartsPage implements OnInit, OnDestroy{
     this.loading.present();
     this.allChartsByNewestSub = this.afDatabase.list('allCharts',{
       query :{
-        orderByChild : 'createdAt'
+        orderByChild : 'createdAt',
+        limitToFirst : 20
       }}).subscribe(charts => {
         this.loading.dismiss();
         this.allChartsByNewest = charts
@@ -48,7 +49,8 @@ export class AllChartsPage implements OnInit, OnDestroy{
         this.allChartsByMostVotedSub.unsubscribe()
       this.allChartsByNewestSub = this.afDatabase.list('allCharts',{
       query :{
-        orderByChild : 'createdAt'
+        orderByChild : 'createdAt',
+        limitToFirst : 20
       }}).subscribe(charts => {
         this.loading.dismiss();
         this.allChartsByNewest = charts
@@ -59,6 +61,7 @@ export class AllChartsPage implements OnInit, OnDestroy{
       this.allChartsByMostVotedSub = this.afDatabase.list('allCharts',{
       query :{
         orderByChild : 'voteCount',
+        limitToFirst : 20
       }}).subscribe(charts => {
         this.loading.dismiss();
         this.allChartsByMostVoted = charts

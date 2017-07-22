@@ -82,7 +82,7 @@ export class ChartCard implements OnDestroy {
       html2canvas(document.getElementById(this.chartDetails.$key)).then(
         res => {
           this.chartImage = res.toDataURL('image/png')
-          this.sharingService.share(ShareVia.WHATSAPP,this.chartDetails.$key,this.chartImage)
+          this.sharingService.share(ShareVia.FACEBOOK,this.chartDetails.$key,this.chartImage)
         }
       ).catch()
     }

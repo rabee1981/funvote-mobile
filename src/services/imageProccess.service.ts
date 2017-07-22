@@ -14,7 +14,7 @@ export class ImageProccessService {
             ctx.rect(0, 0, 315, 166);
             ctx.fillStyle = "#E9EBEE";
             ctx.fill()
-            ctx.globalAlpha = 0.5;
+            ctx.globalAlpha = 0.6;
             ctx.drawImage(img,0, 0, img.width, img.height, 0, 0, 315, 166);
 			dataURL = canvas.toDataURL(outputFormat);
 			canvas = null;
