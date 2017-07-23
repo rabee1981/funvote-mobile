@@ -76,7 +76,7 @@ export class ChartService {
             if(res.length<=0){
                 this.alert.present()
             }else{
-                this.afDatabase.object(`users/${owner}/userCharts/${key}/voters/${this.useruid}`).set(true);
+         //       this.afDatabase.object(`users/${owner}/userCharts/${key}/voters/${this.useruid}`).set(true);
                 this.afDatabase.object(`users/${owner}/userCharts/${key}/chartData/${index}`).$ref.transaction(
                     value => {
                         value++;
