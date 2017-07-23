@@ -40,7 +40,7 @@ export class HomePage implements OnInit,OnDestroy{
         this.userChartsSubscription = this.chartService.getUserCharts().subscribe(
           charts => {
             this.loading.dismiss();
-            this.userCharts = charts;
+            this.userCharts = charts.slice();
           }
         )
       }
@@ -100,6 +100,13 @@ export class HomePage implements OnInit,OnDestroy{
       this.isAllowCreateSubscription.unsubscribe();
     }
     trackByCreatedAt(index,chart){
-      return chart ? chart.backgroundImage : undefined;
+   //   return chart ? chart.backgroundImage : undefined;
+      if(chart){
+        if(chart.backgroundImage){
+          return chart.backgroundImage
+        }
+        return chart.createdAt
+      }
+      return undefined;
     }
 }
