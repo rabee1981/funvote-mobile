@@ -52,7 +52,7 @@ export class ChartComponent implements OnInit, OnDestroy{
       this.isvote = false;
     }
     
-    this.chartDetails.TitleColor = '#000000'
+    this.chartDetails.titleColor = '#000000'
     if(this.chartDetails.chartType==='bar'){
       this.titlePadding = 10
       this.startFromZero = {
