@@ -13,8 +13,12 @@ import { AuthService } from "../../services/auth.service";
 })
 export class ShowChartPage {
   chartDetails : ChartDetails;
+  loading = this.loadingCtrl.create({
+      spinner : 'bubbles',
+      content : 'saving your chart'
+    })
   constructor(public navCtrl: NavController, public navParams: NavParams, private chartService : ChartService,
-              private loadingCtrl: LoadingController, private authService : AuthService, private authFire : AngularFireAuth, private http : Http) {
+              private loadingCtrl: LoadingController, private authService : AuthService, private afAuth : AngularFireAuth, private http : Http) {
   }
   ngOnInit(): void {
       this.chartDetails = this.navParams.data;
@@ -34,20 +38,16 @@ export class ShowChartPage {
       }
     }
   onSave(){
-    let loading = this.loadingCtrl.create({
-      spinner : 'bubbles',
-      content : 'saving your chart'
-    })
-    loading.present()
-    let image = this.chartDetails.backgroundImage;
+    this.loading.present().then(()=>{
+      let image = this.chartDetails.backgroundImage;
     this.chartDetails.backgroundImage = null;
     this.chartDetails.chartData = [0,0,0,0]
     let headers = new Headers();
-      this.authFire.auth.currentUser.getIdToken().then(
+      this.afAuth.auth.currentUser.getIdToken().then(
         token => {
           headers.append('Authorization', 'Bearer '+token)
-          this.http.post('https://us-central1-funvaotedata.cloudfunctions.net/storeChart',this.chartDetails,{headers : headers})
-          .take(1).subscribe(
+          this.http.post('https://us-central1-funvaotedata.cloudfunctions.net/storeChart',this.chartDetails,{headers : headers}).toPromise()
+          .then(
             (res : any) => {
               let chartkey = res._body
               if(image){
@@ -58,20 +58,21 @@ export class ShowChartPage {
                         this.chartService.saveImageURLToDatabase(chartkey,imageRef.downloadURL)
                         .then(
                           res => {
-                            loading.dismiss()
                             this.navCtrl.popToRoot()
                           }
                         ).catch()
                     }).catch()
                 }else{
-                      loading.dismiss()
-                      this.navCtrl.popToRoot()
+                    this.navCtrl.popToRoot()
                 }
             }
           )
         }
       ).then(err => {
-        loading.dismiss()
       })
+    })
+  }
+  ionViewWillLeave(){
+    this.loading.dismiss()
   }
 }

@@ -1,7 +1,7 @@
 import { Http , Headers} from '@angular/http';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ChartDetails } from './../data/chartDetails';
-import { AlertController } from 'ionic-angular';
+import { AlertController, LoadingController, LoadingOptions } from 'ionic-angular';
 import { FacebookService } from './facebook.service';
 import { Injectable } from "@angular/core";
 import { AngularFireDatabase } from "angularfire2/database";
@@ -20,7 +20,7 @@ export class ChartService {
         
     })
     constructor(private afDatabase: AngularFireDatabase, private authService: AuthService, private fbService : FacebookService,
-                private alertCtrl : AlertController, private afAuth : AngularFireAuth, private http : Http) { }
+                private alertCtrl : AlertController, private afAuth : AngularFireAuth, private http : Http, private loadingCtrl : LoadingController) { }
     getUserCharts(){
         return this.afDatabase.list(`users/${this.useruid}/userCharts/`,{
           query : {
@@ -67,11 +67,11 @@ export class ChartService {
            }
        })
     }
-    saveChart(chartDetails : ChartDetails){
-        chartDetails.chartData = [0,0,0,0];
-        chartDetails.owner = this.useruid;
-        return this.afDatabase.list(`users/${this.useruid}/userCharts`).push(chartDetails)
-    }
+    // saveChart(chartDetails : ChartDetails){
+    //     chartDetails.chartData = [0,0,0,0];
+    //     chartDetails.owner = this.useruid;
+    //     return this.afDatabase.list(`users/${this.useruid}/userCharts`).push(chartDetails)
+    // }
     voteFor(key,index,owner){ // voters is updated just in the user charts its not updates in the allCharts and friends charts
         this.afDatabase.list(`allCharts/${key}`).take(1).subscribe(res => {
             if(res.length<=0){
@@ -82,7 +82,7 @@ export class ChartService {
                     token => {
                     headers.append('Authorization', 'Bearer '+token)
                     this.http.get(`https://us-central1-funvaotedata.cloudfunctions.net/voteFor?owner=${owner}&key=${key}&index=${index}`,{headers : headers})
-                    .subscribe(res => {
+                    .take(1).subscribe(res => {
                         console.log(res);
                     })
 
@@ -94,8 +94,23 @@ export class ChartService {
         return this.afDatabase.object(`users/${owner}/userCharts/${key}/voteCount`)
     }
     deleteChart(key){
-        this.afDatabase.object(`users/${this.useruid}/userCharts/${key}`).remove();
-        this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).remove();
+        let loading  = this.loadingCtrl.create({
+            content : "deleting chart",
+            spinner : 'bubbles'
+        })
+        loading.present()
+        let headers = new Headers();
+            this.afAuth.auth.currentUser.getIdToken().then(
+                token => {
+                headers.append('Authorization', 'Bearer '+token)
+                this.http.get(`https://us-central1-funvaotedata.cloudfunctions.net/deleteChart?key=${key}`,{headers : headers})
+                .take(1).subscribe(res => {
+                    console.log(res);
+                    loading.dismiss()
+                })
+        })
+        //TODO
+    //    this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).remove();
     }
     updateFav(key,owner){
         this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).$ref.transaction(
