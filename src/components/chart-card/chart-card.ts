@@ -23,7 +23,7 @@ export class ChartCard implements OnDestroy {
   @Input() chartDetails;
   @Input() owner;
   @Input() justShow = false;
-  votesCount;
+  votesCount=0;
   ownerInfo;
   isFav;
   isUserChart;
@@ -38,11 +38,19 @@ export class ChartCard implements OnDestroy {
     );
     this.ownerInfo = this.afDatabase.object(`users/${this.owner}/userInfo`);
     this.isUserChart = (this.owner == this.authService.getCurrentUser().uid)
-    this.votesCountSub = this.chartService.getVoteCount(this.chartDetails.$key,this.chartDetails.owner).subscribe(
+    if(this.justShow){
+            // votesCount
+      this.votesCount = -1*this.chartDetails.chartData.reduce(
+        (a,b) => {
+          return a+b;
+        })
+    }else{
+      this.votesCountSub = this.chartService.getVoteCount(this.chartDetails.$key,this.chartDetails.owner).subscribe(
       count => {
         this.votesCount = count.$value
       }
     )
+    }
   }
   onDelete(){
     if(!this.justShow){
@@ -87,11 +95,13 @@ export class ChartCard implements OnDestroy {
     }
   }
   listVoters(event){
-    this.chartService.getListOfVoters(this.chartDetails.$key,this.chartDetails.owner)
-    .take(1)
-    .subscribe(res => {
+    if(!this.justShow){
+      this.chartService.getListOfVoters(this.chartDetails.$key,this.chartDetails.owner)
+      .take(1)
+       .subscribe(res => {
       this.navCtrl.push(PopoverVotersListPage, {votersList : res})
     })
+    }
   }
   onVoted(event){
     if(event){
@@ -99,7 +109,9 @@ export class ChartCard implements OnDestroy {
     }
   }
   ngOnDestroy(): void {
-     this.isFavSub.unsubscribe();
-     this.votesCountSub.unsubscribe()
+    if(this.isFavSub)
+      this.isFavSub.unsubscribe();
+    if(this.votesCountSub)
+      this.votesCountSub.unsubscribe()
   }
 }

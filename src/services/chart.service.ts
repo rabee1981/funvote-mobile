@@ -67,11 +67,6 @@ export class ChartService {
            }
        })
     }
-    // saveChart(chartDetails : ChartDetails){
-    //     chartDetails.chartData = [0,0,0,0];
-    //     chartDetails.owner = this.useruid;
-    //     return this.afDatabase.list(`users/${this.useruid}/userCharts`).push(chartDetails)
-    // }
     voteFor(key,index,owner){ // voters is updated just in the user charts its not updates in the allCharts and friends charts
         this.afDatabase.list(`allCharts/${key}`).take(1).subscribe(res => {
             if(res.length<=0){
@@ -85,7 +80,7 @@ export class ChartService {
                     .toPromise().then(res => {
                         console.log(res);
                     })
-        })
+                 })
             }
         })
     }
@@ -108,8 +103,9 @@ export class ChartService {
                     loading.dismiss()
                 })
         })
-        //TODO
-    //    this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).remove();
+        firebase.storage().ref(`users/${this.useruid}/${key}`).delete()
+        .then(()=> console.log('chart photo background was deleted'))
+        .catch(()=> console.log('this chart dont have photo background'))
     }
     updateFav(key,owner){
         this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).$ref.transaction(
