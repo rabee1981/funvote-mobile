@@ -1,3 +1,5 @@
+import { AngularFireAuth } from 'angularfire2/auth';
+import { Http , Headers} from '@angular/http';
 import { AuthService } from './../../services/auth.service';
 import { ImageProccessService } from './../../services/imageProccess.service';
 import { ColorPickerPage } from './../color-picker/color-picker';
@@ -30,7 +32,7 @@ export class ChartFormPage {
     numberString : string[]=['1','2','3','4'];
     labelPlaceHolder = ['iPhone','HTC','Galaxy','OnePlus']
   constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl : ModalController, private camera : Camera
-              ,private imgService : ImageProccessService, private authService : AuthService) {
+              ,private imgService : ImageProccessService, private authService : AuthService, private http : Http,private  authFire : AngularFireAuth) {
     this.chartDetails.chartLabels = [];
     this.chartDetails.chartColor = ['rgba(234, 30, 99, 0.8)','rgba(63, 81, 181, 0.8)','rgba(0, 151, 136, 0.8)','rgba(126, 93, 78, 0.8)'];
   }
@@ -82,5 +84,14 @@ export class ChartFormPage {
   removeImage(){
       this.chartDetails.backgroundImage = null;
     }
-  
+    test(){
+      let headers = new Headers();
+      this.authFire.auth.currentUser.getIdToken(true).then(
+        token => {
+          console.log(token);
+          headers.append('Authorization', 'Bearer '+token)
+          this.http.get('https://us-central1-funvaotedata.cloudfunctions.net/storeChart',{headers : headers}).subscribe((res : any) => console.log(res))
+        }
+      )
+    }
 }
