@@ -1,3 +1,4 @@
+import { Http , Headers} from '@angular/http';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ChartDetails } from './../data/chartDetails';
 import { AlertController } from 'ionic-angular';
@@ -19,7 +20,7 @@ export class ChartService {
         
     })
     constructor(private afDatabase: AngularFireDatabase, private authService: AuthService, private fbService : FacebookService,
-                private alertCtrl : AlertController, private afAuth : AngularFireAuth) { }
+                private alertCtrl : AlertController, private afAuth : AngularFireAuth, private http : Http) { }
     getUserCharts(){
         return this.afDatabase.list(`users/${this.useruid}/userCharts/`,{
           query : {
@@ -76,19 +77,16 @@ export class ChartService {
             if(res.length<=0){
                 this.alert.present()
             }else{
-         //       this.afDatabase.object(`users/${owner}/userCharts/${key}/voters/${this.useruid}`).set(true);
-                this.afDatabase.object(`users/${owner}/userCharts/${key}/chartData/${index}`).$ref.transaction(
-                    value => {
-                        value++;
-                        return value;
-                    }
-                )
-                this.afDatabase.object(`users/${owner}/userCharts/${key}/voteCount`).$ref.transaction(
-                    voteCount => {
-                        voteCount--;
-                        return voteCount;
-                    }
-                )
+                let headers = new Headers();
+                this.afAuth.auth.currentUser.getIdToken().then(
+                    token => {
+                    headers.append('Authorization', 'Bearer '+token)
+                    this.http.get(`https://us-central1-funvaotedata.cloudfunctions.net/voteFor?owner=${owner}&key=${key}&index=${index}`,{headers : headers})
+                    .subscribe(res => {
+                        console.log(res);
+                    })
+
+        })
             }
         })
     }

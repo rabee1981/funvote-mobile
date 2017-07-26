@@ -84,14 +84,4 @@ export class ChartFormPage {
   removeImage(){
       this.chartDetails.backgroundImage = null;
     }
-    test(){
-      let headers = new Headers();
-      this.authFire.auth.currentUser.getIdToken(true).then(
-        token => {
-          console.log(token);
-          headers.append('Authorization', 'Bearer '+token)
-          this.http.get('https://us-central1-funvaotedata.cloudfunctions.net/storeChart',{headers : headers}).subscribe((res : any) => console.log(res))
-        }
-      )
-    }
 }
