@@ -16,6 +16,7 @@ import * as html2canvas from "html2canvas"
   templateUrl: 'chart-card.html'
 })
 export class ChartCard implements OnDestroy {
+  votesCountSub: Subscription;
   isFavSub: Subscription;
   currentLoveCount: any;
   chartImage: any;
@@ -37,13 +38,11 @@ export class ChartCard implements OnDestroy {
     );
     this.ownerInfo = this.afDatabase.object(`users/${this.owner}/userInfo`);
     this.isUserChart = (this.owner == this.authService.getCurrentUser().uid)
-      // votesCount
-  this.votesCount = this.chartDetails.chartData.reduce(
-    (a,b) => {
-      return a+b;
-    }
-  )
-  this.votesCount = this.chartService.getVoteCount(this.chartDetails.$key,this.chartDetails.owner);
+    this.votesCountSub = this.chartService.getVoteCount(this.chartDetails.$key,this.chartDetails.owner).subscribe(
+      count => {
+        this.votesCount = count.$value
+      }
+    )
   }
   onDelete(){
     if(!this.justShow){
@@ -94,7 +93,13 @@ export class ChartCard implements OnDestroy {
       this.navCtrl.push(PopoverVotersListPage, {votersList : res})
     })
   }
-    ngOnDestroy(): void {
+  onVoted(event){
+    if(event){
+      this.votesCount--
+    }
+  }
+  ngOnDestroy(): void {
      this.isFavSub.unsubscribe();
+     this.votesCountSub.unsubscribe()
   }
 }

@@ -82,10 +82,9 @@ export class ChartService {
                     token => {
                     headers.append('Authorization', 'Bearer '+token)
                     this.http.get(`https://us-central1-funvaotedata.cloudfunctions.net/voteFor?owner=${owner}&key=${key}&index=${index}`,{headers : headers})
-                    .take(1).subscribe(res => {
+                    .toPromise().then(res => {
                         console.log(res);
                     })
-
         })
             }
         })

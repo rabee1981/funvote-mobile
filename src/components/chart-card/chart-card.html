@@ -7,12 +7,12 @@
         <small>{{(ownerInfo | async)?.name}}</small>
       </ion-item>
   </ion-buttons>
-  <chart-component [chartDetails]="chartDetails" [owner]="owner" [justShow]="justShow"></chart-component>
+  <chart-component (onVoted)="onVoted($event)" [chartDetails]="chartDetails" [owner]="owner" [justShow]="justShow"></chart-component>
   <ion-card-content style="padding: 0px!important;">
   <ion-item>
     <ion-chip item-start>
         <ion-icon name="contacts" style="margin : 0;"></ion-icon>
-        <ion-label class="label-voters"><a (click)="listVoters($event)">{{-1*(votesCount | async)?.$value | thousand}} voters</a></ion-label>
+        <ion-label class="label-voters"><a (click)="listVoters($event)">{{-1*(votesCount | thousand)}} voters</a></ion-label>
     </ion-chip>
     <ion-badge item-end *ngIf="this.chartDetails.loveCount<0">
       {{-1*this.chartDetails.loveCount | thousand}}
