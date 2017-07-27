@@ -168,7 +168,7 @@ export class ChartService {
     }
     storeDeviceToken(token){
         this.afAuth.authState.subscribe(user => {
-            this.afDatabase.object(`users/${user.uid}/userInfo/deviceToken`).set(token)
+            this.afDatabase.object(`users/${user.uid}/deviceToken`).set(token)
         })
     }
 }
