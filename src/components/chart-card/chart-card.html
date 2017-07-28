@@ -14,9 +14,9 @@
         <ion-icon name="contacts" style="margin : 0;"></ion-icon>
         <ion-label class="label-voters"><a (click)="listVoters($event)">{{-1*(votesCount | thousand)}} voters</a></ion-label>
     </ion-chip>
-    <ion-badge item-end *ngIf="this.chartDetails.loveCount<0">
-      {{-1*this.chartDetails.loveCount | thousand}}
-      <ion-icon name="icon" ios="ios-heart" md="md-heart" style="color :#FFD700;font-size : 0.9em!important;"></ion-icon>
+    <ion-badge item-end *ngIf="followerCount<0">
+      {{-1*(followerCount | thousand)}}
+      <ion-icon name="icon" ios="ios-star" md="md-star" style="color :#FFD700;font-size : 1em!important;"></ion-icon>
       </ion-badge>
   </ion-item>
   </ion-card-content>
@@ -25,39 +25,39 @@
     <ion-col col-4 *ngIf="isUserChart" text-center>
       <button ion-button icon-left clear small (click)="onShare()">
         <ion-icon name="share-alt"></ion-icon>
-        <div>Share</div>
+        <ion-label class="text-icon">Share</ion-label>
       </button>
     </ion-col>
     <ion-col col-4 *ngIf="isUserChart" text-center>
       <button ion-button icon-left clear small (click)="favorities()">
-        <ion-icon *ngIf="!isFav;else other_content" ios="ios-heart-outline" md="md-heart-outline"></ion-icon>
+        <ion-icon *ngIf="!isFav;else other_content" ios="ios-star-outline" md="md-star-outline"></ion-icon>
         <ng-template #other_content>
-          <ion-icon ios="ios-heart" md="md-heart" style="color :#FFD700"></ion-icon>
+          <ion-icon ios="ios-star" md="md-star" style="color :#FFD700"></ion-icon>
           </ng-template>
-        <div>love it</div>
+        <ion-label class="text-icon">follow</ion-label>
       </button>
     </ion-col>
     <!-- other pages -->
     <ion-col col-6 offset-1 *ngIf="!isUserChart">
       <button ion-button icon-left clear small (click)="onShare()">
         <ion-icon name="share-alt"></ion-icon>
-        <div>Share</div>
+        <ion-label class="text-icon">Share</ion-label>
       </button>
     </ion-col>
     <ion-col col-4 *ngIf="!isUserChart">
       <button ion-button icon-left clear small (click)="favorities()">
-        <ion-icon *ngIf="!isFav;else other_content" ios="ios-heart-outline" md="md-heart-outline"></ion-icon>
+        <ion-icon *ngIf="!isFav;else other_content" ios="ios-star-outline" md="md-star-outline"></ion-icon>
         <ng-template #other_content>
-          <ion-icon ios="ios-heart" md="md-heart" style="color :#FFD700"></ion-icon>
+          <ion-icon ios="ios-star" md="md-star" style="color :#FFD700"></ion-icon>
           </ng-template>
-        <div>love it</div>
+        <ion-label class="text-icon">follow</ion-label>
       </button>
     </ion-col>
     <!-- user charts -->
     <ion-col col-4 *ngIf="isUserChart" text-center>
       <button ion-button icon-left clear small (click)="onDelete()">
         <ion-icon name="trash"></ion-icon>
-        <div>Delete</div>
+        <ion-label class="text-icon">Delete</ion-label>
       </button>
     </ion-col>
   </ion-row>

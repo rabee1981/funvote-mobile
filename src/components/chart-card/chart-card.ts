@@ -16,9 +16,10 @@ import * as html2canvas from "html2canvas"
   templateUrl: 'chart-card.html'
 })
 export class ChartCard implements OnDestroy {
+  followerCount=0;
+  followerCountSub: Subscription;
   votesCountSub: Subscription;
   isFavSub: Subscription;
-  currentLoveCount: any;
   chartImage: any;
   @Input() chartDetails;
   @Input() owner;
@@ -50,6 +51,12 @@ export class ChartCard implements OnDestroy {
         this.votesCount = count.$value
       }
     )
+      this.followerCountSub = this.chartService.getFollwerCount(this.chartDetails.$key,this.chartDetails.owner).subscribe(
+        count => {
+          this.followerCount = count.$value
+          console.log(this.followerCount);
+        }
+      )
     }
   }
   onDelete(){
@@ -76,12 +83,12 @@ export class ChartCard implements OnDestroy {
   favorities(){
     if(!this.justShow){
       if(this.isFav){
-        this.chartDetails.loveCount++;
+        this.followerCount++;
       }else{
-        this.chartDetails.loveCount--;
+        this.followerCount--;
       }
-      this.chartService.updateFav(this.chartDetails.$key,this.chartDetails.owner);
-      this.currentLoveCount = this.chartDetails.loveCount;
+      this.isFav = ! this.isFav
+      this.chartService.followChart(this.chartDetails.$key,this.chartDetails.owner);
     }
   }
   onShare(){
@@ -113,5 +120,7 @@ export class ChartCard implements OnDestroy {
       this.isFavSub.unsubscribe();
     if(this.votesCountSub)
       this.votesCountSub.unsubscribe()
+    if(this.followerCountSub)
+      this.followerCountSub.unsubscribe()
   }
 }

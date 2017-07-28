@@ -49,11 +49,13 @@ export class MyApp implements OnInit, OnDestroy{
         adId : bannerId,
         position : 8,
         autoShow: true, 
+        overlap : false,
         isTesting:true  // TODO: remove this line when release
       }
       let adMobInterstitialOptions : AdMobOptions = {
         adId : interstitialId,
-        autoShow: true, 
+        autoShow: true,
+        orientationRenew: true, 
         isTesting:true  // TODO: remove this line when release
       }
       adMob.prepareInterstitial(adMobInterstitialOptions)

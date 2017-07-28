@@ -30,7 +30,7 @@ export class ChartService {
         })
     }
     getFavoritesCharts(){ 
-        return this.afDatabase.list(`users/${this.useruid}/favorites`)
+        return this.afDatabase.list(`users/${this.useruid}/follow`)
                 .map(favKeyArray => {
                     let favCharts = []
                     for(let f of favKeyArray){
@@ -40,12 +40,9 @@ export class ChartService {
                             })
                             //favorite chart was removed
                             if(res.$value===null){
-                                this.afDatabase.object(`users/${this.useruid}/favorites/${res.$key}`).remove()
-                                .then(response => {
-                                    if(index>=0){
-                                        favCharts.splice(index,1)
-                                    }
-                                }).catch()
+                                if(index>=0){
+                                    favCharts.splice(index,1)
+                                }
                             }
                             else{
                                 if(index<0){
@@ -78,7 +75,7 @@ export class ChartService {
                     headers.append('Authorization', 'Bearer '+token)
                     this.http.get(`https://us-central1-funvaotedata.cloudfunctions.net/voteFor?owner=${owner}&key=${key}&index=${index}`,{headers : headers})
                     .toPromise().then(res => {
-                        console.log(res);
+                     //   console.log(res);
                     })
                  })
             }
@@ -86,6 +83,9 @@ export class ChartService {
     }
     getVoteCount(key,owner){
         return this.afDatabase.object(`users/${owner}/userCharts/${key}/voteCount`)
+    }
+    getFollwerCount(key,owner){
+        return this.afDatabase.object(`users/${owner}/userCharts/${key}/followerCount`)
     }
     deleteChart(key){
         let loading  = this.loadingCtrl.create({
@@ -99,7 +99,6 @@ export class ChartService {
                 headers.append('Authorization', 'Bearer '+token)
                 this.http.get(`https://us-central1-funvaotedata.cloudfunctions.net/deleteChart?key=${key}`,{headers : headers})
                 .take(1).subscribe(res => {
-                    console.log(res);
                     loading.dismiss()
                 })
         })
@@ -107,31 +106,19 @@ export class ChartService {
         .then(()=> console.log('chart photo background was deleted'))
         .catch(()=> console.log('this chart dont have photo background'))
     }
-    updateFav(key,owner){
-        this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).$ref.transaction(
-            currentValue => {
-                if(currentValue===null){
-                    this.afDatabase.object(`users/${owner}/userCharts/${key}/loveCount`).$ref.transaction(
-                        count => {
-                            count--;
-                            return count;
-                        }
-                    )
-                    this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).set(true);
-                }else{
-                    this.afDatabase.object(`users/${this.useruid}/favorites/${key}`).remove()
-                    this.afDatabase.object(`users/${owner}/userCharts/${key}/loveCount`).$ref.transaction(
-                        count => {
-                            count++;
-                            return count;
-                        }
-                    )
-                }
-            }
-        )
+    followChart(key,owner){
+        let headers = new Headers();
+                this.afAuth.auth.currentUser.getIdToken().then(
+                    token => {
+                    headers.append('Authorization', 'Bearer '+token)
+                    this.http.get(`https://us-central1-funvaotedata.cloudfunctions.net/followChart?owner=${owner}&key=${key}`,{headers : headers})
+                    .toPromise().then(res => {
+                     //   console.log(res);
+                    })
+                 })
     }
     isFavor(key){
-        return this.afDatabase.object(`users/${this.useruid}/favorites/${key}`);
+        return this.afDatabase.object(`users/${this.useruid}/follow/${key}`);
     }
     isVote(key,owner){ // voters is updated just in the user charts its not updates in the allCharts and friends charts
         return this.afDatabase.object(`users/${owner}/userCharts/${key}/voters/${this.useruid}`);
