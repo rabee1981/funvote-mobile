@@ -47,19 +47,18 @@ export class MyApp implements OnInit, OnDestroy{
       }
       let adMobBannerOptions : AdMobOptions = {
         adId : bannerId,
-        position : 8,
+        position : adMob.AD_POSITION.BOTTOM_CENTER,
         autoShow: true, 
-        overlap : false,
+        orientationRenew: false,
         isTesting:true  // TODO: remove this line when release
       }
       let adMobInterstitialOptions : AdMobOptions = {
         adId : interstitialId,
-        autoShow: true,
-        orientationRenew: true, 
+        autoShow: true, 
         isTesting:true  // TODO: remove this line when release
       }
-      adMob.prepareInterstitial(adMobInterstitialOptions)
-      .catch(err=>{console.log(err)})
+      // adMob.prepareInterstitial(adMobInterstitialOptions)
+      // .catch(err=>{console.log(err)})
       adMob.createBanner(adMobBannerOptions)
       .catch(err=>console.log(err))
       

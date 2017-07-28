@@ -1,3 +1,4 @@
+import { FollowersListPage } from './../../pages/followers-list/followers-list';
 import { PopoverVotersListPage } from './../../pages/popover-voters-list/popover-voters-list';
 import { Subscription } from 'rxjs/Subscription';
 import { SharingService } from './../../services/sharing.service';
@@ -54,7 +55,6 @@ export class ChartCard implements OnDestroy {
       this.followerCountSub = this.chartService.getFollwerCount(this.chartDetails.$key,this.chartDetails.owner).subscribe(
         count => {
           this.followerCount = count.$value
-          console.log(this.followerCount);
         }
       )
     }
@@ -101,12 +101,21 @@ export class ChartCard implements OnDestroy {
       ).catch()
     }
   }
-  listVoters(event){
+  listVoters(){
     if(!this.justShow){
       this.chartService.getListOfVoters(this.chartDetails.$key,this.chartDetails.owner)
       .take(1)
        .subscribe(res => {
       this.navCtrl.push(PopoverVotersListPage, {votersList : res})
+    })
+    }
+  }
+  listFollowers(){
+    if(!this.justShow){
+      this.chartService.getListOfFollowers(this.chartDetails.$key,this.chartDetails.owner)
+      .take(1)
+       .subscribe(res => {
+      this.navCtrl.push(FollowersListPage, {followersList : res})
     })
     }
   }

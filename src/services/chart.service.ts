@@ -139,6 +139,20 @@ export class ChartService {
     saveImageURLToDatabase(key,url){
         return this.afDatabase.object(`users/${this.useruid}/userCharts/${key}/backgroundImage`).set(url)                        
     }
+    getListOfFollowers(key,owner){
+        return this.afDatabase.list(`users/${owner}/userCharts/${key}/followers`)
+        .map(uidList => {
+            let followersInfo=[];
+            uidList.forEach(useruid => {
+                this.afDatabase.object(`users/${useruid.$key}/userInfo`).take(1).subscribe(
+                    userInfo => {
+                        followersInfo.push({name :userInfo.name, photo : userInfo.pictureUrl});
+                    }
+                )
+            })
+            return followersInfo;
+        })
+    }
     getListOfVoters(key,owner){
         return this.afDatabase.list(`users/${owner}/userCharts/${key}/voters`)
         .map(uidList => {
