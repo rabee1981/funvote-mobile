@@ -22,7 +22,6 @@
         "@angular/platform-browser-dynamic": "4.1.2",
         "@ionic-native/admob": "^3.12.1",
         "@ionic-native/camera": "^3.12.1",
-        "@ionic-native/clipboard": "^3.12.1",
         "@ionic-native/core": "3.10.2",
         "@ionic-native/facebook": "^3.12.1",
         "@ionic-native/firebase": "^4.0.1",

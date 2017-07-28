@@ -52,7 +52,7 @@ export class ChartCard implements OnDestroy {
         this.votesCount = count.$value
       }
     )
-      this.followerCountSub = this.chartService.getFollwerCount(this.chartDetails.$key,this.chartDetails.owner).subscribe(
+      this.followerCountSub = this.chartService.getFollowerCount(this.chartDetails.$key,this.chartDetails.owner).subscribe(
         count => {
           this.followerCount = count.$value
         }

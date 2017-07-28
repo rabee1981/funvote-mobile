@@ -84,7 +84,7 @@ export class ChartService {
     getVoteCount(key,owner){
         return this.afDatabase.object(`users/${owner}/userCharts/${key}/voteCount`)
     }
-    getFollwerCount(key,owner){
+    getFollowerCount(key,owner){
         return this.afDatabase.object(`users/${owner}/userCharts/${key}/followerCount`)
     }
     deleteChart(key){
