@@ -36,6 +36,7 @@ import { AdMob } from '@ionic-native/admob';
 import { ThousandPipe } from "../pipes/thousand.pipe";
 import {Camera} from '@ionic-native/camera';
 import { Firebase } from '@ionic-native/firebase';
+import { IonicStorageModule } from '@ionic/storage';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDuFurr7wtx_FFUbmnOMMcxKSOPwtnXKFg",
@@ -68,6 +69,7 @@ export const firebaseConfig = {
     BrowserModule,
     ChartsModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     HttpModule

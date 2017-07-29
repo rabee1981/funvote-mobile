@@ -6,9 +6,10 @@ import { IonicPage, NavController, NavParams, ViewController, Platform } from 'i
   templateUrl: 'sharing-instruction.html',
 })
 export class SharingInstructionPage {
+  toShow = false;
   constructor(private viewCtrl : ViewController, public navParams: NavParams, private platform : Platform) {
   }
   onOk(){
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss(this.toShow);
   }
 }

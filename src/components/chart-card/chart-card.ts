@@ -12,6 +12,7 @@ import { NavController, AlertController, PopoverController, ModalController } fr
 import { AuthService } from "../../services/auth.service";
 import { ShareVia } from "../../data/shareVia.enum";
 import * as html2canvas from "html2canvas"
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'chart-card',
@@ -33,7 +34,7 @@ export class ChartCard implements OnDestroy {
 
   constructor(private chartService : ChartService, private fbService : FacebookService, private afAuth : AngularFireAuth, private afDatabase : AngularFireDatabase,
               private alertCtrl : AlertController,private authService : AuthService, private sharingService : SharingService, private navCtrl : NavController
-              ,private modalCtrl : ModalController) {}
+              ,private modalCtrl : ModalController, private storage: Storage) {}
   ngOnInit(){
     this.isFavSub = this.chartService.isFavor(this.chartDetails.$key).subscribe(
       res => {
@@ -95,16 +96,32 @@ export class ChartCard implements OnDestroy {
   }
   onShare(){
     if(!this.justShow){
-      const sharingInstruction = this.modalCtrl.create(SharingInstructionPage);
-      sharingInstruction.present();
-      sharingInstruction.onDidDismiss(()=>{
-        html2canvas(document.getElementById(this.chartDetails.$key)).then(
-        res => {
-          this.chartImage = res.toDataURL('image/png')
-          this.sharingService.share(ShareVia.FACEBOOK,this.chartDetails.$key,this.chartImage)
+      this.storage.get('showInstruction').then(
+        toShow => {
+          console.log('*********************',toShow);
+          if(toShow){
+            html2canvas(document.getElementById(this.chartDetails.$key)).then(
+              res => {
+                this.chartImage = res.toDataURL('image/png')
+                this.sharingService.share(ShareVia.FACEBOOK,this.chartDetails.$key,this.chartImage)
+              }
+            ).catch()
+          }else{
+            let sharingInstruction = this.modalCtrl.create(SharingInstructionPage);
+            sharingInstruction.present();
+            sharingInstruction.onDidDismiss((isShow)=>{
+              this.storage.set('showInstruction',isShow)
+              console.log('&&&&&&&&&&&&&&&&&&&&&',isShow)
+              html2canvas(document.getElementById(this.chartDetails.$key)).then(
+              res => {
+                this.chartImage = res.toDataURL('image/png')
+                this.sharingService.share(ShareVia.FACEBOOK,this.chartDetails.$key,this.chartImage)
+              }
+            ).catch()
+            })
+          }
         }
-      ).catch()
-      })
+      )
     }
   }
   listVoters(){
