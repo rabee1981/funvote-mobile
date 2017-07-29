@@ -22,7 +22,7 @@ export class SharingService {
       .subscribe(
         (res : any)=>{
        var shortUrl = JSON.parse(res._body).id;
-       var message = 'please vote here '+shortUrl;
+       var message = shortUrl;
        switch(via){
          case ShareVia.FACEBOOK : {
            this.facebookSharing(base64,shortUrl,message)

@@ -1,3 +1,4 @@
+import { SharingInstructionPage } from './../../pages/sharing-instruction/sharing-instruction';
 import { FollowersListPage } from './../../pages/followers-list/followers-list';
 import { PopoverVotersListPage } from './../../pages/popover-voters-list/popover-voters-list';
 import { Subscription } from 'rxjs/Subscription';
@@ -7,7 +8,7 @@ import { ChartService } from "../../services/chart.service";
 import { FacebookService } from "../../services/facebook.service";
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
-import { NavController, AlertController, PopoverController } from "ionic-angular";
+import { NavController, AlertController, PopoverController, ModalController } from "ionic-angular";
 import { AuthService } from "../../services/auth.service";
 import { ShareVia } from "../../data/shareVia.enum";
 import * as html2canvas from "html2canvas"
@@ -31,7 +32,8 @@ export class ChartCard implements OnDestroy {
   isUserChart;
 
   constructor(private chartService : ChartService, private fbService : FacebookService, private afAuth : AngularFireAuth, private afDatabase : AngularFireDatabase,
-              private alertCtrl : AlertController,private authService : AuthService, private sharingService : SharingService, private navCtrl : NavController) {}
+              private alertCtrl : AlertController,private authService : AuthService, private sharingService : SharingService, private navCtrl : NavController
+              ,private modalCtrl : ModalController) {}
   ngOnInit(){
     this.isFavSub = this.chartService.isFavor(this.chartDetails.$key).subscribe(
       res => {
@@ -93,12 +95,16 @@ export class ChartCard implements OnDestroy {
   }
   onShare(){
     if(!this.justShow){
-      html2canvas(document.getElementById(this.chartDetails.$key)).then(
+      const sharingInstruction = this.modalCtrl.create(SharingInstructionPage);
+      sharingInstruction.present();
+      sharingInstruction.onDidDismiss(()=>{
+        html2canvas(document.getElementById(this.chartDetails.$key)).then(
         res => {
           this.chartImage = res.toDataURL('image/png')
           this.sharingService.share(ShareVia.FACEBOOK,this.chartDetails.$key,this.chartImage)
         }
       ).catch()
+      })
     }
   }
   listVoters(){

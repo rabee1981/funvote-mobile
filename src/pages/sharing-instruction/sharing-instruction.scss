@@ -1,0 +1,50 @@
+page-sharing-instruction {
+    ::-webkit-scrollbar{
+    display:none;
+    }
+    p {
+        font-size: 12px;
+        margin-top: 5px;
+        margin-left: 5px;
+        margin-right: 3px;
+        font-weight: bold;
+        span {
+            color : red;
+        }
+    }
+    img {
+        border: 2px outset gray;
+    }
+    button {
+        margin: 0px!important;
+    }
+    ion-item {
+        padding-left: 4px!important;
+        font-size: 12px!important;
+        ion-checkbox {
+            margin-right: 6px!important;
+        }
+        ion-label {
+            opacity : 0.7;
+        }
+    }
+    background-color: rgba(0,0,0,0.5);
+    toolbar-content{
+        height: 50%!important;
+    }
+    ion-card-content {
+            padding: 0px !important;
+            height: 60% !important;
+            position: absolute;
+            top: 20%;
+            left: 18%;
+            display: block;
+            width: 65%;
+            height: 68%!important;
+            overflow: hidden;
+            ion-content {
+                height: 100%;
+                width: 100%;
+            }
+        }
+}

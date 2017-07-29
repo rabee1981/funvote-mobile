@@ -35,6 +35,7 @@ export class ChartFormPage {
               ,private imgService : ImageProccessService, private authService : AuthService, private http : Http,private  authFire : AngularFireAuth) {
     this.chartDetails.chartLabels = [];
     this.chartDetails.chartColor = ['rgba(234, 30, 99, 0.8)','rgba(63, 81, 181, 0.8)','rgba(0, 151, 136, 0.8)','rgba(126, 93, 78, 0.8)'];
+    this.chartDetails.chartType = 'bar'
   }
   onChange(valueString) {
       let value = valueString;

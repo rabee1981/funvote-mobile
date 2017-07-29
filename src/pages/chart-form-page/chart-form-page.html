@@ -14,7 +14,7 @@
         <ion-label type="text" text-center style="font-size : 20px;">Chart Details</ion-label>
       <ion-item>
         <ion-label inline>Title :</ion-label>
-        <ion-input type="text" name="title" [ngStyle]="{'color' : titleColor}" [(ngModel)]="this.chartDetails.chartTitle" required placeholder="What is your favorite phone?"></ion-input>
+        <ion-input type="text" name="title" [maxlength]="100" [ngStyle]="{'color' : titleColor}" [(ngModel)]="this.chartDetails.chartTitle" required placeholder="What is your favorite phone?"></ion-input>
         <button ion-button item-end 
                 [ngStyle]="{'background-color' : this.chartDetails.titleColor}" 
                 style="font-size : 18px;"
@@ -24,7 +24,7 @@
       <ion-item>
         <ion-label>Type :</ion-label>
           <ion-select  name="type" [(ngModel)]="this.chartDetails.chartType" required>
-            <ion-option value="bar">Bar</ion-option>
+            <ion-option value="bar" selected>Bar</ion-option>
             <ion-option value="pie">Pie</ion-option>
             <ion-option value="doughnut">Doughnut</ion-option>
           </ion-select>
@@ -41,7 +41,7 @@
 
       <ion-item *ngFor="let value of valueAxisX; let i = index">
         <ion-label inline>Option {{numberString[i]}} :</ion-label>
-        <ion-input type="text" [name]="value" [(ngModel)]="this.chartDetails.chartLabels[i]" required [placeholder]="labelPlaceHolder[i]"></ion-input>
+        <ion-input type="text" [name]="value" [maxlength]="100" [(ngModel)]="this.chartDetails.chartLabels[i]" required [placeholder]="labelPlaceHolder[i]"></ion-input>
         <button ion-button item-end 
                 [ngStyle]="{'background-color' : this.chartDetails.chartColor[i]}" 
                 style="font-size : 18px;"
