@@ -98,7 +98,6 @@ export class ChartCard implements OnDestroy {
     if(!this.justShow){
       this.storage.get('showInstruction').then(
         toShow => {
-          console.log('*********************',toShow);
           if(toShow){
             html2canvas(document.getElementById(this.chartDetails.$key)).then(
               res => {
@@ -111,7 +110,6 @@ export class ChartCard implements OnDestroy {
             sharingInstruction.present();
             sharingInstruction.onDidDismiss((isShow)=>{
               this.storage.set('showInstruction',isShow)
-              console.log('&&&&&&&&&&&&&&&&&&&&&',isShow)
               html2canvas(document.getElementById(this.chartDetails.$key)).then(
               res => {
                 this.chartImage = res.toDataURL('image/png')
