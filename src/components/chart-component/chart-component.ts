@@ -25,7 +25,7 @@ export class ChartComponent implements OnInit, OnDestroy{
   startFromZero= {xAxes:[],yAxes:[]};
   options={}
   currentData=[];
-  backgroundImage;
+  backgroundImage : any = "data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==";
   constructor(private chartService : ChartService , private alertCtrl : AlertController, private modalCtrl : ModalController
               ,private imgService : ImageProccessService){};
 

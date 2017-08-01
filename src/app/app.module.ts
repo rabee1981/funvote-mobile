@@ -1,3 +1,4 @@
+import { HowToSharePage } from './../pages/how-to-share/how-to-share';
 import { SharingInstructionPage } from './../pages/sharing-instruction/sharing-instruction';
 import { FollowersListPage } from './../pages/followers-list/followers-list';
 import { PopoverVotersListPage } from './../pages/popover-voters-list/popover-voters-list';
@@ -63,7 +64,8 @@ export const firebaseConfig = {
     ThousandPipe,
     PopoverVotersListPage,
     FollowersListPage,
-    SharingInstructionPage
+    SharingInstructionPage,
+    HowToSharePage
   ],
   imports: [
     BrowserModule,
@@ -87,7 +89,8 @@ export const firebaseConfig = {
     ColorPickerPage,
     PopoverVotersListPage,
     FollowersListPage,
-    SharingInstructionPage
+    SharingInstructionPage,
+    HowToSharePage
   ],
   providers: [
     StatusBar,

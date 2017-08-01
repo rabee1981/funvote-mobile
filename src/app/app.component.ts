@@ -1,3 +1,4 @@
+import { HowToSharePage } from './../pages/how-to-share/how-to-share';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Platform, MenuController, NavController, AlertController, Alert } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -28,6 +29,7 @@ export class MyApp implements OnInit, OnDestroy{
   signinPage;
   allChartsPage;
   favPage;
+  howToSharePage;
   friendsChartsPage;
   userName = [];
   connectionAlert;
@@ -84,6 +86,7 @@ export class MyApp implements OnInit, OnDestroy{
       this.allChartsPage = AllChartsPage;
       this.favPage = FavPage;
       this.friendsChartsPage = FriendsChartsPage;
+      this.howToSharePage = HowToSharePage;
         this.afAuth.authState.subscribe(user => {
         if (user) {   
           this.chartService.useruid = user.uid;

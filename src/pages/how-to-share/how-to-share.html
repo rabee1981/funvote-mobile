@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-buttons left>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title text-center >
+      How To Share
+    </ion-title>
+    <ion-buttons right>
+      <ion-item style="background-color: transparent;">
+        <ion-avatar>
+          <img src="{{this.afAuth.auth.currentUser?.photoURL}}">
+        </ion-avatar>
+      </ion-item>
+  </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <p>1. In the chart that you want to share press "share"</p>
+    <p>2. The app will copy to the clipboard for you the URL where people can vote.<span style="color : blue">You dont need to do any thing in this step</span> </p>
+    <p>3. Facebook share dialog will appear, then hold press in the text field and click paste, URL will be pasted</p>
+    <p>4. Add any message next to the URL (very Helpful)</p>
+    <p>5. Post </p>
+    <img src="assets/images/sharing-instructions.gif" >
+</ion-content>
