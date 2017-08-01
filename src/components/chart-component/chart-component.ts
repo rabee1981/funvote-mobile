@@ -24,11 +24,14 @@ export class ChartComponent implements OnInit, OnDestroy{
   startFromZero= {xAxes:[],yAxes:[]};
   options={}
   currentData=[];
+  axesLabels;
   backgroundImage : any = "data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==";
   constructor(private chartService : ChartService , private alertCtrl : AlertController, private modalCtrl : ModalController
               ,private imgService : ImageProccessService){};
 
   ngOnInit(){
+    this.axesLabels = this.wrapLabels(this.chartDetails.chartLabels.slice())
+    console.log(this.axesLabels)
     if(!this.justShow){
       this.isvoteSubscribtion = this.chartService.isVote(this.chartDetails.$key,this.chartDetails.owner)
       .subscribe(res => {
@@ -45,7 +48,8 @@ export class ChartComponent implements OnInit, OnDestroy{
       }
     )
     }else{
-      this.backgroundImage = this.chartDetails.backgroundImage;
+      if(this.chartDetails.backgroundImage)
+        this.backgroundImage = this.chartDetails.backgroundImage;
       this.isvote = false;
     }
     
@@ -162,5 +166,41 @@ export class ChartComponent implements OnInit, OnDestroy{
         this.isvoteSubscribtion.unsubscribe()
         this.imageSub.unsubscribe()
     }
+  }
+  wrapLabels(labels : string[]){
+    let length = labels.length;
+    let wrapLabel=[];
+    let smallThan =''
+    let newItem=[];
+    let longWord = length == 2 ? 15 : (length == 3 ? 12 :11)
+    for(let key in labels){
+      smallThan = ''
+      newItem =[]
+      let s = labels[key]
+      s = s.replace(/  +/g, ' ');
+      let splitS = s.split(' ')
+      if(s.length<longWord){
+        wrapLabel.push(s)
+        continue
+      }
+      for(let i=0;i<splitS.length ; i++){
+        if(splitS[i].length>=longWord){
+          newItem.push(splitS[0])
+          continue
+        }
+        if(smallThan.length+splitS[i].length+1<longWord){
+          smallThan = smallThan + ' ' + splitS[i]
+          if(i == splitS.length-1){
+            newItem.push(smallThan)
+          }
+        }else{
+          newItem.push(smallThan)
+          smallThan = ''
+          i--;
+        }
+      }
+      wrapLabel.push(newItem)
+    }
+    return wrapLabel
   }
 }

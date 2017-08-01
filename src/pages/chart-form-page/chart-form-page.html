@@ -41,7 +41,7 @@
 
       <ion-item *ngFor="let value of valueAxisX; let i = index">
         <ion-label inline>Option {{numberString[i]}} :</ion-label>
-        <ion-input type="text" [name]="value" [maxlength]="100" [(ngModel)]="this.chartDetails.chartLabels[i]" required [placeholder]="labelPlaceHolder[i]"></ion-input>
+        <ion-input type="text" [name]="value" [maxlength]="30" [(ngModel)]="this.chartDetails.chartLabels[i]" required [placeholder]="labelPlaceHolder[i]"></ion-input>
         <button ion-button item-end 
                 [ngStyle]="{'background-color' : this.chartDetails.chartColor[i]}" 
                 style="font-size : 18px;"
