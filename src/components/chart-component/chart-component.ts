@@ -1,5 +1,4 @@
 import { ImageProccessService } from './../../services/imageProccess.service';
-import { ChartDetails } from './../../data/chartDetails';
 import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { ChartService } from "../../services/chart.service";
 import { AlertController, ModalController } from "ionic-angular";
@@ -42,8 +41,6 @@ export class ChartComponent implements OnInit, OnDestroy{
               .then( base64Img => {
                 this.backgroundImage = base64Img
               }).catch()
-        }else{
-              this.backgroundImage = "data:image/gif;base64,R0lGODlhAQABAIAAAP7//wAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==";
         }
       }
     )
