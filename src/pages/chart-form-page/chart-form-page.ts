@@ -76,7 +76,7 @@ export class ChartFormPage {
     this.camera.getPicture(this.options)
       .then(img => {
         let base64 = 'data:image/jpeg;base64,'+img
-        this.imgService.convertToDataURLviaCanvas(base64, "image/jpeg")
+        this.imgService.convertToDataURLviaCanvas(base64, "image/jpeg",0.6)
               .then( base64WithOpacity => {
                 this.chartDetails.backgroundImage = base64WithOpacity
               }).catch()
