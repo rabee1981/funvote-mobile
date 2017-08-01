@@ -14,10 +14,10 @@
   <ion-item>
     <ion-chip item-start>
         <ion-icon name="contacts" style="margin : 0;"></ion-icon>
-        <ion-label class="label-voters"><a (click)="listVoters()">{{-1*(votesCount | thousand)}} voters</a></ion-label>
+        <ion-label class="label-voters"><a (click)="listVoters()">{{-1*votesCount | thousand}} voters</a></ion-label>
     </ion-chip>
     <ion-badge item-end *ngIf="followerCount<0" (click)="listFollowers()">
-      {{-1*(followerCount | thousand)}}
+      {{-1*followerCount | thousand}}
       <ion-icon name="icon" ios="ios-star" md="md-star" style="color :#FFD700;font-size : 1em!important;"></ion-icon>
       </ion-badge>
   </ion-item>
