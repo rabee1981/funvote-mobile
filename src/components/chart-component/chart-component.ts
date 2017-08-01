@@ -103,7 +103,7 @@ export class ChartComponent implements OnInit, OnDestroy{
                                   total += allData[i];
                                 }
                                 var tooltipPercentage = Math.round((tooltipData / total) * 100);
-                                return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
+                                return  tooltipData + ' (' + tooltipPercentage + '%)';
                               }
                             }
                           },

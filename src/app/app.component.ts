@@ -15,7 +15,7 @@ import { FacebookService } from "../services/facebook.service";
 import { FriendsChartsPage } from "../pages/friends-charts/friends-charts";
 import { ConnectivityService } from "../services/ConnectivityService";
 import { Network } from "@ionic-native/network";
-import { AdMob, AdMobOptions } from '@ionic-native/admob';
+import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free';
 
 @Component({
   templateUrl: 'app.html'
@@ -34,36 +34,11 @@ export class MyApp implements OnInit, OnDestroy{
   userName = [];
   connectionAlert;
   @ViewChild('nav') nav : NavController;
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth : AngularFireAuth
+  constructor(private platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth : AngularFireAuth
   ,private authService : AuthService, private menuCtrl : MenuController, private chartService : ChartService, private fbService : FacebookService
-  ,private alertCtrl : AlertController,private conService : ConnectivityService, private network : Network, private adMob : AdMob) {
-    platform.ready().then(() => {
-      let bannerId
-      let interstitialId
-      if(platform.is('android')){
-        bannerId = 'ca-app-pub-9268480526904407/8370470970'
-        interstitialId = 'ca-app-pub-9268480526904407/7796891371';
-      }else if(platform.is('ios')){
-        bannerId = 'ca-app-pub-9268480526904407/2463538177';
-        interstitialId = 'ca-app-pub-9268480526904407/4843424975';
-      }
-      let adMobBannerOptions : AdMobOptions = {
-        adId : bannerId,
-        position : adMob.AD_POSITION.BOTTOM_CENTER,
-        autoShow: true, 
-        orientationRenew: false,
-        isTesting:true  // TODO: remove this line when release
-      }
-      let adMobInterstitialOptions : AdMobOptions = {
-        adId : interstitialId,
-        autoShow: true, 
-        isTesting:true  // TODO: remove this line when release
-      }
-      // adMob.prepareInterstitial(adMobInterstitialOptions)
-      // .catch(err=>{console.log(err)})
-      adMob.createBanner(adMobBannerOptions)
-      .catch(err=>console.log(err))
-      
+  ,private alertCtrl : AlertController,private conService : ConnectivityService, private network : Network, private admobFree : AdMobFree) {
+    platform.ready().then(() => { 
+      this.admobInit()     
       statusBar.styleDefault();
       splashScreen.hide();
       }).catch();
@@ -99,6 +74,33 @@ export class MyApp implements OnInit, OnDestroy{
         }  
     });
     }
+  }
+  admobInit(){
+    let banner
+      let interstitial
+      if(this.platform.is('android')){
+        banner = 'ca-app-pub-9268480526904407/8370470970'
+        interstitial = 'ca-app-pub-9268480526904407/7796891371';
+      }else if(this.platform.is('ios')){
+        banner = 'ca-app-pub-9268480526904407/2463538177';
+        interstitial = 'ca-app-pub-9268480526904407/4843424975';
+      }
+      let adMobBannerOptions : AdMobFreeBannerConfig = {
+        id : banner,
+        overlap : false,
+        autoShow: true, 
+        isTesting:true  // TODO: remove this line when release
+      }
+      let adMobInterstitialOptions : AdMobFreeBannerConfig = {
+        id : interstitial,
+        autoShow : false,
+        isTesting:true  // TODO: remove this line when release
+      }
+      this.admobFree.interstitial.config(adMobInterstitialOptions)
+      this.admobFree.interstitial.prepare()
+      this.admobFree.banner.config(adMobBannerOptions)
+      this.admobFree.banner.prepare()
+      .catch(err=>console.log(err))
   }
   onLogout(){
     this.authService.logout();

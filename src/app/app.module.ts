@@ -33,11 +33,11 @@ import { FriendsChartsPage } from "../pages/friends-charts/friends-charts";
 import { ColorPickerPage } from "../pages/color-picker/color-picker";
 import { ConnectivityService } from "../services/ConnectivityService";
 import { Network } from "@ionic-native/network";
-import { AdMob } from '@ionic-native/admob';
 import { ThousandPipe } from "../pipes/thousand.pipe";
 import {Camera} from '@ionic-native/camera';
 import { Firebase } from '@ionic-native/firebase';
 import { IonicStorageModule } from '@ionic/storage';
+import { AdMobFree } from '@ionic-native/admob-free';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDuFurr7wtx_FFUbmnOMMcxKSOPwtnXKFg",
@@ -103,11 +103,11 @@ export const firebaseConfig = {
     SocialSharing,
     ConnectivityService,
     Network,
-    AdMob,
     SharingService,
     Camera,
     ImageProccessService,
     Firebase,
+    AdMobFree,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

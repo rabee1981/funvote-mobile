@@ -1,3 +1,4 @@
+import { AdMobFree } from '@ionic-native/admob-free';
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavController, LoadingController, AlertController, Platform } from 'ionic-angular';
@@ -26,7 +27,7 @@ export class HomePage implements OnInit,OnDestroy{
   constructor(public navCtrl: NavController, private authService : AuthService ,private afAuth : AngularFireAuth
               ,private chartService : ChartService, private afDatabase: AngularFireDatabase, private loadingCtrl : LoadingController
               ,private conService : ConnectivityService, private alertCtrl : AlertController, private fbase : Firebase,
-              private platform : Platform) {
+              private platform : Platform, private admobFree : AdMobFree) {
   }
   ngOnInit(){
     if(this.conService.isOnline()){
@@ -46,6 +47,12 @@ export class HomePage implements OnInit,OnDestroy{
       }
     )
   }
+  }
+  ionViewDidEnter(){
+    this.admobFree.banner.hide()
+    setTimeout(() => {
+      this.admobFree.banner.show()
+    }, 500);
   }
   ionViewDidLoad(){
     if(this.platform.is('ios')){

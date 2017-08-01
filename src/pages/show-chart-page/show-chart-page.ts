@@ -1,3 +1,4 @@
+import { AdMobFree } from '@ionic-native/admob-free';
 import { Http , Headers } from '@angular/http';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { HomePage } from './../home/home';
@@ -18,7 +19,8 @@ export class ShowChartPage {
       content : 'saving your chart'
     })
   constructor(public navCtrl: NavController, public navParams: NavParams, private chartService : ChartService,
-              private loadingCtrl: LoadingController, private authService : AuthService, private afAuth : AngularFireAuth, private http : Http) {
+              private loadingCtrl: LoadingController, private authService : AuthService, private afAuth : AngularFireAuth,
+              private http : Http, private admobFree : AdMobFree) {
   }
   ngOnInit(): void {
       this.chartDetails = this.navParams.data;
@@ -37,6 +39,9 @@ export class ShowChartPage {
         }
       }
     }
+  ionViewDidEnter(){
+      this.admobFree.interstitial.show()
+  }
   onSave(){
     this.loading.present().then(()=>{
       let image = this.chartDetails.backgroundImage;
