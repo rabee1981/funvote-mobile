@@ -52,7 +52,7 @@ export class HomePage implements OnInit,OnDestroy{
     this.admobFree.banner.hide()
     setTimeout(() => {
       this.admobFree.banner.show()
-    }, 500);
+    }, 1000);
   }
   ionViewDidLoad(){
     if(this.platform.is('ios')){

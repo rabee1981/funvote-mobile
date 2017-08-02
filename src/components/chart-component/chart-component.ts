@@ -31,7 +31,6 @@ export class ChartComponent implements OnInit, OnDestroy{
 
   ngOnInit(){
     this.axesLabels = this.wrapLabels(this.chartDetails.chartLabels.slice())
-    console.log(this.axesLabels)
     if(!this.justShow){
       this.isvoteSubscribtion = this.chartService.isVote(this.chartDetails.$key,this.chartDetails.owner)
       .subscribe(res => {
@@ -153,14 +152,6 @@ export class ChartComponent implements OnInit, OnDestroy{
     }
     return true; 
   }
-  // getColorsWithOpacity(colors : string[],opacity : string){
-  //   var colorsWithOpacity : string[]=[];
-  //   for(var color of colors){
-  //     var index = color.indexOf(')');
-  //     colorsWithOpacity.push(color.substring(0,index-3)+`,${opacity})`)
-  //   }
-  //   return colorsWithOpacity;
-  // }
   ngOnDestroy(){
     if(!this.justShow){
         this.isvoteSubscribtion.unsubscribe()

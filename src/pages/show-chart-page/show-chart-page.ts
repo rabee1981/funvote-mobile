@@ -40,7 +40,11 @@ export class ShowChartPage {
       }
     }
   ionViewDidEnter(){
-      this.admobFree.interstitial.show()
+    this.admobFree.interstitial.isReady().then((res)=>{
+      if(res)
+        this.admobFree.interstitial.show()
+      console.log(res);
+    })
   }
   onSave(){
     this.loading.present().then(()=>{

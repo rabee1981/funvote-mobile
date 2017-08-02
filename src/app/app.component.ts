@@ -96,8 +96,13 @@ export class MyApp implements OnInit, OnDestroy{
         autoShow : false,
         isTesting:true  // TODO: remove this line when release
       }
-      this.admobFree.interstitial.config(adMobInterstitialOptions)
       this.admobFree.interstitial.prepare()
+      this.admobFree.on('admob.interstitial.events.CLOSE').subscribe(
+        res => {
+          this.admobFree.interstitial.config(adMobInterstitialOptions)
+          this.admobFree.interstitial.prepare().then(res => console.log(res))
+        }
+      )
       this.admobFree.banner.config(adMobBannerOptions)
       this.admobFree.banner.prepare()
       .catch(err=>console.log(err))
