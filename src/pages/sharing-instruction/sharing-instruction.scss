@@ -66,4 +66,21 @@ page-sharing-instruction {
                 width: 100%;
             }
         }
+    .my-ipad-content {
+        border-radius: 10px;
+            background-color: white;
+            padding: 0px !important;
+            height: 60% !important;
+            position: absolute;
+            top: 9%;
+            left: 10%;
+            display: block;
+            width: 80%;
+            height: 90%!important;
+            overflow: hidden;
+            ion-content {
+                height: 100%;
+                width: 100%;
+            }
+    }
 }
