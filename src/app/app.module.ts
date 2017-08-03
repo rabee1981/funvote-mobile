@@ -1,3 +1,5 @@
+import { Deeplinks } from '@ionic-native/deeplinks';
+import { SingleChartPage } from './../pages/single-chart/single-chart';
 import { HowToSharePage } from './../pages/how-to-share/how-to-share';
 import { SharingInstructionPage } from './../pages/sharing-instruction/sharing-instruction';
 import { FollowersListPage } from './../pages/followers-list/followers-list';
@@ -65,7 +67,8 @@ export const firebaseConfig = {
     PopoverVotersListPage,
     FollowersListPage,
     SharingInstructionPage,
-    HowToSharePage
+    HowToSharePage,
+    SingleChartPage,
   ],
   imports: [
     BrowserModule,
@@ -90,7 +93,8 @@ export const firebaseConfig = {
     PopoverVotersListPage,
     FollowersListPage,
     SharingInstructionPage,
-    HowToSharePage
+    HowToSharePage,
+    SingleChartPage
   ],
   providers: [
     StatusBar,
@@ -108,6 +112,7 @@ export const firebaseConfig = {
     ImageProccessService,
     Firebase,
     AdMobFree,
+    Deeplinks,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

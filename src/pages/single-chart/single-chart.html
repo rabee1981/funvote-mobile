@@ -1,0 +1,12 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Single Chart</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="color-content">
+  <chart-card *ngIf="chartDetails" [chartDetails]="chartDetails" [owner]="chartDetails?.owner"></chart-card>
+</ion-content> 

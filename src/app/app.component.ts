@@ -1,3 +1,5 @@
+import { SingleChartPage } from './../pages/single-chart/single-chart';
+import { Deeplinks } from '@ionic-native/deeplinks';
 import { HowToSharePage } from './../pages/how-to-share/how-to-share';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Platform, MenuController, NavController, AlertController, Alert } from 'ionic-angular';
@@ -36,7 +38,8 @@ export class MyApp implements OnInit, OnDestroy{
   @ViewChild('nav') nav : NavController;
   constructor(private platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth : AngularFireAuth
   ,private authService : AuthService, private menuCtrl : MenuController, private chartService : ChartService, private fbService : FacebookService
-  ,private alertCtrl : AlertController,private conService : ConnectivityService, private network : Network, private admobFree : AdMobFree) {
+  ,private alertCtrl : AlertController,private conService : ConnectivityService, private network : Network, private admobFree : AdMobFree,
+  private deeplinks : Deeplinks) {
     platform.ready().then(() => { 
       this.admobInit()     
       statusBar.styleDefault();
@@ -68,7 +71,14 @@ export class MyApp implements OnInit, OnDestroy{
           this.userName = user.displayName.split(' ');
           this.rootPage = this.homePage;
           this.fbService.saveFriendsInfo(user); 
-          this.fbService.saveUserInfo(user.uid);      
+          this.fbService.saveUserInfo(user.uid);
+          this.deeplinks.routeWithNavController(this.nav, {
+              '/chart/:id': SingleChartPage
+            }).subscribe((match) => {
+              console.log('Successfully routed', match);
+            }, (nomatch) => {
+              console.warn('Unmatched Route', nomatch);
+            });      
         }else{
         this.rootPage =  this.signinPage; 
         }  
