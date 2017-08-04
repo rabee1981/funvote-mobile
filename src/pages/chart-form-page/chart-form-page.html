@@ -48,7 +48,7 @@
                 (click)="changeLabelColor(i)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
       </ion-item>
       <ion-item>
-        Background Image : (optional)
+        <ion-label inline>Background Image : (optional)</ion-label>
         <button *ngIf="!this.chartDetails.backgroundImage" ion-button outline item-end color="secondary" (click)="loadImage()">add</button>
         <button *ngIf="this.chartDetails.backgroundImage" ion-button outline item-end color="danger" (click)="removeImage()">remove</button>
       </ion-item>
