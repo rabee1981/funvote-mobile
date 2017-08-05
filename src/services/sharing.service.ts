@@ -15,12 +15,11 @@ export class SharingService {
     });
     share(via : ShareVia, key,base64){
       this.loading.present();
-      let longUrl = "https://funvaotedata.firebaseapp.com/chart/"+key
       let headers = new Headers();
             this.afAuth.auth.currentUser.getIdToken().then(
                 token => {
                 headers.append('Authorization', 'Bearer '+token)
-                this.http.get(`https://us-central1-funvaotedata.cloudfunctions.net/getShortLink?longUrl=${longUrl}`,{headers : headers})
+                this.http.get(`https://us-central1-funvaotedata.cloudfunctions.net/getShortLink?key=${key}`,{headers : headers})
                 .take(1).subscribe((res : any) => {
                   let shortUrl = res._body;
                   var message = shortUrl;
