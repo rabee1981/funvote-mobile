@@ -11,4 +11,5 @@ export class ChartDetails{
     titleColor = '#000000';
     backgroundImage=null;
     followerCount = 0;
+    isPublic = "false";
 }

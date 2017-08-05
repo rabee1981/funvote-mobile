@@ -22,7 +22,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-label>Type :</ion-label>
+        <ion-label inline>Type :</ion-label>
           <ion-select  name="type" [(ngModel)]="this.chartDetails.chartType" required>
             <ion-option value="bar" selected>Bar</ion-option>
             <ion-option value="pie">Pie</ion-option>
@@ -31,7 +31,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-label>Options Amount :</ion-label>
+        <ion-label inline>Options Amount :</ion-label>
           <ion-select  name="optionAmount" (ionChange)="onChange($event)" [(ngModel)]="selectedValue" required>
             <ion-option value="2">2</ion-option>
             <ion-option value="3">3</ion-option>
@@ -52,6 +52,15 @@
         <button *ngIf="!this.chartDetails.backgroundImage" ion-button outline item-end color="secondary" (click)="loadImage()">add</button>
         <button *ngIf="this.chartDetails.backgroundImage" ion-button outline item-end color="danger" (click)="removeImage()">remove</button>
       </ion-item>
+
+      <ion-item>
+        <ion-label inline>Who should see this?</ion-label>
+          <ion-select  name="public" [(ngModel)]="this.chartDetails.isPublic">
+            <ion-option value="false">👥&nbsp;&nbsp;&nbsp;Friends</ion-option>
+            <ion-option value="true">🌎&nbsp;&nbsp;&nbsp;Public</ion-option>
+          </ion-select>
+      </ion-item>
+      
 </ion-list>
   </form>
   <button ion-button (click)="onShow()" [disabled]="!f.valid">Show</button>

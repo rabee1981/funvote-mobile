@@ -11,7 +11,7 @@ import { HomePage } from '../pages/home/home';
 import { SigninPage } from "../pages/signin-page/signin-page";
 import { AuthService } from "../services/auth.service";
 import { ChartService } from "../services/chart.service";
-import { AllChartsPage } from "../pages/all-charts-page/all-charts-page";
+import { PublicChartsPage } from "../pages/public-charts-page/public-charts-page";
 import { FavPage } from "../pages/fav/fav";
 import { FacebookService } from "../services/facebook.service";
 import { FriendsChartsPage } from "../pages/friends-charts/friends-charts";
@@ -29,7 +29,7 @@ export class MyApp implements OnInit, OnDestroy{
   homePage = HomePage;
   rootPage:any = this.homePage;
   signinPage;
-  allChartsPage;
+  publicChartsPage;
   favPage;
   howToSharePage;
   friendsChartsPage;
@@ -61,7 +61,7 @@ export class MyApp implements OnInit, OnDestroy{
 });
     if(this.conService.isOnline){
       this.signinPage = SigninPage;
-      this.allChartsPage = AllChartsPage;
+      this.publicChartsPage = PublicChartsPage;
       this.favPage = FavPage;
       this.friendsChartsPage = FriendsChartsPage;
       this.howToSharePage = HowToSharePage;

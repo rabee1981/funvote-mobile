@@ -34,7 +34,7 @@ export class ChartService {
                 .map(favKeyArray => {
                     let favCharts = []
                     for(let f of favKeyArray){
-                        this.afDatabase.object(`allCharts/${f.$key}`).subscribe(res => {
+                        this.afDatabase.object(`publicCharts/${f.$key}`).subscribe(res => {
                             let index = favCharts.findIndex(chart => {
                                 return chart.$key == res.$key
                             })
@@ -64,22 +64,16 @@ export class ChartService {
            }
        })
     }
-    voteFor(key,index,owner){ // voters is updated just in the user charts its not updates in the allCharts and friends charts
-        this.afDatabase.list(`allCharts/${key}`).take(1).subscribe(res => {
-            if(res.length<=0){
-                this.alert.present()
-            }else{
-                let headers = new Headers();
-                this.afAuth.auth.currentUser.getIdToken().then(
-                    token => {
-                    headers.append('Authorization', 'Bearer '+token)
-                    this.http.get(`https://us-central1-funvaotedata.cloudfunctions.net/voteFor?owner=${owner}&key=${key}&index=${index}`,{headers : headers})
-                    .toPromise().then(res => {
-                     //   console.log(res);
-                    })
-                 })
-            }
-        })
+    voteFor(key,index,owner){ // voters is updated just in the user charts its not updates in the publicCharts and friends charts
+        let headers = new Headers();
+        this.afAuth.auth.currentUser.getIdToken().then(
+            token => {
+            headers.append('Authorization', 'Bearer '+token)
+            this.http.get(`https://us-central1-funvaotedata.cloudfunctions.net/voteFor?owner=${owner}&key=${key}&index=${index}`,{headers : headers})
+            .toPromise().then(res => {
+                //   console.log(res);
+            })
+            })
     }
     getVoteCount(key,owner){
         return this.afDatabase.object(`users/${owner}/userCharts/${key}/voteCount`)
@@ -120,7 +114,7 @@ export class ChartService {
     isFavor(key){
         return this.afDatabase.object(`users/${this.useruid}/follow/${key}`);
     }
-    isVote(key,owner){ // voters is updated just in the user charts its not updates in the allCharts and friends charts
+    isVote(key,owner){ // voters is updated just in the user charts its not updates in the publicCharts and friends charts
         return this.afDatabase.object(`users/${owner}/userCharts/${key}/voters/${this.useruid}`);
     }
     isAllowToCreate(){

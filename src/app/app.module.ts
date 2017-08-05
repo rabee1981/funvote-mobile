@@ -25,7 +25,7 @@ import { ChartCard } from "../components/chart-card/chart-card";
 import { ChartFormPage } from "../pages/chart-form-page/chart-form-page";
 import { ShowChartPage } from "../pages/show-chart-page/show-chart-page";
 import { ChartService } from "../services/chart.service";
-import { AllChartsPage } from "../pages/all-charts-page/all-charts-page";
+import { PublicChartsPage } from "../pages/public-charts-page/public-charts-page";
 import { Facebook } from "@ionic-native/facebook";
 import { FacebookService } from "../services/facebook.service";
 import { HttpModule } from "@angular/http";
@@ -59,7 +59,7 @@ export const firebaseConfig = {
     SigninPage,
     ChartFormPage,
     ShowChartPage,
-    AllChartsPage,
+    PublicChartsPage,
     FavPage,
     FriendsChartsPage,
     ColorPickerPage,
@@ -86,7 +86,7 @@ export const firebaseConfig = {
     SigninPage,
     ChartFormPage,
     ShowChartPage,
-    AllChartsPage,
+    PublicChartsPage,
     FavPage,
     FriendsChartsPage,
     ColorPickerPage,

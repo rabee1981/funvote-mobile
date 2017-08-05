@@ -17,7 +17,7 @@ export class SingleChartPage implements OnInit{
 
   ngOnInit() {
     let chartkey = this.navParams.get('id')
-    this.afDatabase.object(`allCharts/${chartkey}`).subscribe(chart => {
+    this.afDatabase.object(`publicCharts/${chartkey}`).subscribe(chart => {
       this.chartDetails = chart;
       this.chartDetails.$key = chartkey;
     })

@@ -7,14 +7,14 @@ import 'rxjs/add/operator/switchMap'
 import { AngularFireAuth } from "angularfire2/auth";
 
 @Component({
-  selector: 'page-all-charts-page',
-  templateUrl: 'all-charts-page.html',
+  selector: 'public-charts-page',
+  templateUrl: 'public-charts-page.html',
 })
-export class AllChartsPage implements OnInit, OnDestroy{
-  allChartsByMostVotedSub: Subscription;
-  allChartsByNewestSub: Subscription;
-  allChartsByNewest;
-  allChartsByMostVoted;
+export class PublicChartsPage implements OnInit, OnDestroy{
+  publicChartsByMostVotedSub: Subscription;
+  publicChartsByNewestSub: Subscription;
+  publicChartsByNewest;
+  publicChartsByMostVoted;
   sortBy = 'createdAt';
   loading = this.loadingCtrl.create({
       content : 'Loading Charts',
@@ -26,53 +26,53 @@ export class AllChartsPage implements OnInit, OnDestroy{
 
   ngOnInit(){
     this.loading.present();
-    this.allChartsByNewestSub = this.afDatabase.list('allCharts',{
+    this.publicChartsByNewestSub = this.afDatabase.list('publicCharts',{
       query :{
         orderByChild : 'createdAt',
         limitToFirst : 50
       }}).subscribe(charts => {
         this.loading.dismiss();
-        this.allChartsByNewest = charts
+        this.publicChartsByNewest = charts
       })
       
   }
   onChange(event){
-    this.allChartsByNewest=[];
-    this.allChartsByMostVoted=[];
+    this.publicChartsByNewest=[];
+    this.publicChartsByMostVoted=[];
     this.loading = this.loadingCtrl.create({
       content : 'Loading Charts',
       spinner : 'bubbles',
     })
     this.loading.present();
     if(event === 'createdAt'){
-      if(this.allChartsByMostVotedSub)
-        this.allChartsByMostVotedSub.unsubscribe()
-      this.allChartsByNewestSub = this.afDatabase.list('allCharts',{
+      if(this.publicChartsByMostVotedSub)
+        this.publicChartsByMostVotedSub.unsubscribe()
+      this.publicChartsByNewestSub = this.afDatabase.list('publicCharts',{
       query :{
         orderByChild : 'createdAt',
         limitToFirst : 50
       }}).subscribe(charts => {
         this.loading.dismiss();
-        this.allChartsByNewest = charts
+        this.publicChartsByNewest = charts
       })
     }else if(event === 'voteCount'){
-      if(this.allChartsByNewestSub)
-        this.allChartsByNewestSub.unsubscribe()
-      this.allChartsByMostVotedSub = this.afDatabase.list('allCharts',{
+      if(this.publicChartsByNewestSub)
+        this.publicChartsByNewestSub.unsubscribe()
+      this.publicChartsByMostVotedSub = this.afDatabase.list('publicCharts',{
       query :{
         orderByChild : 'voteCount',
         limitToFirst : 50
       }}).subscribe(charts => {
         this.loading.dismiss();
-        this.allChartsByMostVoted = charts
+        this.publicChartsByMostVoted = charts
       })
     }
   }
   ngOnDestroy(){
-    if(this.allChartsByMostVotedSub)
-      this.allChartsByMostVotedSub.unsubscribe()
-    if(this.allChartsByNewestSub)
-        this.allChartsByNewestSub.unsubscribe()
+    if(this.publicChartsByMostVotedSub)
+      this.publicChartsByMostVotedSub.unsubscribe()
+    if(this.publicChartsByNewestSub)
+        this.publicChartsByNewestSub.unsubscribe()
   }
   trackByCreatedAt(index,chart){
     return chart ? chart.createdAt : undefined;
