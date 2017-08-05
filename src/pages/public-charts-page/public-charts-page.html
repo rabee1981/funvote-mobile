@@ -30,14 +30,14 @@
 <ion-content class="color-content">
   <div *ngIf="sortBy === 'createdAt'">
     <ion-list>
-      <ion-item class="color-content item-chart" no-lines *ngFor="let chart of allChartsByNewest; trackBy : trackByCreatedAt;">
+      <ion-item class="color-content item-chart" no-lines *ngFor="let chart of publicChartsByNewest; trackBy : trackByCreatedAt;">
         <chart-card [chartDetails]="chart" [owner]="chart.owner"></chart-card>
       </ion-item>
     </ion-list>
   </div>
   <div *ngIf="sortBy === 'voteCount'">
     <ion-list>
-      <ion-item class="color-content item-chart" no-lines *ngFor="let chart of allChartsByMostVoted; trackBy : trackByCreatedAt;">
+      <ion-item class="color-content item-chart" no-lines *ngFor="let chart of publicChartsByMostVoted; trackBy : trackByCreatedAt;">
         <chart-card [chartDetails]="chart" [owner]="chart.owner"></chart-card>
       </ion-item>
     </ion-list>
