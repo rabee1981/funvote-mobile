@@ -13,6 +13,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
   templateUrl: 'single-chart.html',
 })
 export class SingleChartPage implements OnInit, OnDestroy{
+  userChart: Subscription;
   userStateSubscription: Subscription;
   loading = this.loadingCtrl.create({
     content : 'Loading Chart',
@@ -42,7 +43,7 @@ export class SingleChartPage implements OnInit, OnDestroy{
                   this.chartDetails = publicChart;
                   this.loading.dismiss();
                 }else{
-                  this.afDatabase.object(`users/${user.uid}/userCharts/${chartkey}`).subscribe(
+                  this.userChart = this.afDatabase.object(`users/${user.uid}/userCharts/${chartkey}`).subscribe(
                     userChart => {
                       if(userChart !== undefined){
                         this.chartDetails = userChart;
@@ -68,6 +69,8 @@ export class SingleChartPage implements OnInit, OnDestroy{
       })
   }
     ngOnDestroy(): void {
+    if(this.userChart)
+      this.userChart.unsubscribe()
     if(this.publicChartsthisSub)
       this.publicChartsthisSub.unsubscribe()
     if(this.chartSubscription)
