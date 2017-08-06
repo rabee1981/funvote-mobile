@@ -42,9 +42,21 @@ export class SingleChartPage implements OnInit, OnDestroy{
                   this.chartDetails = publicChart;
                   this.loading.dismiss();
                 }else{
-                  console.log(publicChart.$value)
-                  alert('you can not see this chart, this chart is not public')
-                  this.loading.dismiss();
+                  this.afDatabase.object(`users/${user.uid}/userCharts/${chartkey}`).subscribe(
+                    userChart => {
+                      if(userChart !== undefined){
+                        this.chartDetails = userChart;
+                        this.loading.dismiss()
+                      }else{
+                          alert('you can not see this chart, this chart is not public')
+                          this.loading.dismiss()
+                      }
+                    },
+                    err => {
+                      alert('you can not see this chart, this chart is not public')
+                      this.loading.dismiss()
+                    }
+                  )
                 }
               })
             }
