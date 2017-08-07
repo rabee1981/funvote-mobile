@@ -75,9 +75,10 @@ export class MyApp implements OnInit, OnDestroy{
           this.deeplinks.routeWithNavController(this.nav, {
               '/chart/:id': SingleChartPage
             }).subscribe((match) => {
-              console.log('Successfully routed', match);
+              let chartkey = match.$link.queryString.split('id=').pop()
+              this.nav.push(SingleChartPage,{id : chartkey})
             }, (nomatch) => {
-              console.warn('Unmatched Route', nomatch);
+              alert('Unmatched Route' + nomatch);
             });      
         }else{
         this.rootPage =  this.signinPage; 
