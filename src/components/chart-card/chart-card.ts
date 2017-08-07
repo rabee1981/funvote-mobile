@@ -91,7 +91,8 @@ export class ChartCard implements OnDestroy {
         this.followerCount--;
       }
       this.isFav = ! this.isFav
-      this.chartService.followChart(this.chartDetails.$key,this.chartDetails.owner);
+      let locationInDb;
+      this.chartService.followChart(this.chartDetails.$key,this.chartDetails.owner,this.chartDetails.isPublic);
     }
   }
   onShare(){
