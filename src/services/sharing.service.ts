@@ -22,7 +22,10 @@ export class SharingService {
       //           this.http.get(`https://us-central1-funvaotedata.cloudfunctions.net/getShortLink?key=${key}`,{headers : headers})
       //           .take(1).subscribe((res : any) => {
                   // let shortUrl = res._body;
-                  let shortUrl = "https://fb.me/344016559352747?id=" + key // this just for android TODO generate one for ios in https://developers.facebook.com/quickstarts
+                  // *** for android ****
+                  //let shortUrl = "https://fb.me/344016559352747?id=" + key // this just for android TODO generate one for ios in https://developers.facebook.com/quickstarts
+                  // *** both *****
+                  let shortUrl = "https://fb.me/344033696017700?id=" + key
                   var message = shortUrl;
                   switch(via){
                     case ShareVia.FACEBOOK : {
@@ -46,7 +49,7 @@ export class SharingService {
         // })
     }
     facebookSharing(base64,shortUrl,message){
-        this.socialSharing.shareViaFacebookWithPasteMessageHint(message,base64,shortUrl,'please click paste')
+        this.socialSharing.shareViaFacebookWithPasteMessageHint(message,base64,null,'please click paste')
         .then(res => {
           this.loading.dismiss();
         }).catch(

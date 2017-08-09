@@ -43,7 +43,7 @@
         "cordova-plugin-console": "^1.0.7",
         "cordova-plugin-device": "^1.1.6",
         "cordova-plugin-facebook4": "file:///Users/mohamadrabee/Desktop/Facebook",
-        "cordova-plugin-firebase": "^0.1.22",
+        "cordova-plugin-firebase": "^0.1.23",
         "cordova-plugin-network-information": "^1.3.3",
         "cordova-plugin-splashscreen": "^4.0.3",
         "cordova-plugin-statusbar": "^2.2.3",
@@ -104,7 +104,6 @@
                 "APP_ID": "304302026657534",
                 "APP_NAME": "Vote Fun"
             },
-            "cordova-plugin-firebase": {},
             "cordova-sqlite-storage": {},
             "cordova-plugin-admob-free": {},
             "ionic-plugin-deeplinks": {
@@ -124,7 +123,8 @@
                 "DEEPLINK_4_HOST": " ",
                 "DEEPLINK_5_SCHEME": " ",
                 "DEEPLINK_5_HOST": " "
-            }
+            },
+            "cordova-plugin-firebase": {}
         },
         "platforms": [
             "android",

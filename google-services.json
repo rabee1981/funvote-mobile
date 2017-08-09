@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:134302046449:android:6e44188944cefe2b",
+        "mobilesdk_app_id": "1:134302046449:android:7c98e2de2b1e4eb9",
         "android_client_info": {
-          "package_name": "com.ionicframework.funvote516366"
+          "package_name": "com.mr.votefun"
         }
       },
       "oauth_client": [
