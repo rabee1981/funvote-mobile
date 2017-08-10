@@ -4,11 +4,12 @@ import { Http , Headers } from '@angular/http';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { LoadingController, Platform } from 'ionic-angular';
 import { ShareVia } from "../data/shareVia.enum";
+import { Clipboard } from '@ionic-native/clipboard';
 
 @Injectable()
 export class SharingService {
   constructor(private platform: Platform, private http: Http, private loadingCtrl: LoadingController
-                , private socialSharing: SocialSharing, private afAuth : AngularFireAuth){}
+                , private socialSharing: SocialSharing, private afAuth : AngularFireAuth, private clipboard : Clipboard){}
 
     loading = this.loadingCtrl.create({
       content: 'Please Wait...'
@@ -25,7 +26,8 @@ export class SharingService {
                   // *** for android ****
                   //let shortUrl = "https://fb.me/344016559352747?id=" + key // this just for android TODO generate one for ios in https://developers.facebook.com/quickstarts
                   // *** both *****
-                  let shortUrl = "fb.me/344033696017700?id=" + key
+                  //TODO generate new app link can be don in https://developers.facebook.com/quickstarts/304302026657534/?platform=app-links-host
+                  let shortUrl = "fb.me/344033696017700?id=" + 'sss' +key + 'eee' // start/end  
                   var message = shortUrl;
                   switch(via){
                     case ShareVia.FACEBOOK : {
@@ -49,7 +51,8 @@ export class SharingService {
         // })
     }
     facebookSharing(base64,shortUrl,message){
-        this.socialSharing.shareViaFacebookWithPasteMessageHint(null,base64,message,'please click paste')
+      if(this.platform.is('android')){
+        this.socialSharing.shareViaFacebookWithPasteMessageHint(message,base64,null,'please click paste')
         .then(res => {
           this.loading.dismiss();
         }).catch(
@@ -57,6 +60,18 @@ export class SharingService {
             this.loading.dismiss();
           }
         )
+      }
+      else if(this.platform.is('ios')){
+        this.clipboard.copy(message)
+        this.socialSharing.shareViaFacebookWithPasteMessageHint(null,base64,null,'please click paste')
+        .then(res => {
+          this.loading.dismiss();
+        }).catch(
+          err => {
+            this.loading.dismiss();
+          }
+        )
+      }
     }
     instagramSharing(base64,shortUrl,message){
       //TODO

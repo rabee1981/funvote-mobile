@@ -89,6 +89,7 @@
         <variable name="APP_ID" value="304302026657534" />
         <variable name="APP_NAME" value="Vote Fun" />
     </plugin>
+    <plugin name="cordova-clipboard" spec="^1.0.0" />
     <plugin name="cordova-plugin-admob-free" spec="^0.10.0" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1">
         <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />

@@ -40,6 +40,7 @@ import {Camera} from '@ionic-native/camera';
 import { Firebase } from '@ionic-native/firebase';
 import { IonicStorageModule } from '@ionic/storage';
 import { AdMobFree } from '@ionic-native/admob-free';
+import { Clipboard } from '@ionic-native/clipboard';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyDuFurr7wtx_FFUbmnOMMcxKSOPwtnXKFg",
@@ -113,6 +114,7 @@ export const firebaseConfig = {
     Firebase,
     AdMobFree,
     Deeplinks,
+    Clipboard,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

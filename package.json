@@ -22,6 +22,7 @@
         "@angular/platform-browser-dynamic": "4.1.2",
         "@ionic-native/admob-free": "^4.1.0",
         "@ionic-native/camera": "^3.12.1",
+        "@ionic-native/clipboard": "^4.1.0",
         "@ionic-native/core": "3.10.2",
         "@ionic-native/deeplinks": "^4.1.0",
         "@ionic-native/facebook": "^3.12.1",
@@ -36,6 +37,7 @@
         "com.phonegap.plugins.facebookconnect": "/Users/mohamadrabee/Desktop/Facebook",
         "cordova-admob-sdk": "^0.8.0",
         "cordova-android": "^6.2.3",
+        "cordova-clipboard": "^1.0.0",
         "cordova-ios": "^4.4.0",
         "cordova-plugin-admob-free": "^0.10.0",
         "cordova-plugin-camera": "^2.4.1",
@@ -125,7 +127,8 @@
                 "DEEPLINK_5_SCHEME": " ",
                 "DEEPLINK_5_HOST": " "
             },
-            "cordova-plugin-firebase": {}
+            "cordova-plugin-firebase": {},
+            "cordova-clipboard": {}
         },
         "platforms": [
             "android",

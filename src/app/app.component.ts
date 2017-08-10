@@ -75,8 +75,11 @@ export class MyApp implements OnInit, OnDestroy{
           this.deeplinks.routeWithNavController(this.nav, {
               '/chart/:id': SingleChartPage
             }).subscribe((match) => {
-              if(match.$link.queryString.indexOf('id=')>0){
-                  let chartkey = match.$link.queryString.split('id=').pop()
+              let queryString = decodeURIComponent(match.$link.queryString)
+              if(queryString.indexOf('id=')>0){
+                  let start = queryString.indexOf('sss')+3
+                  let end = queryString.indexOf('eee')
+                  let chartkey = queryString.slice(start,end)
                   this.nav.push(SingleChartPage,{id : chartkey})
               }
             }, (nomatch) => {
