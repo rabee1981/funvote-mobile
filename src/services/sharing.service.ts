@@ -25,7 +25,7 @@ export class SharingService {
                   // *** for android ****
                   //let shortUrl = "https://fb.me/344016559352747?id=" + key // this just for android TODO generate one for ios in https://developers.facebook.com/quickstarts
                   // *** both *****
-                  let shortUrl = "https://fb.me/344033696017700?id=" + key
+                  let shortUrl = "fb.me/344033696017700?id=" + key
                   var message = shortUrl;
                   switch(via){
                     case ShareVia.FACEBOOK : {
@@ -49,7 +49,7 @@ export class SharingService {
         // })
     }
     facebookSharing(base64,shortUrl,message){
-        this.socialSharing.shareViaFacebookWithPasteMessageHint(message,base64,null,'please click paste')
+        this.socialSharing.shareViaFacebookWithPasteMessageHint(null,base64,message,'please click paste')
         .then(res => {
           this.loading.dismiss();
         }).catch(
