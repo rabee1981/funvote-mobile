@@ -27,7 +27,10 @@ export class SingleChartPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    let alertOption: AlertOptions = { buttons: [{ text:'OK' , role: 'cancle' , handler: ()=>{this.navCtrl.popToRoot()}}] };
+    let alertOption: AlertOptions = { 
+      enableBackdropDismiss : false ,
+      buttons: [{ text:'OK' , role: 'cancle' , handler: ()=>{this.navCtrl.popToRoot()}}] 
+    };
     let alert
     this.loading.present();
     let chartkey = this.navParams.get('id')

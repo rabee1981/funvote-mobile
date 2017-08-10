@@ -8,7 +8,7 @@ import { ChartService } from "../../services/chart.service";
 import { FacebookService } from "../../services/facebook.service";
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
-import { NavController, AlertController, PopoverController, ModalController } from "ionic-angular";
+import { NavController, AlertController, PopoverController, ModalController, LoadingController} from "ionic-angular";
 import { AuthService } from "../../services/auth.service";
 import { ShareVia } from "../../data/shareVia.enum";
 import * as html2canvas from "html2canvas"
@@ -34,7 +34,7 @@ export class ChartCard implements OnDestroy {
 
   constructor(private chartService : ChartService, private fbService : FacebookService, private afAuth : AngularFireAuth, private afDatabase : AngularFireDatabase,
               private alertCtrl : AlertController,private authService : AuthService, private sharingService : SharingService, private navCtrl : NavController
-              ,private modalCtrl : ModalController, private storage: Storage) {}
+              ,private modalCtrl : ModalController, private storage: Storage, private loadingCtrl : LoadingController) {}
   ngOnInit(){
     this.isFavSub = this.chartService.isFavor(this.chartDetails.$key).subscribe(
       res => {
@@ -97,31 +97,34 @@ export class ChartCard implements OnDestroy {
   }
   onShare(){
     if(!this.justShow){
+      let loading = this.loadingCtrl.create({
+        content: 'Please Wait...'
+      });
       this.storage.get('showInstruction').then(
         toShow => {
           if(toShow){
-            html2canvas(document.getElementById(this.chartDetails.$key)).then(
-              res => {
-                this.chartImage = res.toDataURL('image/png')
-                this.sharingService.share(ShareVia.FACEBOOK,this.chartDetails.$key,this.chartImage)
-              }
-            ).catch()
+            loading.present()
+            this.convertAndShare().then(()=>loading.dismiss())
           }else{
             let sharingInstruction = this.modalCtrl.create(SharingInstructionPage);
             sharingInstruction.present();
             sharingInstruction.onDidDismiss((isShow)=>{
+              loading.present()
               this.storage.set('showInstruction',isShow)
-              html2canvas(document.getElementById(this.chartDetails.$key)).then(
-              res => {
-                this.chartImage = res.toDataURL('image/png')
-                this.sharingService.share(ShareVia.FACEBOOK,this.chartDetails.$key,this.chartImage)
-              }
-            ).catch()
+              this.convertAndShare().then(()=>loading.dismiss())
             })
           }
         }
       )
     }
+  }
+  convertAndShare(){ 
+      return html2canvas(document.getElementById(this.chartDetails.$key)).then(
+                res => {
+                  this.chartImage = res.toDataURL('image/png')
+                  this.sharingService.share(ShareVia.FACEBOOK,this.chartDetails.$key,this.chartImage)
+                }
+              ).catch()
   }
   listVoters(){
     if(!this.justShow){

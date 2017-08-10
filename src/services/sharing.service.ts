@@ -8,14 +8,10 @@ import { Clipboard } from '@ionic-native/clipboard';
 
 @Injectable()
 export class SharingService {
-  constructor(private platform: Platform, private http: Http, private loadingCtrl: LoadingController
-                , private socialSharing: SocialSharing, private afAuth : AngularFireAuth, private clipboard : Clipboard){}
+  constructor(private platform: Platform, private http: Http, private socialSharing: SocialSharing,
+              private afAuth : AngularFireAuth, private clipboard : Clipboard){}
 
-    loading = this.loadingCtrl.create({
-      content: 'Please Wait...'
-    });
     share(via : ShareVia, key,base64){
-      this.loading.present();
       // let headers = new Headers();
       //       this.afAuth.auth.currentUser.getIdToken().then(
       //           token => {
@@ -31,47 +27,24 @@ export class SharingService {
                   var message = shortUrl;
                   switch(via){
                     case ShareVia.FACEBOOK : {
-                      this.facebookSharing(base64,shortUrl,message)
-                      break
+                      return this.facebookSharing(base64,shortUrl,message)
                     }
                     case ShareVia.INSTAGRAM : {
-                      this.instagramSharing(base64,shortUrl,message)
-                      break
+                      return this.instagramSharing(base64,shortUrl,message)
                     }
                     case ShareVia.TWITTER : {
-                      this.twitterSharing(base64,shortUrl,message)
-                      break
+                      return this.twitterSharing(base64,shortUrl,message)
                     }
                     case ShareVia.WHATSAPP : {
-                      this.whatsappSharing(base64,shortUrl,message)
-                      break
+                      return this.whatsappSharing(base64,shortUrl,message)
                     }
                   }
         //         })
         // })
     }
     facebookSharing(base64,shortUrl,message){
-      if(this.platform.is('android')){
-        this.socialSharing.shareViaFacebookWithPasteMessageHint(message,base64,null,'please click paste')
-        .then(res => {
-          this.loading.dismiss();
-        }).catch(
-          err => {
-            this.loading.dismiss();
-          }
-        )
-      }
-      else if(this.platform.is('ios')){
         this.clipboard.copy(message)
-        this.socialSharing.shareViaFacebookWithPasteMessageHint(null,base64,null,'please click paste')
-        .then(res => {
-          this.loading.dismiss();
-        }).catch(
-          err => {
-            this.loading.dismiss();
-          }
-        )
-      }
+        return this.socialSharing.shareViaFacebookWithPasteMessageHint(null,base64,null,'please click paste')
     }
     instagramSharing(base64,shortUrl,message){
       //TODO
@@ -80,9 +53,6 @@ export class SharingService {
       //TODO
     }
     whatsappSharing(base64,shortUrl,message){
-     this.socialSharing.shareViaWhatsApp(message,base64)
-       .then(res => {
-         this.loading.dismiss()
-       })
+     return this.socialSharing.shareViaWhatsApp(message,base64)
     }
 }
