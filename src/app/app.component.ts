@@ -77,8 +77,8 @@ export class MyApp implements OnInit, OnDestroy{
             }).subscribe((match) => {
               let queryString = decodeURIComponent(match.$link.queryString)
               if(queryString.indexOf('id=')>0){
-                  let start = queryString.indexOf('sss')+3
-                  let end = queryString.indexOf('eee')
+                  let start = queryString.indexOf('id=')+3
+                  let end = queryString.indexOf('end')
                   let chartkey = queryString.slice(start,end)
                   this.nav.push(SingleChartPage,{id : chartkey})
               }
@@ -107,11 +107,11 @@ export class MyApp implements OnInit, OnDestroy{
         autoShow: true, 
         isTesting:true  // TODO: remove this line when release
       }
-      let adMobInterstitialOptions : AdMobFreeBannerConfig = {
-        id : interstitial,
-        autoShow : false,
-        isTesting:true  // TODO: remove this line when release
-      }
+      // let adMobInterstitialOptions : AdMobFreeBannerConfig = {
+      //   id : interstitial,
+      //   autoShow : false,
+      //   isTesting:true  // TODO: remove this line when release
+      // }
       // this.admobFree.interstitial.config(adMobInterstitialOptions)
       // this.admobFree.interstitial.prepare()
       // this.admobFree.on('admob.interstitial.events.CLOSE').subscribe(

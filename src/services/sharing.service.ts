@@ -1,14 +1,13 @@
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';
-import { Http , Headers } from '@angular/http';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { LoadingController, Platform } from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 import { ShareVia } from "../data/shareVia.enum";
 import { Clipboard } from '@ionic-native/clipboard';
 
 @Injectable()
 export class SharingService {
-  constructor(private platform: Platform, private http: Http, private socialSharing: SocialSharing,
+  constructor(private platform: Platform, private socialSharing: SocialSharing,
               private afAuth : AngularFireAuth, private clipboard : Clipboard){}
 
     share(via : ShareVia, key,base64){
@@ -23,7 +22,7 @@ export class SharingService {
                   //let shortUrl = "https://fb.me/344016559352747?id=" + key // this just for android TODO generate one for ios in https://developers.facebook.com/quickstarts
                   // *** both *****
                   //TODO generate new app link can be don in https://developers.facebook.com/quickstarts/304302026657534/?platform=app-links-host
-                  let shortUrl = "fb.me/344033696017700?id=" + 'sss' +key + 'eee' // start/end  
+                  let shortUrl = "fb.me/344033696017700?id=" +key + 'end' // start/end  
                   var message = shortUrl;
                   switch(via){
                     case ShareVia.FACEBOOK : {

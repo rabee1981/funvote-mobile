@@ -1,6 +1,5 @@
 import { SharingInstructionPage } from './../../pages/sharing-instruction/sharing-instruction';
-import { FollowersListPage } from './../../pages/followers-list/followers-list';
-import { PopoverVotersListPage } from './../../pages/popover-voters-list/popover-voters-list';
+import { UsersListPage } from './../../pages/users-list/users-list';
 import { Subscription } from 'rxjs/Subscription';
 import { SharingService } from './../../services/sharing.service';
 import { Component, Input, OnDestroy } from '@angular/core';
@@ -8,7 +7,7 @@ import { ChartService } from "../../services/chart.service";
 import { FacebookService } from "../../services/facebook.service";
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
-import { NavController, AlertController, PopoverController, ModalController, LoadingController} from "ionic-angular";
+import { NavController, AlertController, ModalController, LoadingController} from "ionic-angular";
 import { AuthService } from "../../services/auth.service";
 import { ShareVia } from "../../data/shareVia.enum";
 import * as html2canvas from "html2canvas"
@@ -91,27 +90,25 @@ export class ChartCard implements OnDestroy {
         this.followerCount--;
       }
       this.isFav = ! this.isFav
-      let locationInDb;
       this.chartService.followChart(this.chartDetails.$key,this.chartDetails.owner,this.chartDetails.isPublic);
     }
   }
   onShare(){
     if(!this.justShow){
       let loading = this.loadingCtrl.create({
-        content: 'Please Wait...'
+        spinner : 'bubbles'
       });
+      loading.present()
       this.storage.get('showInstruction').then(
         toShow => {
           if(toShow){
-            loading.present()
-            this.convertAndShare().then(()=>loading.dismiss())
+            this.convertAndShare().then(()=>loading.dismiss()).catch(()=>loading.dismiss())
           }else{
             let sharingInstruction = this.modalCtrl.create(SharingInstructionPage);
             sharingInstruction.present();
             sharingInstruction.onDidDismiss((isShow)=>{
-              loading.present()
               this.storage.set('showInstruction',isShow)
-              this.convertAndShare().then(()=>loading.dismiss())
+              this.convertAndShare().then(()=>loading.dismiss()).catch(()=>loading.dismiss())
             })
           }
         }
@@ -122,26 +119,20 @@ export class ChartCard implements OnDestroy {
       return html2canvas(document.getElementById(this.chartDetails.$key)).then(
                 res => {
                   this.chartImage = res.toDataURL('image/png')
-                  this.sharingService.share(ShareVia.FACEBOOK,this.chartDetails.$key,this.chartImage)
+                  return this.sharingService.share(ShareVia.FACEBOOK,this.chartDetails.$key,this.chartImage)
                 }
               ).catch()
   }
   listVoters(){
     if(!this.justShow){
-      this.chartService.getListOfVoters(this.chartDetails.$key,this.chartDetails.owner)
-      .take(1)
-       .subscribe(res => {
-      this.navCtrl.push(PopoverVotersListPage, {votersList : res})
-    })
+        let listVoterOps  = this.chartService.getListOfVoters(this.chartDetails.$key,this.chartDetails.owner)
+        this.navCtrl.push(UsersListPage, {listOps : listVoterOps , title : 'Voters'})
     }
   }
   listFollowers(){
     if(!this.justShow){
-      this.chartService.getListOfFollowers(this.chartDetails.$key,this.chartDetails.owner)
-      .take(1)
-       .subscribe(res => {
-      this.navCtrl.push(FollowersListPage, {followersList : res})
-    })
+        let listFollowersOps = this.chartService.getListOfFollowers(this.chartDetails.$key,this.chartDetails.owner)
+        this.navCtrl.push(UsersListPage, {listOps : listFollowersOps , title : 'Followers'})
     }
   }
   onVoted(event){

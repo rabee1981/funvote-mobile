@@ -1,7 +1,6 @@
 import { AdMobFree } from '@ionic-native/admob-free';
 import { Http , Headers } from '@angular/http';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { HomePage } from './../home/home';
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ChartDetails } from "../../data/chartDetails";

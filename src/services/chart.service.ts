@@ -1,7 +1,6 @@
 import { Http, Headers } from '@angular/http';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { ChartDetails } from './../data/chartDetails';
-import { AlertController, LoadingController, LoadingOptions } from 'ionic-angular';
+import { AlertController, LoadingController } from 'ionic-angular';
 import { FacebookService } from './facebook.service';
 import { Injectable } from "@angular/core";
 import { AngularFireDatabase } from "angularfire2/database";

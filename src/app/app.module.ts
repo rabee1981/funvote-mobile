@@ -2,8 +2,7 @@ import { Deeplinks } from '@ionic-native/deeplinks';
 import { SingleChartPage } from './../pages/single-chart/single-chart';
 import { HowToSharePage } from './../pages/how-to-share/how-to-share';
 import { SharingInstructionPage } from './../pages/sharing-instruction/sharing-instruction';
-import { FollowersListPage } from './../pages/followers-list/followers-list';
-import { PopoverVotersListPage } from './../pages/popover-voters-list/popover-voters-list';
+import { UsersListPage } from './../pages/users-list/users-list';
 import { ImageProccessService } from './../services/imageProccess.service';
 import { SharingService } from './../services/sharing.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -65,8 +64,7 @@ export const firebaseConfig = {
     FriendsChartsPage,
     ColorPickerPage,
     ThousandPipe,
-    PopoverVotersListPage,
-    FollowersListPage,
+    UsersListPage,
     SharingInstructionPage,
     HowToSharePage,
     SingleChartPage,
@@ -91,8 +89,7 @@ export const firebaseConfig = {
     FavPage,
     FriendsChartsPage,
     ColorPickerPage,
-    PopoverVotersListPage,
-    FollowersListPage,
+    UsersListPage,
     SharingInstructionPage,
     HowToSharePage,
     SingleChartPage
