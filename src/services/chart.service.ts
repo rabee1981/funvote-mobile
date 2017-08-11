@@ -84,7 +84,7 @@ export class ChartService {
             token => {
                 headers.append('Authorization', 'Bearer ' + token)
                 this.http.get(`https://us-central1-funvaotedata.cloudfunctions.net/voteFor?owner=${owner}&key=${key}&index=${index}`, { headers: headers })
-                    .toPromise().then(res => {
+                    .take(1).subscribe(res => {
                         //   console.log(res);
                     })
             })
@@ -128,7 +128,7 @@ export class ChartService {
             token => {
                 headers.append('Authorization', 'Bearer ' + token)
                 this.http.get(`https://us-central1-funvaotedata.cloudfunctions.net/followChart?owner=${owner}&key=${key}&locationInDb=${location}`, { headers: headers })
-                    .toPromise().then(res => {
+                    .take(1).subscribe(res => {
                         //   console.log(res);
                     })
             })

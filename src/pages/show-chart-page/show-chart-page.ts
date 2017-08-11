@@ -54,8 +54,8 @@ export class ShowChartPage {
       this.afAuth.auth.currentUser.getIdToken().then(
         token => {
           headers.append('Authorization', 'Bearer '+token)
-          this.http.post('https://us-central1-funvaotedata.cloudfunctions.net/storeChart',this.chartDetails,{headers : headers}).toPromise()
-          .then(
+          this.http.post('https://us-central1-funvaotedata.cloudfunctions.net/storeChart',this.chartDetails,{headers : headers}).take(1)
+          .subscribe(
             (res : any) => {
               let chartkey = res._body
               if(image){

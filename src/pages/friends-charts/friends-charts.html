@@ -21,8 +21,8 @@
 
 <ion-content class="color-content">
   <ion-list>
-    <ion-item class="color-content item-chart" no-lines *ngFor="let chart of friendsCharts; trackBy : trackByCreatedAt">
-        <chart-card [chartDetails]="chart" [owner]="chart.owner"></chart-card>
+    <ion-item class="color-content item-chart" no-lines *ngFor="let chart of friendsCharts | async; trackBy : trackByCreatedAt">
+        <chart-card *ngIf="chart" [chartDetails]="chart" [owner]="chart?.owner"></chart-card>
     </ion-item>
   </ion-list>
 </ion-content>

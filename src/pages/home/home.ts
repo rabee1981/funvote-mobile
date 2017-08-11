@@ -16,10 +16,9 @@ import { Firebase } from '@ionic-native/firebase';
 })
 export class HomePage implements OnInit,OnDestroy{
   isAllowCreate;
-  userCharts : any[] = [];
+  userCharts;
   isAllowCreateSubscription : Subscription;
   userStateSubscription : Subscription;
-  userChartsSubscription : Subscription;
   loading = this.loadingCtrl.create({
       content : 'Loading Charts',
       spinner : 'bubbles',
@@ -38,10 +37,12 @@ export class HomePage implements OnInit,OnDestroy{
           this.loading.dismiss();
           return;
         }
-        this.userChartsSubscription = this.chartService.getUserCharts().subscribe(
+        this.userCharts = this.chartService.getUserCharts().do(
           charts => {
             this.loading.dismiss();
-            this.userCharts = charts.slice();
+          },
+          err=>{
+            this.loading.dismiss();
           }
         )
       }
@@ -102,8 +103,6 @@ export class HomePage implements OnInit,OnDestroy{
   ngOnDestroy(){
     if (this.userStateSubscription)
       this.userStateSubscription.unsubscribe();
-    if(this.userChartsSubscription)
-      this.userChartsSubscription.unsubscribe();
     if(this.isAllowCreateSubscription)
       this.isAllowCreateSubscription.unsubscribe();
     }

@@ -1,5 +1,5 @@
 import { ChartService } from './../../services/chart.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
 import { FacebookService } from "../../services/facebook.service";
@@ -10,7 +10,7 @@ import { AngularFireDatabase } from "angularfire2/database";
   selector: 'page-friends-charts',
   templateUrl: 'friends-charts.html',
 })
-export class FriendsChartsPage implements OnInit{
+export class FriendsChartsPage {
     friendsCharts;
   loading = this.loadingCtrl.create({
       content : 'Loading Charts',
@@ -20,10 +20,12 @@ export class FriendsChartsPage implements OnInit{
   private afDatabase : AngularFireDatabase, private loadingCtrl : LoadingController, private chartService : ChartService) {
   }
 
-  ngOnInit(){
+  ionViewDidLoad(){
     this.loading.present()
-    this.chartService.getFriendsCharts().subscribe(charts => {
-      this.friendsCharts = charts;
+    this.friendsCharts = this.chartService.getFriendsCharts().do(
+      charts => {
+      this.loading.dismiss()
+    },err => {
       this.loading.dismiss()
     })
   }
