@@ -106,14 +106,16 @@ export class ChartCard implements OnDestroy {
           }else{
             let sharingInstruction = this.modalCtrl.create(SharingInstructionPage);
             sharingInstruction.present();
+            loading.dismiss()
             sharingInstruction.onDidDismiss((isShow)=>{
+              loading.present()
               this.storage.set('showInstruction',isShow)
               this.convertAndShare().then(()=>loading.dismiss()).catch(()=>loading.dismiss())
             })
           }
         }
       )
-    }
+     }
   }
   convertAndShare(){ 
       return html2canvas(document.getElementById(this.chartDetails.$key)).then(

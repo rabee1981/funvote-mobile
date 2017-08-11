@@ -43,7 +43,7 @@ export class SharingService {
     }
     facebookSharing(base64,shortUrl,message){
         this.clipboard.copy(message)
-        return this.socialSharing.shareViaFacebookWithPasteMessageHint(null,base64,null,'please click paste')
+        return this.socialSharing.shareViaFacebook(null,base64,null)
     }
     instagramSharing(base64,shortUrl,message){
       //TODO

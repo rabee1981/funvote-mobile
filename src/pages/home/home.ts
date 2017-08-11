@@ -55,6 +55,7 @@ export class HomePage implements OnInit,OnDestroy{
     }, 1000);
   }
   ionViewDidLoad(){
+    this.fbase.setBadgeNumber(0)
     if(this.platform.is('ios')){
       this.fbase.grantPermission().then(()=>{
       this.fcmInit()
@@ -71,9 +72,9 @@ export class HomePage implements OnInit,OnDestroy{
 
       this.fbase.onNotificationOpen().subscribe(data=>{
         if(data.wasTapped){
-          console.log("Received in background");
+          //Received in background
         } else {
-          console.log("Received in foreground");
+          //Received in foreground
         };
       })
 
