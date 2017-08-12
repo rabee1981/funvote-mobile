@@ -11,7 +11,7 @@ export class UsersListPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController) {
   }
 
-  ngOnInit(){
+  ionViewDidLoad(){
     this.title = this.navParams.get('title');
     this.votersListOps = this.navParams.get('listOps');
   }

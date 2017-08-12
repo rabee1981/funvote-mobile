@@ -2,7 +2,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthService } from './../../services/auth.service';
 import { ImageProccessService } from './../../services/imageProccess.service';
 import { ColorPickerPage } from './../color-picker/color-picker';
-import { ModalController } from 'ionic-angular';
+import { ModalController, LoadingController } from 'ionic-angular';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ChartDetails } from "../../data/chartDetails";
@@ -31,7 +31,8 @@ export class ChartFormPage {
     numberString : string[]=['1','2','3','4'];
     labelPlaceHolder = ['iPhone','HTC','Galaxy','OnePlus']
   constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl : ModalController, private camera : Camera
-              ,private imgService : ImageProccessService, private authService : AuthService,private  authFire : AngularFireAuth) {
+              ,private imgService : ImageProccessService, private authService : AuthService,private  authFire : AngularFireAuth,
+               private loadingCtrl : LoadingController) {
     this.chartDetails.chartLabels = [];
     this.chartDetails.chartColor = ['rgba(234, 30, 99, 0.8)','rgba(63, 81, 181, 0.8)','rgba(0, 151, 136, 0.8)','rgba(126, 93, 78, 0.8)'];
     this.chartDetails.chartType = 'bar'
@@ -72,14 +73,20 @@ export class ChartFormPage {
         })
   }
   loadImage(){
+    let loading = this.loadingCtrl.create({
+      content : 'loading picture...',
+      spinner : 'bubbles'
+    })
     this.camera.getPicture(this.options)
       .then(img => {
+        loading.present()
         let base64 = 'data:image/jpeg;base64,'+img
         this.imgService.convertToDataURLviaCanvas(base64, "image/jpeg",0.6)
               .then( base64WithOpacity => {
                 this.chartDetails.backgroundImage = base64WithOpacity
-              }).catch()
-      }).catch()
+                loading.dismiss()
+              }).catch(err => loading.dismiss())
+      }).catch(err => loading.dismiss())
   }
   removeImage(){
       this.chartDetails.backgroundImage = null;

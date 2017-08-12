@@ -14,7 +14,7 @@ import { Firebase } from '@ionic-native/firebase';
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage implements OnInit,OnDestroy{
+export class HomePage implements OnDestroy{
   isAllowCreate;
   userCharts;
   isAllowCreateSubscription : Subscription;
@@ -28,7 +28,7 @@ export class HomePage implements OnInit,OnDestroy{
               ,private conService : ConnectivityService, private alertCtrl : AlertController, private fbase : Firebase,
               private platform : Platform, private admobFree : AdMobFree) {
   }
-  ngOnInit(){
+  ionViewDidLoad(){
     if(this.conService.isOnline()){
     this.loading.present();
     this.userStateSubscription = this.authService.getUserState().subscribe(
@@ -47,15 +47,6 @@ export class HomePage implements OnInit,OnDestroy{
         )
       }
     )
-  }
-  }
-  ionViewDidEnter(){
-    this.admobFree.banner.hide()
-    setTimeout(() => {
-      this.admobFree.banner.show()
-    }, 1000);
-  }
-  ionViewDidLoad(){
     this.fbase.setBadgeNumber(0)
     if(this.platform.is('ios')){
       this.fbase.grantPermission().then(()=>{
@@ -65,7 +56,14 @@ export class HomePage implements OnInit,OnDestroy{
       this.fcmInit()
     }
     
-    }
+  }
+  }
+  ionViewDidEnter(){
+    this.admobFree.banner.hide()
+    setTimeout(() => {
+      this.admobFree.banner.show()
+    }, 1000);
+  }
   fcmInit(){
     this.fbase.getToken().then(token=>{
           this.chartService.storeDeviceToken(token);
