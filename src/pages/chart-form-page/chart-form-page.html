@@ -49,7 +49,7 @@
       </ion-item>
       <ion-item>
         <ion-label inline>Background Image : (optional)</ion-label>
-        <button *ngIf="!this.chartDetails.backgroundImage" ion-button outline item-end color="secondary" (click)="loadImage()">add</button>
+        <ion-icon *ngIf="!this.chartDetails.backgroundImage" style="margin : 0px 10px 0px!important; font-size : 40px" name="camera" item-end color="secondary" (click)="loadImage()"></ion-icon>
         <button *ngIf="this.chartDetails.backgroundImage" ion-button outline item-end color="danger" (click)="removeImage()">remove</button>
       </ion-item>
 

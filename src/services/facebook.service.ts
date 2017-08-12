@@ -35,17 +35,13 @@ export class FacebookService {
         .take(1).subscribe(
             (res : any) => {
                 let freidsArray = JSON.parse(res._body).data;
-                let userFriendsList : UserInfo[]=[];
                 for(let key in freidsArray){
                 var userInfo : UserInfo = new UserInfo();
                     userInfo.name = freidsArray[key].name,
                     userInfo.pictureUrl = freidsArray[key].picture.data.url,
                     userInfo.facebookUid = freidsArray[key].id,
-                userFriendsList.push(userInfo)
+                this.afDatabase.object(`users/${user.uid}/friendsList/${key}`).update(userInfo)
             }
-                for(let k in userFriendsList){
-                  this.afDatabase.object(`users/${user.uid}/friendsList/${k}`).update(userFriendsList[k])
-                }
             }
         )
       }).catch()
