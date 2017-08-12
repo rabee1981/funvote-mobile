@@ -27,53 +27,56 @@ export class SingleChartPage implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    let alertOption: AlertOptions = { 
-      enableBackdropDismiss : false ,
-      buttons: [{ text:'OK' , role: 'cancle' , handler: ()=>{this.navCtrl.popToRoot()}}] 
+    let alertOption: AlertOptions = {
+      enableBackdropDismiss: false,
+      buttons: [{ text: 'OK', role: 'cancle', handler: () => { this.navCtrl.popToRoot() } }]
     };
     let alert
     this.loading.present();
-    let chartkey = this.navParams.get('id')
-    this.userStateSubscription = this.authService.getUserState().subscribe(
-      user => {
-        this.chartSubscription = this.afDatabase.object(`users/${user.uid}/friendsCharts/${chartkey}`)
-          .subscribe(
-          chart => {
-            if (chart.$value === undefined) {
-              this.chartDetails = chart;
-              this.loading.dismiss();
-            } else {
-              this.publicChartsthisSub = this.afDatabase.object(`publicCharts/${chartkey}`).subscribe(publicChart => {
-                if (publicChart.$value === undefined) {
-                  this.chartDetails = publicChart;
-                  this.loading.dismiss();
-                } else {
-                  this.userChart = this.afDatabase.object(`users/${user.uid}/userCharts/${chartkey}`).subscribe(
-                    userChart => {
-                      if (userChart.$value === undefined) {
-                        this.chartDetails = userChart;
+    setTimeout(() => {
+      let chartkey = this.navParams.get('id')
+      this.userStateSubscription = this.authService.getUserState().subscribe(
+        user => {
+          this.chartSubscription = this.afDatabase.object(`users/${user.uid}/friendsCharts/${chartkey}`)
+            .subscribe(
+            chart => {
+              if (chart.$value === undefined) {
+                this.chartDetails = chart;
+                this.loading.dismiss();
+              } else {
+                this.publicChartsthisSub = this.afDatabase.object(`publicCharts/${chartkey}`).subscribe(publicChart => {
+                  if (publicChart.$value === undefined) {
+                    this.chartDetails = publicChart;
+                    this.loading.dismiss();
+                  } else {
+                    this.userChart = this.afDatabase.object(`users/${user.uid}/userCharts/${chartkey}`).subscribe(
+                      userChart => {
+                        if (userChart.$value === undefined) {
+                          this.chartDetails = userChart;
+                          this.loading.dismiss()
+                        } else {
+                          this.loading.dismiss()
+                          alertOption.subTitle = 'you cannot see this chart, this chart is not public or it has been deleted'
+                          alert = this.alertCtrl.create(alertOption).present()
+                        }
+                      },
+                      err => {
                         this.loading.dismiss()
-                      } else {
-                        this.loading.dismiss()
-                        alertOption.subTitle = 'you cannot see this chart, this chart is not public or it has been deleted'
+                        alertOption.subTitle = 'oops something went wrong, please try again later'
                         alert = this.alertCtrl.create(alertOption).present()
                       }
-                    },
-                    err => {
-                      this.loading.dismiss()
-                      alertOption.subTitle = 'oops something went wrong, please try again later'
-                      alert = this.alertCtrl.create(alertOption).present()
-                    }
-                  )
-                }
-              })
+                    )
+                  }
+                })
+              }
+            },
+            err => {
+              this.loading.dismiss();
             }
-          },
-          err => {
-            this.loading.dismiss();
-          }
-          )
-      })
+            )
+        })
+    }, 3000);
+
   }
   ngOnDestroy(): void {
     if (this.userChart)
