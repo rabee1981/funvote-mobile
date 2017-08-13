@@ -7,9 +7,9 @@ import { NavController, NavParams, ViewController, Platform } from 'ionic-angula
 })
 export class SharingInstructionPage {
   toShow = false;
-  constructor(private viewCtrl : ViewController, public navParams: NavParams, private platform : Platform) {
+  constructor(private viewCtrl: ViewController, public navParams: NavParams, private platform: Platform) {
   }
-  onOk(){
+  onOk() {
     this.viewCtrl.dismiss(this.toShow);
   }
 }

@@ -1,26 +1,26 @@
 <ion-card>
   <ion-buttons right>
-      <ion-item style="background-color: transparent;">
-        <ion-avatar item-start>
-          <img src="{{(ownerInfo | async)?.pictureUrl}}">
-        </ion-avatar>
-        <small>{{(ownerInfo | async)?.name}}</small>
-      </ion-item>
+    <ion-item style="background-color: transparent;">
+      <ion-avatar item-start>
+        <img src="{{(ownerInfo | async)?.pictureUrl}}">
+      </ion-avatar>
+      <small>{{(ownerInfo | async)?.name}}</small>
+    </ion-item>
   </ion-buttons>
   <ion-item style="padding: 0px !important;" text-wrap>
     <chart-component (onVoted)="onVoted($event)" [chartDetails]="chartDetails" [owner]="owner" [justShow]="justShow"></chart-component>
   </ion-item>
   <ion-card-content style="padding: 0px!important;">
-  <ion-item>
-    <ion-chip item-start>
+    <ion-item>
+      <ion-chip item-start>
         <ion-icon name="contacts" style="margin : 0;"></ion-icon>
         <ion-label class="label-voters"><a (click)="listVoters()">{{-1*votesCount | thousand}} voters</a></ion-label>
-    </ion-chip>
-    <ion-badge item-end *ngIf="followerCount<0" (click)="listFollowers()">
-      {{-1*followerCount | thousand}}
-      <ion-icon name="icon" ios="ios-star" md="md-star" style="color :#FFD700;font-size : 1em!important;"></ion-icon>
+      </ion-chip>
+      <ion-badge item-end *ngIf="followerCount<0" (click)="listFollowers()">
+        {{-1*followerCount | thousand}}
+        <ion-icon name="icon" ios="ios-star" md="md-star" style="color :#FFD700;font-size : 1em!important;"></ion-icon>
       </ion-badge>
-  </ion-item>
+    </ion-item>
   </ion-card-content>
   <ion-row>
     <!-- your charts page -->

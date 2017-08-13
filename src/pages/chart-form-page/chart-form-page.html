@@ -1,7 +1,6 @@
-
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title text-center >
+    <ion-title text-center>
       Chart Information
     </ion-title>
   </ion-navbar>
@@ -11,59 +10,55 @@
 <ion-content padding class="color-content">
   <form #f="ngForm" ngSubmit>
     <ion-list>
-        <ion-label type="text" text-center style="font-size : 20px;">Chart Details</ion-label>
+      <ion-label type="text" text-center style="font-size : 20px;">Chart Details</ion-label>
       <ion-item>
         <ion-label inline>Title :</ion-label>
-        <ion-input type="text" name="title" [maxlength]="100" [ngStyle]="{'color' : titleColor}" [(ngModel)]="this.chartDetails.chartTitle" required placeholder="What is your favorite phone?"></ion-input>
-        <button ion-button item-end 
-                [ngStyle]="{'background-color' : this.chartDetails.titleColor}" 
-                style="font-size : 18px;"
-                (click)="changeTitleColor()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+        <ion-input type="text" name="title" [maxlength]="100" [ngStyle]="{'color' : titleColor}" [(ngModel)]="this.chartDetails.chartTitle"
+          required placeholder="What is your favorite phone?"></ion-input>
+        <button ion-button item-end [ngStyle]="{'background-color' : this.chartDetails.titleColor}" style="font-size : 18px;" (click)="changeTitleColor()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
       </ion-item>
 
       <ion-item>
         <ion-label inline>Type :</ion-label>
-          <ion-select  name="type" [(ngModel)]="this.chartDetails.chartType" required>
-            <ion-option value="bar" selected>Bar</ion-option>
-            <ion-option value="pie">Pie</ion-option>
-            <ion-option value="doughnut">Doughnut</ion-option>
-          </ion-select>
+        <ion-select name="type" [(ngModel)]="this.chartDetails.chartType" required>
+          <ion-option value="bar" selected>Bar</ion-option>
+          <ion-option value="pie">Pie</ion-option>
+          <ion-option value="doughnut">Doughnut</ion-option>
+        </ion-select>
       </ion-item>
 
       <ion-item>
         <ion-label inline>Options Amount :</ion-label>
-          <ion-select  name="optionAmount" (ionChange)="onChange($event)" [(ngModel)]="selectedValue" required>
-            <ion-option value="2">2</ion-option>
-            <ion-option value="3">3</ion-option>
-            <ion-option value="4">4</ion-option>
-          </ion-select>
+        <ion-select name="optionAmount" (ionChange)="onChange($event)" [(ngModel)]="selectedValue" required>
+          <ion-option value="2">2</ion-option>
+          <ion-option value="3">3</ion-option>
+          <ion-option value="4">4</ion-option>
+        </ion-select>
       </ion-item>
 
       <ion-item *ngFor="let value of valueAxisX; let i = index">
         <ion-label inline>Option {{numberString[i]}} :</ion-label>
         <ion-input type="text" [name]="value" [maxlength]="30" [(ngModel)]="this.chartDetails.chartLabels[i]" required [placeholder]="labelPlaceHolder[i]"></ion-input>
-        <button ion-button item-end 
-                [ngStyle]="{'background-color' : this.chartDetails.chartColor[i]}" 
-                style="font-size : 18px;"
-                (click)="changeLabelColor(i)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+        <button ion-button item-end [ngStyle]="{'background-color' : this.chartDetails.chartColor[i]}" style="font-size : 18px;"
+          (click)="changeLabelColor(i)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
       </ion-item>
       <ion-item>
         <ion-label inline>Background Image : (optional)</ion-label>
-        <ion-icon *ngIf="!this.chartDetails.backgroundImage" style="margin : 0px 10px 0px!important; font-size : 40px" name="camera" item-end color="secondary" (click)="loadImage()"></ion-icon>
+        <ion-icon *ngIf="!this.chartDetails.backgroundImage" style="margin : 0px 10px 0px!important; font-size : 40px" name="camera"
+          item-end color="secondary" (click)="loadImage()"></ion-icon>
         <button *ngIf="this.chartDetails.backgroundImage" ion-button outline item-end color="danger" (click)="removeImage()">remove</button>
       </ion-item>
 
       <ion-item>
         <ion-label inline>Who should see this?</ion-label>
-          <ion-select  name="public" [(ngModel)]="this.chartDetails.isPublic">
-            <ion-option value="false">👥&nbsp;&nbsp;&nbsp;Friends</ion-option>
-            <ion-option value="true">🌎&nbsp;&nbsp;&nbsp;Public</ion-option>
-          </ion-select>
+        <ion-select name="public" [(ngModel)]="this.chartDetails.isPublic">
+          <ion-option value="false">👥&nbsp;&nbsp;&nbsp;Friends</ion-option>
+          <ion-option value="true">🌎&nbsp;&nbsp;&nbsp;Public</ion-option>
+        </ion-select>
       </ion-item>
-      
-</ion-list>
+
+    </ion-list>
   </form>
   <button ion-button (click)="onShow()" [disabled]="!f.valid">Show</button>
-  <img *ngIf="this.chartDetails.backgroundImage"[src]="this.chartDetails.backgroundImage">
+  <img *ngIf="this.chartDetails.backgroundImage" [src]="this.chartDetails.backgroundImage">
 </ion-content>
-

@@ -8,7 +8,7 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class HowToSharePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private afAuth : AngularFireAuth) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private afAuth: AngularFireAuth) {
   }
 
 }

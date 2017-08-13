@@ -39,23 +39,23 @@ export class ChartService {
                 let followCharts = []
                 for (let f of favKeyArray) {
                     let locEnum = parseInt(f.$value)
-                    if(locEnum == LocationInDb.USER)
+                    if (locEnum == LocationInDb.USER)
                         this.afDatabase.object(`users/${this.useruid}/userCharts/${f.$key}`).subscribe(res => {
-                        this.updateFollowArray(followCharts,res)
-                    })
-                    else if(locEnum == LocationInDb.FRIENDS)
+                            this.updateFollowArray(followCharts, res)
+                        })
+                    else if (locEnum == LocationInDb.FRIENDS)
                         this.afDatabase.object(`users/${this.useruid}/friendsCharts/${f.$key}`).subscribe(res => {
-                        this.updateFollowArray(followCharts,res)
-                    })
-                    else if(locEnum == LocationInDb.PUBLIC)
+                            this.updateFollowArray(followCharts, res)
+                        })
+                    else if (locEnum == LocationInDb.PUBLIC)
                         this.afDatabase.object(`publicCharts/${f.$key}`).subscribe(res => {
-                        this.updateFollowArray(followCharts,res)
-                    }) 
+                            this.updateFollowArray(followCharts, res)
+                        })
                 }
                 return followCharts
             })
     }
-    updateFollowArray(followCharts,res) {
+    updateFollowArray(followCharts, res) {
         let index = followCharts.findIndex(chart => {
             return chart.$key == res.$key
         })
@@ -116,11 +116,11 @@ export class ChartService {
     }
     followChart(key, owner, isPublic) {
         let location
-        if(isPublic === 'true'){
+        if (isPublic === 'true') {
             location = LocationInDb.PUBLIC
-        }else if(owner === this.useruid){
+        } else if (owner === this.useruid) {
             location = LocationInDb.USER
-        }else{
+        } else {
             location = LocationInDb.FRIENDS
         }
         let headers = new Headers();

@@ -22,12 +22,12 @@ import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free';
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp implements OnInit, OnDestroy{
+export class MyApp implements OnInit, OnDestroy {
   alert: Alert;
   connectSubscription: any;
   disconnectSubscription: any;
   homePage = HomePage;
-  rootPage:any = this.homePage;
+  rootPage: any = this.homePage;
   signinPage;
   publicChartsPage;
   favPage;
@@ -35,100 +35,100 @@ export class MyApp implements OnInit, OnDestroy{
   friendsChartsPage;
   userName = [];
   connectionAlert;
-  @ViewChild('nav') nav : NavController;
-  constructor(private platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth : AngularFireAuth
-  ,private authService : AuthService, private menuCtrl : MenuController, private chartService : ChartService, private fbService : FacebookService
-  ,private alertCtrl : AlertController,private conService : ConnectivityService, private network : Network, private admobFree : AdMobFree,
-  private deeplinks : Deeplinks) {
-    platform.ready().then(() => { 
-      this.admobInit()     
+  @ViewChild('nav') nav: NavController;
+  constructor(private platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private afAuth: AngularFireAuth
+    , private authService: AuthService, private menuCtrl: MenuController, private chartService: ChartService, private fbService: FacebookService
+    , private alertCtrl: AlertController, private conService: ConnectivityService, private network: Network, private admobFree: AdMobFree,
+    private deeplinks: Deeplinks) {
+    platform.ready().then(() => {
+      this.admobInit()
       statusBar.styleDefault();
       splashScreen.hide();
-      }).catch();
+    }).catch();
 
   }
-  ngOnInit(){
+  ngOnInit() {
     this.disconnectSubscription = this.network.onDisconnect().subscribe(() => {
       this.connectionAlert = this.alertCtrl.create({
-    title: 'Connection error',
-    subTitle: 'Unable to connect with the server. Check your internet connection and try agin.',
-    enableBackdropDismiss : false
+        title: 'Connection error',
+        subTitle: 'Unable to connect with the server. Check your internet connection and try agin.',
+        enableBackdropDismiss: false
+      });
+      this.connectionAlert.present();
     });
-  this.connectionAlert.present();
-});
-  this.connectSubscription = this.network.onConnect().subscribe(() => {
-  this.connectionAlert.dismiss();
-});
-    if(this.conService.isOnline){
+    this.connectSubscription = this.network.onConnect().subscribe(() => {
+      this.connectionAlert.dismiss();
+    });
+    if (this.conService.isOnline) {
       this.signinPage = SigninPage;
       this.publicChartsPage = PublicChartsPage;
       this.favPage = FavPage;
       this.friendsChartsPage = FriendsChartsPage;
       this.howToSharePage = HowToSharePage;
-        this.afAuth.authState.subscribe(user => {
-        if (user) {   
+      this.afAuth.authState.subscribe(user => {
+        if (user) {
           this.chartService.useruid = user.uid;
           this.userName = user.displayName.split(' ');
           this.rootPage = this.homePage;
-          this.fbService.saveFriendsInfo(user); 
+          this.fbService.saveFriendsInfo(user);
           this.fbService.saveUserInfo(user.uid);
           this.deeplinks.routeWithNavController(this.nav, {
-              '/chart/:id': SingleChartPage
-            }).subscribe((match) => {
-              let queryString = decodeURIComponent(match.$link.queryString)
-              if(queryString.indexOf('id=')>0){
-                  let start = queryString.indexOf('id=')+3
-                  let end = queryString.indexOf('end')
-                  let chartkey = queryString.slice(start,end)
-                  this.nav.push(SingleChartPage,{id : chartkey})
-              }
-            }, (nomatch) => {
-              alert('Unmatched Route' + nomatch);
-            });      
-        }else{
-        this.rootPage =  this.signinPage; 
-        }  
-    });
+            '/chart/:id': SingleChartPage
+          }).subscribe((match) => {
+            let queryString = decodeURIComponent(match.$link.queryString)
+            if (queryString.indexOf('id=') > 0) {
+              let start = queryString.indexOf('id=') + 3
+              let end = queryString.indexOf('end')
+              let chartkey = queryString.slice(start, end)
+              this.nav.push(SingleChartPage, { id: chartkey })
+            }
+          }, (nomatch) => {
+            alert('Unmatched Route' + nomatch);
+          });
+        } else {
+          this.rootPage = this.signinPage;
+        }
+      });
     }
   }
-  admobInit(){
+  admobInit() {
     let banner
-      let interstitial
-      if(this.platform.is('android')){
-        banner = 'ca-app-pub-9268480526904407/8370470970'
-        interstitial = 'ca-app-pub-9268480526904407/7796891371';
-      }else if(this.platform.is('ios')){
-        banner = 'ca-app-pub-9268480526904407/2463538177';
-        interstitial = 'ca-app-pub-9268480526904407/4843424975';
-      }
-      let adMobBannerOptions : AdMobFreeBannerConfig = {
-        id : banner,
-        overlap : false,
-        autoShow: true, 
-        isTesting:true  // TODO: remove this line when release
-      }
-      // let adMobInterstitialOptions : AdMobFreeBannerConfig = {
-      //   id : interstitial,
-      //   autoShow : false,
-      //   isTesting:true  // TODO: remove this line when release
-      // }
-      // this.admobFree.interstitial.config(adMobInterstitialOptions)
-      // this.admobFree.interstitial.prepare()
-      // this.admobFree.on('admob.interstitial.events.CLOSE').subscribe(
-      //   res => {
-      //     this.admobFree.interstitial.config(adMobInterstitialOptions)
-      //     this.admobFree.interstitial.prepare().then(res => console.log(res))
-      //   }
-      // )
-      this.admobFree.banner.config(adMobBannerOptions)
-      this.admobFree.banner.prepare()
-      .catch(err=>console.log(err))
+    let interstitial
+    if (this.platform.is('android')) {
+      banner = 'ca-app-pub-9268480526904407/8370470970'
+      interstitial = 'ca-app-pub-9268480526904407/7796891371';
+    } else if (this.platform.is('ios')) {
+      banner = 'ca-app-pub-9268480526904407/2463538177';
+      interstitial = 'ca-app-pub-9268480526904407/4843424975';
+    }
+    let adMobBannerOptions: AdMobFreeBannerConfig = {
+      id: banner,
+      overlap: false,
+      autoShow: true,
+      isTesting: true  // TODO: remove this line when release
+    }
+    // let adMobInterstitialOptions : AdMobFreeBannerConfig = {
+    //   id : interstitial,
+    //   autoShow : false,
+    //   isTesting:true  // TODO: remove this line when release
+    // }
+    // this.admobFree.interstitial.config(adMobInterstitialOptions)
+    // this.admobFree.interstitial.prepare()
+    // this.admobFree.on('admob.interstitial.events.CLOSE').subscribe(
+    //   res => {
+    //     this.admobFree.interstitial.config(adMobInterstitialOptions)
+    //     this.admobFree.interstitial.prepare().then(res => console.log(res))
+    //   }
+    // )
+    this.admobFree.banner.config(adMobBannerOptions)
+    this.admobFree.banner.prepare()
+      .catch(err => console.log(err))
   }
-  onLogout(){
+  onLogout() {
     this.authService.logout();
     this.menuCtrl.close();
   }
-  onLoad(page : any){
+  onLoad(page: any) {
     this.nav.setRoot(page);
     this.menuCtrl.close();
   }

@@ -10,18 +10,18 @@ import { ChartService } from "../../services/chart.service";
   selector: 'page-fav',
   templateUrl: 'fav.html',
 })
-export class FavPage implements OnDestroy{
+export class FavPage implements OnDestroy {
   favChartsSubscribtion: Subscription;
   userStateSubscription: any;
-  favCharts=[];
+  favCharts = [];
   loading = this.loadingCtrl.create({
-      content : 'Loading Charts',
-      spinner : 'bubbles',
-    })
-  constructor(public navCtrl: NavController, public navParams: NavParams, private afAuth : AngularFireAuth, private afDatabase: AngularFireDatabase
-  , private authService : AuthService, private loadingCtrl : LoadingController, private chartService : ChartService) {
+    content: 'Loading Charts',
+    spinner: 'bubbles',
+  })
+  constructor(public navCtrl: NavController, public navParams: NavParams, private afAuth: AngularFireAuth, private afDatabase: AngularFireDatabase
+    , private authService: AuthService, private loadingCtrl: LoadingController, private chartService: ChartService) {
   }
-  ngOnInit(){
+  ngOnInit() {
     this.loading.present();
     this.favChartsSubscribtion = this.chartService.getFavoritesCharts().subscribe(
       favCharts => {
@@ -29,13 +29,13 @@ export class FavPage implements OnDestroy{
       }
     )
   }
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     this.loading.dismiss();
   }
   ngOnDestroy(): void {
     this.favChartsSubscribtion.unsubscribe();
   }
-  trackByCreatedAt(index,chart){
-      return chart ? chart.createdAt : undefined;
-    }
+  trackByCreatedAt(index, chart) {
+    return chart ? chart.createdAt : undefined;
+  }
 }

@@ -5,7 +5,7 @@
         <ion-icon name="menu"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title text-center >
+    <ion-title text-center>
       Friends Charts
     </ion-title>
     <ion-buttons right>
@@ -14,7 +14,7 @@
           <img src="{{this.afAuth.auth.currentUser?.photoURL}}">
         </ion-avatar>
       </ion-item>
-  </ion-buttons>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -22,7 +22,7 @@
 <ion-content class="color-content">
   <ion-list>
     <ion-item class="color-content item-chart" no-lines *ngFor="let chart of friendsCharts | async; trackBy : trackByCreatedAt">
-        <chart-card *ngIf="chart" [chartDetails]="chart" [owner]="chart?.owner"></chart-card>
+      <chart-card *ngIf="chart" [chartDetails]="chart" [owner]="chart?.owner"></chart-card>
     </ion-item>
   </ion-list>
 </ion-content>

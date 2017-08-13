@@ -1,11 +1,11 @@
 <ion-card-content [ngClass]="platform.is('android') ? 'my-android-content' : (platform.is('ipad')  ? 'my-ipad-content' : 'my-ios-content')">
-    <p><span>IMPORTANT</span>: Make sure to paste the URL where people can vote, here how you should do that</p>
-    <img src="assets/images/sharing-instructions.gif" >
-    <ion-footer>
-      <button ion-button full color="primary" (click)="onOk()">
+  <p><span>IMPORTANT</span>: Make sure to paste the URL where people can vote, here how you should do that</p>
+  <img src="assets/images/sharing-instructions.gif">
+  <ion-footer>
+    <button ion-button full color="primary" (click)="onOk()">
         <label id="gotIt">GOT IT</label>
         <label id="showAgain">Don't show again</label>
         <ion-checkbox color="color1" [(ngModel)]="toShow"></ion-checkbox>
       </button>
-    </ion-footer>
+  </ion-footer>
 </ion-card-content>

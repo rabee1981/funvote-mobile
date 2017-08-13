@@ -11,26 +11,26 @@ import { AngularFireDatabase } from "angularfire2/database";
   templateUrl: 'friends-charts.html',
 })
 export class FriendsChartsPage {
-    friendsCharts;
+  friendsCharts;
   loading = this.loadingCtrl.create({
-      content : 'Loading Charts',
-      spinner : 'bubbles',
-    })
-  constructor(public navCtrl: NavController, public navParams: NavParams, private afAuth : AngularFireAuth, private fbService : FacebookService,
-  private afDatabase : AngularFireDatabase, private loadingCtrl : LoadingController, private chartService : ChartService) {
+    content: 'Loading Charts',
+    spinner: 'bubbles',
+  })
+  constructor(public navCtrl: NavController, public navParams: NavParams, private afAuth: AngularFireAuth, private fbService: FacebookService,
+    private afDatabase: AngularFireDatabase, private loadingCtrl: LoadingController, private chartService: ChartService) {
   }
 
-  ionViewDidLoad(){
+  ionViewDidLoad() {
     this.loading.present()
     this.friendsCharts = this.chartService.getFriendsCharts().do(
       charts => {
-      this.loading.dismiss()
-    },err => {
-      this.loading.dismiss()
-    })
+        this.loading.dismiss()
+      }, err => {
+        this.loading.dismiss()
+      })
   }
-  trackByCreatedAt(index,chart){
+  trackByCreatedAt(index, chart) {
     return chart ? chart.createdAt : undefined;
-    }
+  }
 
 }

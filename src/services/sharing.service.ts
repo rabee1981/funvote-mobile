@@ -12,19 +12,8 @@ export class SharingService {
     private afAuth: AngularFireAuth, private clipboard: Clipboard) { }
 
   share(via: ShareVia, key, base64) {
-    // let headers = new Headers();
-    //       this.afAuth.auth.currentUser.getIdToken().then(
-    //           token => {
-    //           headers.append('Authorization', 'Bearer '+token)
-    //           this.http.get(`https://us-central1-funvaotedata.cloudfunctions.net/getShortLink?key=${key}`,{headers : headers})
-    //           .take(1).subscribe((res : any) => {
-    // let shortUrl = res._body;
-    // *** for android ****
-    //let shortUrl = "https://fb.me/344016559352747?id=" + key // this just for android TODO generate one for ios in https://developers.facebook.com/quickstarts
-    // *** both *****
-    //TODO generate new app link can be don in https://developers.facebook.com/quickstarts/304302026657534/?platform=app-links-host
     this.afDatabase.object('fbAppLink').take(1).subscribe(url => {
-      let shortUrl = url.$value+ '?id=' + key + 'end' // start/end  
+      let shortUrl = url.$value + '?id=' + key + 'end' // url = "fb.me/344033696017700"
       var message = shortUrl;
       switch (via) {
         case ShareVia.FACEBOOK: {
@@ -41,8 +30,6 @@ export class SharingService {
         }
       }
     })
-    //         })
-    // })
   }
   facebookSharing(base64, shortUrl, message) {
     this.clipboard.copy(message)

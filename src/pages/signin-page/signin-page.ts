@@ -7,16 +7,16 @@ import { AuthService } from "../../services/auth.service";
   templateUrl: 'signin-page.html',
 })
 export class SigninPage {
-  constructor(private authService : AuthService, private loadingCtrl : LoadingController) {}
+  constructor(private authService: AuthService, private loadingCtrl: LoadingController) { }
   facebookLogin() {
     var loading = this.loadingCtrl.create({
-      content : 'Logging in...',
-      spinner : 'bubbles',
+      content: 'Logging in...',
+      spinner: 'bubbles',
     });
     loading.present();
     this.authService.signInWithFacebook().then(res => loading.dismiss())
-    .catch(err=>{
-      loading.dismiss()
-    })
+      .catch(err => {
+        loading.dismiss()
+      })
   }
 }

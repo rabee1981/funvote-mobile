@@ -5,7 +5,7 @@
         <ion-icon name="menu"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title text-center >
+    <ion-title text-center>
       Top Charts
     </ion-title>
     <ion-buttons right>
@@ -14,23 +14,23 @@
           <img src="{{this.afAuth.auth.currentUser?.photoURL}}">
         </ion-avatar>
       </ion-item>
-  </ion-buttons>
+    </ion-buttons>
   </ion-navbar>
   <ion-list style="margin : 0!important;">
     <ion-item>
       <ion-label style="font-weight : bold;">Sort By :</ion-label>
       <ion-select [(ngModel)]="sortBy" placeholder="Newest" (ionChange)="onChange($event)">
-      <ion-option value="createdAt">50 Newest</ion-option>
-      <ion-option value="voteCount">50 Most Voted</ion-option>
+        <ion-option value="createdAt">50 Newest</ion-option>
+        <ion-option value="voteCount">50 Most Voted</ion-option>
       </ion-select>
     </ion-item>
   </ion-list>
 </ion-header>
 
 <ion-content class="color-content">
-    <ion-list>
-      <ion-item class="color-content item-chart" no-lines *ngFor="let chart of publicCharts | async; trackBy : trackByCreatedAt;">
-        <chart-card [chartDetails]="chart" [owner]="chart?.owner"></chart-card>
-      </ion-item>
-    </ion-list>
+  <ion-list>
+    <ion-item class="color-content item-chart" no-lines *ngFor="let chart of publicCharts | async; trackBy : trackByCreatedAt;">
+      <chart-card [chartDetails]="chart" [owner]="chart?.owner"></chart-card>
+    </ion-item>
+  </ion-list>
 </ion-content>

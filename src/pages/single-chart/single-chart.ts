@@ -43,8 +43,8 @@ export class SingleChartPage implements OnInit, OnDestroy {
 
         }, 3000);
       }
-    }).then(_=>{
-      this.storage.set('isFirstRun',false)
+    }).then(_ => {
+      this.storage.set('isFirstRun', false)
     })
   }
   loadChart() {

@@ -7,7 +7,7 @@ import { ChartService } from "../../services/chart.service";
 import { FacebookService } from "../../services/facebook.service";
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
-import { NavController, AlertController, ModalController, LoadingController} from "ionic-angular";
+import { NavController, AlertController, ModalController, LoadingController } from "ionic-angular";
 import { AuthService } from "../../services/auth.service";
 import { ShareVia } from "../../data/shareVia.enum";
 import * as html2canvas from "html2canvas"
@@ -18,7 +18,7 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'chart-card.html'
 })
 export class ChartCard implements OnDestroy {
-  followerCount=0;
+  followerCount = 0;
   followerCountSub: Subscription;
   votesCountSub: Subscription;
   isFavSub: Subscription;
@@ -26,15 +26,15 @@ export class ChartCard implements OnDestroy {
   @Input() chartDetails;
   @Input() owner;
   @Input() justShow = false;
-  votesCount=0;
+  votesCount = 0;
   ownerInfo;
   isFav;
   isUserChart;
 
-  constructor(private chartService : ChartService, private fbService : FacebookService, private afAuth : AngularFireAuth, private afDatabase : AngularFireDatabase,
-              private alertCtrl : AlertController,private authService : AuthService, private sharingService : SharingService, private navCtrl : NavController
-              ,private modalCtrl : ModalController, private storage: Storage, private loadingCtrl : LoadingController) {}
-  ngOnInit(){
+  constructor(private chartService: ChartService, private fbService: FacebookService, private afAuth: AngularFireAuth, private afDatabase: AngularFireDatabase,
+    private alertCtrl: AlertController, private authService: AuthService, private sharingService: SharingService, private navCtrl: NavController
+    , private modalCtrl: ModalController, private storage: Storage, private loadingCtrl: LoadingController) { }
+  ngOnInit() {
     this.isFavSub = this.chartService.isFavor(this.chartDetails.$key).subscribe(
       res => {
         this.isFav = res.$value ? true : false;
@@ -42,28 +42,28 @@ export class ChartCard implements OnDestroy {
     );
     this.ownerInfo = this.afDatabase.object(`users/${this.owner}/userInfo`);
     this.isUserChart = (this.owner == this.authService.getCurrentUser().uid)
-    if(this.justShow){
-            // votesCount
-      this.votesCount = -1*this.chartDetails.chartData.reduce(
-        (a,b) => {
-          return a+b;
+    if (this.justShow) {
+      // votesCount
+      this.votesCount = -1 * this.chartDetails.chartData.reduce(
+        (a, b) => {
+          return a + b;
         })
-    }else{
-      this.votesCountSub = this.chartService.getVoteCount(this.chartDetails.$key,this.chartDetails.owner).subscribe(
-      count => {
-        this.votesCount = count.$value
-      }
-    )
-      this.followerCountSub = this.chartService.getFollowerCount(this.chartDetails.$key,this.chartDetails.owner).subscribe(
+    } else {
+      this.votesCountSub = this.chartService.getVoteCount(this.chartDetails.$key, this.chartDetails.owner).subscribe(
+        count => {
+          this.votesCount = count.$value
+        }
+      )
+      this.followerCountSub = this.chartService.getFollowerCount(this.chartDetails.$key, this.chartDetails.owner).subscribe(
         count => {
           this.followerCount = count.$value
         }
       )
     }
   }
-  onDelete(){
-    if(!this.justShow){
-        var alert = this.alertCtrl.create({
+  onDelete() {
+    if (!this.justShow) {
+      var alert = this.alertCtrl.create({
         title: 'Delete Chart',
         message: 'Do you want to Delete this chart?',
         buttons: [
@@ -74,7 +74,7 @@ export class ChartCard implements OnDestroy {
           {
             text: 'Delete',
             handler: () => {
-                this.chartService.deleteChart(this.chartDetails.$key);
+              this.chartService.deleteChart(this.chartDetails.$key);
             }
           }
         ]
@@ -82,72 +82,72 @@ export class ChartCard implements OnDestroy {
       alert.present();
     }
   }
-  favorities(){
-    if(!this.justShow){
-      if(this.isFav){
+  favorities() {
+    if (!this.justShow) {
+      if (this.isFav) {
         this.followerCount++;
-      }else{
+      } else {
         this.followerCount--;
       }
-      this.isFav = ! this.isFav
-      this.chartService.followChart(this.chartDetails.$key,this.chartDetails.owner,this.chartDetails.isPublic);
+      this.isFav = !this.isFav
+      this.chartService.followChart(this.chartDetails.$key, this.chartDetails.owner, this.chartDetails.isPublic);
     }
   }
-  onShare(){
-    if(!this.justShow){
+  onShare() {
+    if (!this.justShow) {
       let loading = this.loadingCtrl.create({
-        spinner : 'bubbles'
+        spinner: 'bubbles'
       });
       loading.present()
       this.storage.get('showInstruction').then(
         toShow => {
-          if(toShow){
-            this.convertAndShare().then(()=>loading.dismiss()).catch(()=>loading.dismiss())
-          }else{
+          if (toShow) {
+            this.convertAndShare().then(() => loading.dismiss()).catch(() => loading.dismiss())
+          } else {
             let sharingInstruction = this.modalCtrl.create(SharingInstructionPage);
             sharingInstruction.present();
             loading.dismiss()
-            sharingInstruction.onDidDismiss((isShow)=>{
+            sharingInstruction.onDidDismiss((isShow) => {
               loading.present()
-              this.storage.set('showInstruction',isShow)
-              this.convertAndShare().then(()=>loading.dismiss()).catch(()=>loading.dismiss())
+              this.storage.set('showInstruction', isShow)
+              this.convertAndShare().then(() => loading.dismiss()).catch(() => loading.dismiss())
             })
           }
         }
       )
-     }
-  }
-  convertAndShare(){ 
-      return html2canvas(document.getElementById(this.chartDetails.$key)).then(
-                res => {
-                  this.chartImage = res.toDataURL('image/png')
-                  return this.sharingService.share(ShareVia.FACEBOOK,this.chartDetails.$key,this.chartImage)
-                }
-              ).catch()
-  }
-  listVoters(){
-    if(!this.justShow){
-        let listVoterOps  = this.chartService.getListOfVoters(this.chartDetails.$key,this.chartDetails.owner)
-        this.navCtrl.push(UsersListPage, {listOps : listVoterOps , title : 'Voters'})
     }
   }
-  listFollowers(){
-    if(!this.justShow){
-        let listFollowersOps = this.chartService.getListOfFollowers(this.chartDetails.$key,this.chartDetails.owner)
-        this.navCtrl.push(UsersListPage, {listOps : listFollowersOps , title : 'Followers'})
+  convertAndShare() {
+    return html2canvas(document.getElementById(this.chartDetails.$key)).then(
+      res => {
+        this.chartImage = res.toDataURL('image/png')
+        return this.sharingService.share(ShareVia.FACEBOOK, this.chartDetails.$key, this.chartImage)
+      }
+    ).catch()
+  }
+  listVoters() {
+    if (!this.justShow) {
+      let listVoterOps = this.chartService.getListOfVoters(this.chartDetails.$key, this.chartDetails.owner)
+      this.navCtrl.push(UsersListPage, { listOps: listVoterOps, title: 'Voters' })
     }
   }
-  onVoted(event){
-    if(event){
+  listFollowers() {
+    if (!this.justShow) {
+      let listFollowersOps = this.chartService.getListOfFollowers(this.chartDetails.$key, this.chartDetails.owner)
+      this.navCtrl.push(UsersListPage, { listOps: listFollowersOps, title: 'Followers' })
+    }
+  }
+  onVoted(event) {
+    if (event) {
       this.votesCount--
     }
   }
   ngOnDestroy(): void {
-    if(this.isFavSub)
+    if (this.isFavSub)
       this.isFavSub.unsubscribe();
-    if(this.votesCountSub)
+    if (this.votesCountSub)
       this.votesCountSub.unsubscribe()
-    if(this.followerCountSub)
+    if (this.followerCountSub)
       this.followerCountSub.unsubscribe()
   }
 }

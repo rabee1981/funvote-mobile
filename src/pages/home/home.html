@@ -5,7 +5,7 @@
         <ion-icon name="menu"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title text-center >
+    <ion-title text-center>
       Your Charts
     </ion-title>
     <ion-buttons right>
@@ -14,7 +14,7 @@
           <img *ngIf="conService.isOnline()" src="{{this.afAuth.auth.currentUser?.photoURL}}">
         </ion-avatar>
       </ion-item>
-  </ion-buttons>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -22,10 +22,10 @@
   <div *ngIf="(userCharts | async)?.length==0" class="center-page">Create Your Chart To See It Here...</div>
   <ion-list>
     <ion-item class="color-content item-chart" no-lines *ngFor="let chart of userCharts | async; trackBy:trackByCreatedAt">
-        <chart-card [chartDetails]="chart" [owner]="chart?.owner"></chart-card>
+      <chart-card [chartDetails]="chart" [owner]="chart?.owner"></chart-card>
     </ion-item>
   </ion-list>
   <ion-fab padding bottom="0">
-      <button ion-fab color="danger" (click)="onCreateChart()"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab color="danger" (click)="onCreateChart()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 </ion-content>
