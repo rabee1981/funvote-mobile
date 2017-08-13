@@ -2,18 +2,22 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Injectable } from '@angular/core';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { Platform } from 'ionic-angular';
+import { Platform, LoadingController } from 'ionic-angular';
 import { ShareVia } from "../data/shareVia.enum";
 import { Clipboard } from '@ionic-native/clipboard';
 
 @Injectable()
 export class SharingService {
+  applink;
   constructor(private platform: Platform, private socialSharing: SocialSharing, private afDatabase: AngularFireDatabase,
-    private afAuth: AngularFireAuth, private clipboard: Clipboard) { }
+    private afAuth: AngularFireAuth, private clipboard: Clipboard) {
+      this.afDatabase.object('fbAppLink').take(1).subscribe(url => {
+        this.applink = url.$value
+      })
+     }
 
   share(via: ShareVia, key, base64) {
-    this.afDatabase.object('fbAppLink').take(1).subscribe(url => {
-      let shortUrl = url.$value + '?id=' + key + 'end' // url = "fb.me/344033696017700"
+      let shortUrl = this.applink + '?id=' + key + 'end' // url = "fb.me/344033696017700"
       var message = shortUrl;
       switch (via) {
         case ShareVia.FACEBOOK: {
@@ -29,7 +33,6 @@ export class SharingService {
           return this.whatsappSharing(base64, shortUrl, message)
         }
       }
-    })
   }
   facebookSharing(base64, shortUrl, message) {
     this.clipboard.copy(message)

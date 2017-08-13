@@ -102,15 +102,26 @@ export class ChartCard implements OnDestroy {
       this.storage.get('showInstruction').then(
         toShow => {
           if (toShow) {
-            this.convertAndShare().then(() => loading.dismiss()).catch(() => loading.dismiss())
+            this.convertAndShare().then(_ => {
+              loading.dismiss()
+            }).catch(_=>{
+                loading.dismiss()
+              })
           } else {
             let sharingInstruction = this.modalCtrl.create(SharingInstructionPage);
             sharingInstruction.present();
             loading.dismiss()
             sharingInstruction.onDidDismiss((isShow) => {
+              loading = this.loadingCtrl.create({
+                spinner: 'bubbles'
+              });
               loading.present()
               this.storage.set('showInstruction', isShow)
-              this.convertAndShare().then(() => loading.dismiss()).catch(() => loading.dismiss())
+              this.convertAndShare().then(_ => {
+                loading.dismiss()
+              }).catch(_=>{
+                loading.dismiss()
+              })
             })
           }
         }
@@ -121,9 +132,9 @@ export class ChartCard implements OnDestroy {
     return html2canvas(document.getElementById(this.chartDetails.$key)).then(
       res => {
         this.chartImage = res.toDataURL('image/png')
-        return this.sharingService.share(ShareVia.FACEBOOK, this.chartDetails.$key, this.chartImage)
+        return this.sharingService.share(ShareVia.FACEBOOK, this.chartDetails.$key, this.chartImage) as Promise<any>
       }
-    ).catch()
+    )
   }
   listVoters() {
     if (!this.justShow) {

@@ -99,10 +99,6 @@
             "ionic-plugin-keyboard": {},
             "cordova-plugin-x-socialsharing": {},
             "cordova-plugin-network-information": {},
-            "cordova-plugin-camera": {
-                "CAMERA_USAGE_DESCRIPTION": " ",
-                "PHOTOLIBRARY_USAGE_DESCRIPTION": " "
-            },
             "com.phonegap.plugins.facebookconnect": {
                 "APP_ID": "304302026657534",
                 "APP_NAME": "Vote Fun"
@@ -128,7 +124,11 @@
                 "DEEPLINK_5_HOST": " "
             },
             "cordova-plugin-firebase": {},
-            "cordova-clipboard": {}
+            "cordova-clipboard": {},
+            "cordova-plugin-camera": {
+                "CAMERA_USAGE_DESCRIPTION": "Vote Fun use photos",
+                "PHOTOLIBRARY_USAGE_DESCRIPTION": "Vote Fun use photos"
+            }
         },
         "platforms": [
             "android",
