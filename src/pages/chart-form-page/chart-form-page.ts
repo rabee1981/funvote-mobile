@@ -24,7 +24,6 @@ export class ChartFormPage {
     correctOrientation: true,
 
   }
-  titleColor = "#000000"
   selectedValue = '2';
   valueAxisX: number[] = [1, 2];
   chartDetails: ChartDetails = new ChartDetails();
@@ -67,7 +66,6 @@ export class ChartFormPage {
     colorPicker.onDidDismiss(
       color => {
         if (color) {
-          this.titleColor = color;
           this.chartDetails.titleColor = color;
         }
       })
