@@ -7,7 +7,7 @@ import { ChartService } from "../../services/chart.service";
 import { FacebookService } from "../../services/facebook.service";
 import { AngularFireAuth } from "angularfire2/auth";
 import { AngularFireDatabase } from "angularfire2/database";
-import { NavController, AlertController, ModalController, LoadingController } from "ionic-angular";
+import { NavController, AlertController, ModalController, LoadingController, ActionSheetController } from "ionic-angular";
 import { AuthService } from "../../services/auth.service";
 import { ShareVia } from "../../data/shareVia.enum";
 import * as html2canvas from "html2canvas"
@@ -30,10 +30,11 @@ export class ChartCard implements OnDestroy {
   ownerInfo;
   isFav;
   isUserChart;
+  reportOptions
 
   constructor(private chartService: ChartService, private fbService: FacebookService, private afAuth: AngularFireAuth, private afDatabase: AngularFireDatabase,
     private alertCtrl: AlertController, private authService: AuthService, private sharingService: SharingService, private navCtrl: NavController
-    , private modalCtrl: ModalController, private storage: Storage, private loadingCtrl: LoadingController) { }
+    , private modalCtrl: ModalController, private storage: Storage, private loadingCtrl: LoadingController, private actionSheetCtrl: ActionSheetController) { }
   ngOnInit() {
     this.isFavSub = this.chartService.isFavor(this.chartDetails.$key).subscribe(
       res => {
@@ -59,7 +60,7 @@ export class ChartCard implements OnDestroy {
           this.followerCount = count.$value
         }
       )
-    }
+    } 
   }
   onDelete() {
     if (!this.justShow) {
@@ -152,6 +153,32 @@ export class ChartCard implements OnDestroy {
     if (event) {
       this.votesCount--
     }
+  }
+  report(){
+    this.reportOptions = this.actionSheetCtrl.create({
+      title: 'Report',
+      buttons: [
+        {
+          text: 'Report chart',
+          icon: 'ios-alert-outline',
+          handler: () => {
+            this.chartService.reportChart(this.chartDetails.$key,this.chartDetails.owner)
+          }
+        },
+        {
+          text: 'Report user',
+          icon: 'ios-flag-outline',
+          handler: () => {
+            this.chartService.reportUser(this.chartDetails.owner)
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        }
+      ]
+    });
+    this.reportOptions.present()
   }
   ngOnDestroy(): void {
     if (this.isFavSub)

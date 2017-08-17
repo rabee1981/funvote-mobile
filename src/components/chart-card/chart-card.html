@@ -1,12 +1,11 @@
 <ion-card>
-  <ion-buttons right>
     <ion-item style="background-color: transparent;">
       <ion-avatar item-start>
         <img src="{{(ownerInfo | async)?.pictureUrl}}">
       </ion-avatar>
       <small>{{(ownerInfo | async)?.name}}</small>
+      <ion-icon *ngIf="!isUserChart" item-end ios="ios-arrow-down" style="font-size: 18px; opacity : 0.5; padding-left: 10px" (click)="report()"></ion-icon>
     </ion-item>
-  </ion-buttons>
   <ion-item style="padding: 0px !important;" text-wrap>
     <chart-component (onVoted)="onVoted($event)" [chartDetails]="chartDetails" [owner]="owner" [justShow]="justShow"></chart-component>
   </ion-item>
