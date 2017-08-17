@@ -188,10 +188,7 @@ export class ChartService {
             this.afDatabase.object(`users/${user.uid}/deviceToken`).set(token)
         })
     }
-    reportChart(key,owner) {
-        this.afDatabase.object(`reprotedCharts/${key}`).set(owner)
-    }
-    reportUser(owner) {
-        this.afDatabase.object(`reportedUsers/${owner}`).set(true)
+    reportChart(key,owner,reason) {
+        this.afDatabase.object(`reprotedCharts/${key}`).set({owner : owner,reason : reason})
     }
 }

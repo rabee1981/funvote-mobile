@@ -60,7 +60,7 @@ export class ChartCard implements OnDestroy {
           this.followerCount = count.$value
         }
       )
-    } 
+    }
   }
   onDelete() {
     if (!this.justShow) {
@@ -105,9 +105,9 @@ export class ChartCard implements OnDestroy {
           if (toShow) {
             this.convertAndShare().then(_ => {
               loading.dismiss()
-            }).catch(_=>{
-                loading.dismiss()
-              })
+            }).catch(_ => {
+              loading.dismiss()
+            })
           } else {
             let sharingInstruction = this.modalCtrl.create(SharingInstructionPage);
             sharingInstruction.present();
@@ -120,7 +120,7 @@ export class ChartCard implements OnDestroy {
               this.storage.set('showInstruction', isShow)
               this.convertAndShare().then(_ => {
                 loading.dismiss()
-              }).catch(_=>{
+              }).catch(_ => {
                 loading.dismiss()
               })
             })
@@ -154,22 +154,15 @@ export class ChartCard implements OnDestroy {
       this.votesCount--
     }
   }
-  report(){
+  report() {
     this.reportOptions = this.actionSheetCtrl.create({
       title: 'Report',
       buttons: [
         {
-          text: 'Report chart',
+          text: 'Report inappropriate',
           icon: 'ios-alert-outline',
           handler: () => {
-            this.chartService.reportChart(this.chartDetails.$key,this.chartDetails.owner)
-          }
-        },
-        {
-          text: 'Report user',
-          icon: 'ios-flag-outline',
-          handler: () => {
-            this.chartService.reportUser(this.chartDetails.owner)
+            this.reportReason()
           }
         },
         {
@@ -180,12 +173,42 @@ export class ChartCard implements OnDestroy {
     });
     this.reportOptions.present()
   }
-  ngOnDestroy(): void {
-    if (this.isFavSub)
+  reportReason() {
+    let alert = this.alertCtrl.create();
+    alert.setTitle('Why?');
+
+    alert.addInput({
+      type: 'radio',
+      label: 'This chart is spam or scam',
+      value: '1',
+    });
+    alert.addInput({
+      type: 'radio',
+      label: 'This chart puts people at risk',
+      value: '2',
+    });
+    alert.addInput({
+      type: 'radio',
+      label: "This chart shouldn't be here",
+      value: '3',
+    });
+    alert.addButton('Cancel');
+    alert.addButton({
+      text: 'OK',
+      handler: data => {
+        if(data){
+          this.chartService.reportChart(this.chartDetails.$key,this.chartDetails.owner,data)
+        }
+      }
+    });
+    alert.present();
+}
+ngOnDestroy(): void {
+  if(this.isFavSub)
       this.isFavSub.unsubscribe();
-    if (this.votesCountSub)
+  if(this.votesCountSub)
       this.votesCountSub.unsubscribe()
     if (this.followerCountSub)
       this.followerCountSub.unsubscribe()
-  }
+}
 }

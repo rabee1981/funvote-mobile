@@ -4,7 +4,7 @@
         <img src="{{(ownerInfo | async)?.pictureUrl}}">
       </ion-avatar>
       <small>{{(ownerInfo | async)?.name}}</small>
-      <ion-icon *ngIf="!isUserChart" item-end ios="ios-arrow-down" style="font-size: 18px; opacity : 0.5; padding-left: 10px" (click)="report()"></ion-icon>
+      <ion-icon *ngIf="!isUserChart" item-end ios="ios-arrow-down" md="md-arrow-dropdown" style="font-size: 18px; opacity : 0.5; padding-left: 10px" (click)="report()"></ion-icon>
     </ion-item>
   <ion-item style="padding: 0px !important;" text-wrap>
     <chart-component (onVoted)="onVoted($event)" [chartDetails]="chartDetails" [owner]="owner" [justShow]="justShow"></chart-component>
