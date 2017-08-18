@@ -35,13 +35,33 @@ export class FacebookService {
         .take(1).subscribe(
         (res: any) => {
           let freidsArray = JSON.parse(res._body).data;
+          let listFacebookUid : string[] = []
           for (let key in freidsArray) {
             var userInfo: UserInfo = new UserInfo();
             userInfo.name = freidsArray[key].name,
               userInfo.pictureUrl = freidsArray[key].picture.data.url,
               userInfo.facebookUid = freidsArray[key].id,
-              this.afDatabase.object(`users/${user.uid}/friendsList/${key}`).update(userInfo)
+              listFacebookUid.push(userInfo.facebookUid)
+              this.afDatabase.object(`users/${user.uid}/friendsList/${userInfo.facebookUid}`).update(userInfo)
           }
+          this.afDatabase.list(`users/${user.uid}/friendsList`).take(1).subscribe(fireFriends => {
+            if(fireFriends.length > listFacebookUid.length){
+              for(let faceUid of listFacebookUid){
+                for(let key in fireFriends){
+                  if(faceUid === fireFriends[key].facebookUid){
+                    fireFriends[key] = 0
+                    break
+                  }
+                }
+              }
+            for(let key in fireFriends){
+              if(fireFriends[key] != 0){
+                console.log('********',key,'%%%%%%%%',fireFriends[key].facebookUid);
+                this.afDatabase.object(`users/${user.uid}/friendsList/${fireFriends[key].facebookUid}`).remove()
+              }
+            }
+          }
+          })
         }
         )
     }).catch()
