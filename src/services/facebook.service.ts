@@ -56,7 +56,6 @@ export class FacebookService {
               }
             for(let key in fireFriends){
               if(fireFriends[key] != 0){
-                console.log('********',key,'%%%%%%%%',fireFriends[key].facebookUid);
                 this.afDatabase.object(`users/${user.uid}/friendsList/${fireFriends[key].facebookUid}`).remove()
               }
             }
