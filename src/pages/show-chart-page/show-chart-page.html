@@ -2,7 +2,7 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>showChartPage</ion-title>
+    <ion-title>Show Before Create</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -10,10 +10,7 @@
 
 <ion-content class="color-content">
   <chart-card [chartDetails]="chartDetails" [justShow]="true" [owner]="chartDetails.owner"></chart-card>
-  <p style="opacity : 0.7">
-    * this just an example how your chart will look like, please click Create to complete the creation of your chart
-  </p>
   <p>
-  <button ion-button (click)="onSave()" full>Create</button>
+  <button ion-button (click)="onSave()" full>Create & Save</button>
   </p>
 </ion-content>
