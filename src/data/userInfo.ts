@@ -3,5 +3,5 @@ export class UserInfo {
     firebaseUid : string;
     facebookUid : string;
     pictureUrl : string = null;
-    email : string;
+    email : string = null;
 }
