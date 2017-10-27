@@ -28,4 +28,5 @@
   <ion-fab padding bottom="0">
     <button ion-fab color="danger" (click)="onCreateChart()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
+  <button style="font-size : 18px" ion-button icon-left block *ngIf="(userCharts | async)?.length!=0" (click)="invite()"><ion-icon name="logo-facebook"></ion-icon>Invite friends to vote</button>
 </ion-content>

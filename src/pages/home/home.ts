@@ -1,3 +1,4 @@
+import { FacebookService } from './../../services/facebook.service';
 import { AdMobFree } from '@ionic-native/admob-free';
 import { Subscription } from 'rxjs/Subscription';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -26,7 +27,7 @@ export class HomePage implements OnDestroy {
   constructor(public navCtrl: NavController, private authService: AuthService, private afAuth: AngularFireAuth
     , private chartService: ChartService, private afDatabase: AngularFireDatabase, private loadingCtrl: LoadingController
     , private conService: ConnectivityService, private alertCtrl: AlertController, private fbase: Firebase,
-    private platform: Platform, private admobFree: AdMobFree) {
+    private platform: Platform, private admobFree: AdMobFree, private fbService : FacebookService) {
   }
   ionViewDidLoad() {
     if (this.conService.isOnline()) {
@@ -113,5 +114,9 @@ export class HomePage implements OnDestroy {
       return chart.createdAt
     }
     return undefined;
+  }
+  invite(){
+    this.fbService.invite();
+    
   }
 }

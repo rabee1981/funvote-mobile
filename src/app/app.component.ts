@@ -104,7 +104,7 @@ export class MyApp implements OnInit, OnDestroy {
     let adMobBannerOptions: AdMobFreeBannerConfig = {
       id: banner,
       overlap: false,
-      autoShow: true,
+      autoShow: true
     }
     // let adMobInterstitialOptions : AdMobFreeBannerConfig = {
     //   id : interstitial,

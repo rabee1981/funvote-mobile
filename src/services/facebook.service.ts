@@ -86,4 +86,10 @@ export class FacebookService {
       }
       )
   }
+  invite(){
+    this.facebook.appInvite({
+      url: "https://fb.me/371674349920301",
+      picture: "https://lh3.googleusercontent.com/IoEEgEwPG1sIxIGOjacVzBqFmhPobeufB8mWXFnyAdhG9BSFhJD4uVll2RL9YYRW0qA=w300-rw"
+    })
+  }
 }
